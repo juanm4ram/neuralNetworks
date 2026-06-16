@@ -1,0 +1,806 @@
+/* =========================================================
+   La evolución de los agentes y las redes neuronales
+   Estética reutilizada de "El Secreto en la Red" / The Evolution of Trust:
+   fondo papel claro, tipografía manuscrita, trazos dibujados a mano.
+   ========================================================= */
+
+@font-face {
+  font-family: 'FuturaHandwritten';
+  font-style: normal;
+  font-display: swap;
+  src: url('./assets/FuturaHandwritten.ttf') format('truetype');
+}
+
+:root {
+  --paper: #ffffff;
+  --paper-soft: #fcfbf8;
+  --ink: #3b3743;
+  --ink-soft: #6f6b78;
+  --ink-faint: #9b97a3;
+  --line: #e7e3d8;
+  --line-soft: #f1eee6;
+
+  --blue: #4f88e6;
+  --green: #2bae7e;
+  --red: #e8543f;
+  --amber: #e9962f;
+  --violet: #8f6fd1;
+
+  --font: 'FuturaHandwritten', 'Segoe UI', 'Trebuchet MS', sans-serif;
+  --shadow: 0 6px 18px rgba(50, 45, 60, 0.1);
+  --shadow-soft: 0 3px 10px rgba(50, 45, 60, 0.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.18;
+  font-weight: normal;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: var(--font);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(79, 136, 230, 0.5);
+  outline-offset: 2px;
+}
+
+/* ---------- Pantallas (navegación) ---------- */
+
+.screen {
+  display: none;
+}
+.screen.is-active {
+  display: block;
+}
+
+/* ---------- Botones (estilo dibujado) ---------- */
+
+.btn {
+  appearance: none;
+  border: 2.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+  padding: 9px 18px;
+  border-radius: 15px 13px 16px 12px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn--primary {
+  background: var(--ink);
+  color: #fff;
+}
+.btn--ghost {
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+.btn--lg {
+  font-size: 1.18rem;
+  padding: 13px 30px;
+  border-radius: 19px 15px 20px 16px;
+}
+
+/* =========================================================
+   Portada interactiva (Splash) — réplica de The Evolution of Trust
+   ========================================================= */
+
+.splash {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+.splash__stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.splash__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.splash__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  pointer-events: none;
+  padding: 24px;
+}
+.splash__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--ink);
+  line-height: 0.92;
+  user-select: none;
+}
+.splash__title-sm {
+  font-size: clamp(1.1rem, 3vw, 2rem);
+  color: var(--ink-soft);
+  margin: 0.04em 0;
+  letter-spacing: 0.02em;
+}
+.splash__title-lg {
+  font-size: clamp(2.1rem, 6.2vw, 4.6rem);
+  letter-spacing: 0.012em;
+}
+.splash__title-md {
+  font-size: clamp(1.5rem, 4.4vw, 3.2rem);
+  color: var(--ink);
+  letter-spacing: 0.012em;
+}
+.splash__and {
+  font-size: clamp(1rem, 2.6vw, 1.7rem);
+  color: var(--blue);
+  margin: 0.12em 0;
+}
+.splash__play {
+  pointer-events: auto;
+  font-family: var(--font);
+  font-size: clamp(1.05rem, 2.3vw, 1.5rem);
+  color: var(--ink);
+  background: #ffffff;
+  border: 3px solid var(--ink);
+  border-radius: 26px 20px 28px 18px;
+  padding: 12px 40px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.splash__play:hover {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-soft);
+}
+.splash__play:active {
+  transform: scale(0.96);
+}
+
+.splash__footer {
+  position: relative;
+  flex-shrink: 0;
+  height: 58px;
+  background: #222222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.splash__langs {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.splash__lang {
+  color: #dd4040;
+  text-decoration: none;
+}
+.splash__lang:hover {
+  color: #ee5151;
+}
+.splash__email {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+.splash__email img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* =========================================================
+   Páginas de contenido (lectura tipo documento)
+   ========================================================= */
+
+.page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 72% 8%, #eef2fc 0%, #ffffff 55%);
+  display: flex;
+  flex-direction: column;
+}
+
+.page__bar {
+  flex-shrink: 0;
+  z-index: 10;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  border-bottom: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+}
+.page__logo {
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.page__home {
+  border: 2px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  padding: 5px 13px;
+  border-radius: 12px 10px 13px 9px;
+  cursor: pointer;
+}
+.page__home:hover {
+  border-color: var(--ink-soft);
+}
+
+.page__body {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 14px 26px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page__kicker {
+  display: inline-block;
+  font-size: 0.74rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.page__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+}
+.page__subtitle {
+  font-size: 1.2rem;
+  color: var(--blue);
+  margin-bottom: 26px;
+}
+
+.lead {
+  font-size: clamp(0.98rem, 1.7vw, 1.08rem);
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.prose {
+  font-size: clamp(0.9rem, 1.5vw, 0.98rem);
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.prose strong {
+  font-weight: normal;
+  color: var(--ink);
+  text-shadow: 0.6px 0 0 currentColor;
+}
+.question {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--ink);
+  text-align: center;
+  margin: 14px 0;
+  line-height: 1.25;
+}
+
+/* ---------- Recuadro de video ---------- */
+
+.video-card {
+  margin: 14px auto;
+  width: 100%;
+  max-width: 560px;
+  border: 2.5px solid var(--ink);
+  border-radius: 20px 15px 22px 14px;
+  background: #000;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.video-card__frame {
+  position: relative;
+  width: 100%;
+  background: #0c0c0f;
+}
+.video-card__frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.video-card__missing {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 220px;
+  text-align: center;
+  color: #d8d4c8;
+  background: #1a1a1f;
+  padding: 20px;
+}
+.video-card__missing code {
+  font-family: 'Segoe UI', monospace;
+  font-size: 0.82rem;
+  color: #ffb9a8;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.video-card__caption {
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ---------- Bloque resaltado / nota ---------- */
+
+.callout {
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--blue);
+  border-radius: 14px 12px 15px 11px;
+  background: var(--paper-soft);
+  padding: 16px 20px;
+  margin: 24px 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+}
+
+/* ---------- Navegación inferior entre páginas ---------- */
+
+.page__nav {
+  flex-shrink: 0;
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 6px 26px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+/* =========================================================
+   Páginas de documento (scrollables) — capítulos del trabajo
+   ========================================================= */
+
+.page--doc {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+.page--doc .page__bar {
+  position: sticky;
+  top: 0;
+}
+.page--doc .page__body {
+  display: block;
+  max-width: 720px;
+  padding: 30px 26px 48px;
+}
+
+.doc-kicker {
+  display: inline-block;
+  font-size: 0.74rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+.doc-title {
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  letter-spacing: 0.01em;
+  margin-bottom: 18px;
+}
+.doc h2 {
+  font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+  margin: 32px 0 10px;
+  color: var(--ink);
+}
+.doc h3 {
+  font-size: clamp(1.1rem, 2.3vw, 1.32rem);
+  margin: 24px 0 8px;
+  color: var(--blue);
+}
+.doc p {
+  font-size: 1.04rem;
+  color: var(--ink-soft);
+  margin: 0 0 13px;
+}
+.doc p .hl {
+  color: var(--ink);
+}
+.doc em {
+  font-style: italic;
+  color: var(--ink);
+}
+.doc-aside {
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.92em;
+}
+
+/* lista de definiciones de variables */
+.defs {
+  list-style: none;
+  margin: 4px 0 16px;
+  padding: 14px 18px;
+  border: 2px solid var(--line);
+  border-radius: 14px 12px 15px 11px;
+  background: var(--paper-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.defs li {
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+.defs .sym {
+  color: var(--blue);
+}
+
+/* bloque de ecuación destacada */
+.eq {
+  margin: 16px 0;
+  padding: 4px 10px;
+  border-left: 4px solid var(--blue);
+  background: #eef2fc;
+  border-radius: 0 12px 12px 0;
+  overflow-x: auto;
+}
+
+/* tarjeta de dato / estudio citado */
+.cite {
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--amber);
+  border-radius: 0 14px 15px 0;
+  background: var(--paper-soft);
+  padding: 13px 18px;
+  margin: 18px 0;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+.cite strong {
+  font-weight: normal;
+  color: var(--ink);
+}
+
+/* nota / aclaración */
+.note {
+  border: 2px dashed var(--line);
+  border-radius: 14px 12px 15px 11px;
+  background: #fff;
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 0.96rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ---------- Tabla de verdad ---------- */
+.truth-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.95rem;
+}
+.truth-table th,
+.truth-table td {
+  border: 2px solid var(--line);
+  padding: 8px 10px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.truth-table th {
+  background: var(--paper-soft);
+  color: var(--ink);
+  font-weight: normal;
+}
+.truth-table td.ok {
+  color: #1f8c63;
+}
+.truth-table td.no {
+  color: #c5402c;
+}
+.truth-table tr td:last-child {
+  font-size: 1.05rem;
+}
+
+/* ---------- Gráficos de compuertas (SVG hechos a mano) ---------- */
+.gate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin: 18px 0;
+}
+.gate-card {
+  border: 2px solid var(--line);
+  border-radius: 16px 13px 17px 12px;
+  background: var(--paper);
+  padding: 14px 14px 10px;
+  box-shadow: var(--shadow-soft);
+}
+.gate-card h4 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  text-align: center;
+}
+.gate-card .gate-sub {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-bottom: 8px;
+}
+.gate-card svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* figura combinada: diagrama de neurona + gráfico de la compuerta */
+.fig {
+  margin: 20px 0;
+}
+.fig-cap {
+  font-size: 1.02rem;
+  text-align: center;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.fig-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 2px solid var(--line);
+  border-radius: 16px 13px 17px 12px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+  padding: 14px 12px;
+}
+.fig-neuron {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+.fig-plot {
+  width: 100%;
+  max-width: 248px;
+  height: auto;
+}
+.fig-layers {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  margin: 8px auto 4px;
+}
+
+/* citas a estudios (superíndice con enlace) */
+.ref {
+  font-size: 0.62em;
+  vertical-align: super;
+  line-height: 0;
+}
+.ref a {
+  color: var(--blue);
+  text-decoration: none;
+  padding: 0 1px;
+}
+.ref a:hover {
+  text-decoration: underline;
+}
+
+/* tarjeta genérica para diagramas nuevos */
+.diagram {
+  border: 2px solid var(--line);
+  border-radius: 16px 13px 17px 12px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+  padding: 12px 12px 10px;
+  margin: 18px auto;
+  text-align: center;
+}
+.diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.diagram h4 {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 3px;
+}
+.diagram .gate-sub {
+  font-size: 0.84rem;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-bottom: 8px;
+}
+.diagram--sm {
+  max-width: 320px;
+}
+.diagram--md {
+  max-width: 430px;
+}
+.diagram--lg {
+  max-width: 540px;
+}
+.diagram-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 18px 0;
+}
+.diagram-row .diagram {
+  margin: 0;
+  flex: 1 1 240px;
+}
+
+/* ---------- Herramienta interactiva (regresión) ---------- */
+.tool {
+  border: 2.5px solid var(--ink);
+  border-radius: 20px 16px 22px 15px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 20px;
+  margin: 22px 0;
+}
+.tool__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.tool__title {
+  font-size: 1.12rem;
+  color: var(--ink);
+}
+.tool__mse {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.tool__mse b {
+  font-weight: normal;
+  color: var(--red);
+}
+.tool__canvas-wrap {
+  position: relative;
+  width: 100%;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+  overflow: hidden;
+}
+.tool__canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.tool__controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 22px;
+  margin-top: 14px;
+}
+.tool__row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tool__row label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.tool__row .val {
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+.tool__row input[type='range'] {
+  width: 100%;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+.tool__foot {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.tool__hint {
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+}
+@media (max-width: 480px) {
+  .tool__controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Navegación entre capítulos ---------- */
+.doc-nav {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 26px 56px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+.doc-progress {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  padding: 0 0 4px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 540px) {
+  body {
+    font-size: 16px;
+  }
+  .page__body {
+    padding: 34px 18px 60px;
+  }
+  .page--doc .page__body {
+    padding: 22px 16px 36px;
+  }
+}

@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="La evolución de los agentes y las redes neuronales: una exploración con herramientas de Análisis Matemático 2."
+    />
+    <title>La evolución de los agentes y las redes neuronales</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$']],
+          displayMath: [['$$', '$$']],
+        },
+        svg: { fontCache: 'global' },
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+  </head>
+  <body>
+    <!-- ============================================================
+         PANTALLA 1 — PORTADA
+         ============================================================ -->
+    <section id="splash" class="screen is-active">
+      <div class="splash">
+        <div class="splash__stage">
+          <canvas id="splash-canvas" class="splash__canvas"></canvas>
+          <div class="splash__center">
+            <h1 class="splash__title">
+              <span class="splash__title-sm">La evolución de los</span>
+              <span class="splash__title-lg">AGENTES</span>
+              <span class="splash__and">y las</span>
+              <span class="splash__title-md">REDES NEURONALES</span>
+            </h1>
+            <button type="button" class="splash__play" data-goto="intro">
+              EMPEZAR&nbsp;&rarr;
+            </button>
+          </div>
+        </div>
+
+        <footer class="splash__footer">
+          <div class="splash__langs">
+            <a class="splash__lang" href="#es">Español</a>
+            <a class="splash__lang" href="#en">English</a>
+          </div>
+          <a
+            class="splash__email"
+            href="mailto:?subject=La evolución de los agentes y las redes neuronales"
+            aria-label="Compartir por correo"
+          >
+            <img src="assets/email.png" alt="" />
+          </a>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PANTALLA 2 — INTRODUCCIÓN
+         ============================================================ -->
+    <section id="intro" class="screen">
+      <div class="page">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="page__body">
+          <span class="page__kicker">Introducción</span>
+
+          <p class="lead">
+            En esta semana, el presidente de Estados Unidos ha bloqueado un nuevo
+            modelo anunciado por Anthropic porque supuestamente representaba una
+            amenaza para la seguridad Nacional.
+          </p>
+
+          <!-- VIDEO 1: canyoufeelit_edit.mp4 (loop, sin audio, autoplay) -->
+          <figure class="video-card">
+            <div class="video-card__frame">
+              <video
+                class="js-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+              >
+                <source src="videos/canyoufeelit_edit.mp4" type="video/mp4" />
+              </video>
+              <div class="video-card__missing" style="display: none;">
+                <span>Falta el video</span>
+                <code>videos/canyoufeelit_edit.mp4</code>
+                <span style="font-size: 0.8rem; opacity: 0.7;">
+                  Copialo dentro de la carpeta <em>videos/</em> del proyecto.
+                </span>
+              </div>
+            </div>
+          </figure>
+
+          <p class="question">
+            ¿Tiene Anthropic la piedra filosofal definitiva que puede acabarlo
+            con todo?
+          </p>
+
+          <p class="prose">
+            Honestamente no creo, pero en este trabajo, trataremos de explicar
+            la forma en la cual los ingenieros de esta empresa diseñan los
+            agentes, utilizando conocimientos obtenidos en Análisis Matemático 2.
+          </p>
+        </div>
+
+        <div class="page__nav">
+          <button type="button" class="btn btn--ghost" data-goto="splash">
+            &larr; Portada
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap1">
+            Comenzar el trabajo &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 1 — EL ORIGEN: REGRESIÓN LINEAL
+         ============================================================ -->
+    <section id="cap1" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 1</span>
+          <h1 class="doc-title">El origen: modelando la realidad con regresión lineal</h1>
+
+          <p>
+            Imaginemos que somos un investigador de inteligencia artificial
+            experimentado y que acabamos de ser contratados por Anthropic (ya
+            quisiéramos). Un nuevo plan, una nueva vida que construir, unos buenos
+            cientos de dólares. Nuestro primer proyecto es optimizar un agente de IA.
+          </p>
+          <p>
+            Tras analizar el rendimiento de distintos modelos, empezamos a divagar
+            y a preguntarnos cómo se podría modelar esta realidad donde los modelos
+            actúan con retraso madurativo, y cómo podríamos mejorarlo.
+          </p>
+
+          <div class="cite">
+            Investigando, nos encontramos con el estudio de <strong>EnCompass</strong><sup class="ref"><a href="https://news.mit.edu/2026/helping-ai-agents-search-to-get-best-results-from-llms-0205" target="_blank" rel="noopener">[1]</a></sup>
+            (MIT CSAIL + Asari AI). Proponen que un agente no debe quedarse con la
+            primera respuesta que genera un LLM, sino explorar múltiples caminos,
+            retroceder y elegir la mejor ejecución: una especie de <em>beam search</em>.
+          </div>
+
+          <p>
+            Empezamos a anotar nuestros primeros datos. Si el agente explora un solo
+            camino, su tasa de éxito es del 40&nbsp;%. Si explora 3 caminos, sube al
+            55&nbsp;%. Si explora 10 caminos, alcanza el 85&nbsp;%
+            <span class="doc-aside">(datos hipotéticos)</span>.
+          </p>
+
+          <figure class="gate-card" style="max-width: 460px; margin: 18px auto;">
+            <h4>Tasa de éxito vs. caminos explorados</h4>
+            <div class="gate-sub">los puntos sugieren una tendencia casi recta</div>
+            <svg id="scatter-cap1" viewBox="0 0 380 240" aria-hidden="true"></svg>
+          </figure>
+
+          <p>
+            Poco a poco seguimos completando esta gráfica con los datos reales y
+            empezamos a darnos cuenta de una cosa: parece que existe una relación
+            directa. Viendo la gráfica, trazamos una línea que representa esta
+            tendencia. Lo creamos o no, lo que acabamos de dibujar es un
+            <em>modelo</em>.
+          </p>
+          <p>
+            Matemáticamente, en un espacio bidimensional, una recta se define con la
+            siguiente ecuación:
+          </p>
+          <div class="eq">$$\hat{y} = w \cdot x + b$$</div>
+          <ul class="defs">
+            <li><span class="sym">$\hat{y}$</span> (salida): la predicción de nuestro modelo (p.&nbsp;ej. la tasa de éxito del agente).</li>
+            <li><span class="sym">$x$</span> (entrada): nuestra variable independiente (p.&nbsp;ej. la cantidad de caminos explorados).</li>
+            <li><span class="sym">$w$</span> (peso / pendiente): define la inclinación de la recta y, conceptualmente, la relación entre la entrada y la salida.</li>
+            <li><span class="sym">$b$</span> (sesgo / término independiente): nos muestra a qué altura la recta corta al eje.</li>
+          </ul>
+          <p>
+            Esta es la estructura del modelo de <em>regresión lineal simple</em>. Pero,
+            claro, lo ideal sería plantear un algoritmo que pudiera dibujar esta línea
+            automáticamente a partir de los datos. ¿Cómo decide ese algoritmo cuál es
+            la mejor recta? Lo vemos en el próximo capítulo.
+          </p>
+        </div>
+
+        <div class="doc-progress">Página 1 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="intro">
+            &larr; Introducción
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap2">
+            La función de coste &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 2 — LA FUNCIÓN DE COSTE Y EL ERROR
+         ============================================================ -->
+    <section id="cap2" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 2</span>
+          <h1 class="doc-title">La función de coste y el error</h1>
+
+          <p>
+            ¿Cómo sabe el algoritmo si una línea es mejor que otra? Aquí entra el
+            concepto de <em>error</em>. Para un punto determinado (por ejemplo, 5
+            caminos explorados), nuestro modelo predice un éxito del 65&nbsp;%, pero
+            el dato real de EnCompass marca un 70&nbsp;%. La distancia entre el valor
+            predicho y el valor real es nuestro error.
+          </p>
+
+          <!-- VIDEO 2: funcionpruebaerror.mp4 -->
+          <figure class="video-card">
+            <div class="video-card__frame">
+              <video
+                class="js-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+              >
+                <source src="videos/funcionpruebaerror.mp4" type="video/mp4" />
+              </video>
+              <div class="video-card__missing" style="display: none;">
+                <span>Falta el video</span>
+                <code>videos/funcionpruebaerror.mp4</code>
+                <span style="font-size: 0.8rem; opacity: 0.7;">
+                  Copialo dentro de la carpeta <em>videos/</em> del proyecto.
+                </span>
+              </div>
+            </div>
+            <figcaption class="video-card__caption">
+              La idea de medir y reducir el error, de forma visual.
+            </figcaption>
+          </figure>
+
+          <p>
+            Para evaluar el modelo completo, calculamos el <em>Error Cuadrático Medio</em>
+            (MSE), una función de coste que penaliza con mayor intensidad a los puntos
+            más alejados:
+          </p>
+          <div class="eq">$$C = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$</div>
+          <p>
+            Nuestra tarea es manipular los parámetros $w$ y $b$ para minimizar esta
+            función de coste. Aquí tenemos una herramienta interactiva para probar a
+            ajustar la línea nosotros mismos: movemos los deslizantes y observamos cómo
+            cambia el error.
+          </p>
+
+          <div class="tool" id="reg-tool">
+            <div class="tool__head">
+              <span class="tool__title">Ajustá la recta a los datos</span>
+              <span class="tool__mse">MSE actual: <b id="reg-mse">—</b></span>
+            </div>
+            <div class="tool__canvas-wrap">
+              <canvas id="reg-canvas" class="tool__canvas" width="640" height="380"></canvas>
+            </div>
+            <div class="tool__controls">
+              <div class="tool__row">
+                <label>Pendiente <span class="sym">$w$</span><span class="val" id="reg-w-val">5.0</span></label>
+                <input type="range" id="reg-w" min="0" max="10" step="0.1" value="5" />
+              </div>
+              <div class="tool__row">
+                <label>Sesgo <span class="sym">$b$</span><span class="val" id="reg-b-val">35</span></label>
+                <input type="range" id="reg-b" min="0" max="60" step="1" value="35" />
+              </div>
+            </div>
+            <div class="tool__foot">
+              <button type="button" class="btn" id="reg-best">Mostrar mejor ajuste</button>
+              <span class="tool__hint">
+                El mejor ajuste minimiza el error cuadrático medio.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-progress">Página 2 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap1">
+            &larr; El origen
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap3">
+            La neurona artificial &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 3 — AÑADIENDO DIMENSIONES: LA NEURONA ARTIFICIAL
+         ============================================================ -->
+    <section id="cap3" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 3</span>
+          <h1 class="doc-title">Añadiendo dimensiones: la neurona artificial</h1>
+
+          <p>
+            La realidad nos demuestra que es mucho más compleja, y que un fenómeno
+            rara vez está afectado por un solo factor. El éxito de un agente depende
+            de los caminos que explora, sí, pero también de su capacidad deductiva.
+          </p>
+          <div class="cite">
+            El estudio <strong>“Teaching AI agents to ask better questions by playing
+            Battleship”</strong><sup class="ref"><a href="https://news.mit.edu/2026/teaching-ai-agents-ask-better-questions-playing-battleship-0603" target="_blank" rel="noopener">[2]</a></sup> (MIT CSAIL + Harvard) demostró que la tasa de éxito
+            depende drásticamente de si el agente usa una estrategia de inferencia
+            Monte Carlo, pasando de un éxito del 8&nbsp;% al 82&nbsp;%.
+          </div>
+          <p>
+            Si introducimos esta nueva variable al modelo, ya no estaríamos ante una
+            regresión simple, sino <em>múltiple</em>. La ecuación evoluciona para
+            acomodar más pesos ($w_1, w_2, \dots$):
+          </p>
+          <div class="eq">$$z = w_1 x_1 + w_2 x_2 + \dots + w_n x_n + b$$</div>
+          <p>
+            Esto, en esencia, es lo que hace matemáticamente una <em>neurona
+            artificial</em>: recibe varias entradas, las multiplica por sus pesos
+            correspondientes, las suma y añade el sesgo.
+          </p>
+          <p>
+            Y aquí ya no buscaríamos la recta que mejor se ajuste a datos
+            bidimensionales, sino el mejor <em>plano</em> que se ajuste a la nube de
+            datos tridimensional. Si agregamos más variables, trabajaremos con
+            <em>hiperplanos</em> en espacios multidimensionales. Cada dimensión
+            representa una característica de la realidad que los datos describen.
+          </p>
+
+          <h2>La forma vectorial</h2>
+          <p>
+            La manera más cómoda de representar estos datos es de forma
+            <em>vectorial</em>, con matrices:
+          </p>
+          <div class="eq">$$Y = X\,W$$</div>
+          <ul class="defs">
+            <li><span class="sym">$X$</span> — matriz de diseño de tamaño $n \times (d+1)$: cada fila es una muestra (una configuración de agente) y cada columna una característica. La primera columna es de unos, para acompañar al sesgo.</li>
+            <li><span class="sym">$W$</span> — vector de parámetros de tamaño $(d+1) \times 1$: contiene los pesos $w_1, \dots, w_d$ y el sesgo $b$.</li>
+            <li><span class="sym">$Y$</span> — vector de salidas de tamaño $n \times 1$: la predicción para cada muestra.</li>
+          </ul>
+
+          <h2>El error cuadrático medio en forma vectorial</h2>
+          <p>
+            La suma de los errores al cuadrado se escribe como el producto del vector
+            de errores por sí mismo (su norma al cuadrado):
+          </p>
+          <div class="eq">$$C = (Y - XW)^{T}\,(Y - XW)$$</div>
+          <p>
+            Distribuimos la transpuesta y multiplicamos los paréntesis:
+          </p>
+          <div class="eq">$$C = Y^{T}Y - 2\,W^{T}X^{T}Y + W^{T}X^{T}X\,W$$</div>
+          <p class="note">
+            Los términos cruzados $Y^{T}XW$ y $W^{T}X^{T}Y$ son escalares y uno es la
+            transpuesta del otro, por eso se combinan en un único $-2\,W^{T}X^{T}Y$.
+          </p>
+          <p>
+            Recordemos que con la derivada podíamos encontrar el mínimo de una función,
+            igualándola a cero. Si derivamos la expresión anterior respecto de $W$ y la
+            igualamos a $0$:
+          </p>
+          <div class="eq">$$\frac{\partial C}{\partial W} = -2\,X^{T}Y + 2\,X^{T}X\,W = 0$$</div>
+          <p>
+            Despejando, obtenemos la expresión del mínimo error cuadrático medio:
+          </p>
+          <div class="eq">$$W = (X^{T}X)^{-1}\,X^{T}Y$$</div>
+          <p>
+            Esta ecuación es lo único que necesitamos para obtener los parámetros que
+            minimizan el error. Tomamos las matrices $X$ e $Y$, calculamos $W$, y eso es
+            todo: este es el método de los <em>mínimos cuadrados ordinarios</em>.
+          </p>
+
+          <h2>¿Por qué no alcanza con esta fórmula?</h2>
+          <p>
+            En este caso tuvimos suerte de obtener una fórmula cerrada con la cual
+            calcular los parámetros. Pero no siempre ocurrirá. Si trabajamos con otros
+            modelos u otras funciones de coste, no siempre podremos hallar el mínimo de
+            forma analítica. E incluso aplicando el método anterior, hay que invertir
+            $X^{T}X$, y <em>invertir una matriz</em> es una operación que para una
+            computadora puede ser muy ineficiente.
+          </p>
+          <p>
+            Así que necesitamos un método que nos garantice reducir el coste de forma
+            general: un método iterativo que se vaya acercando al mínimo error, el
+            <em>descenso del gradiente</em>. Pero antes de llegar a él, veamos bien qué
+            es una neurona.
+          </p>
+        </div>
+
+        <div class="doc-progress">Página 3 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap2">
+            &larr; La función de coste
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap4">
+            ¿Qué es una neurona? &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 4 — ¿QUÉ ES UNA NEURONA?
+         ============================================================ -->
+    <section id="cap4" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 4</span>
+          <h1 class="doc-title">¿Qué es una neurona?</h1>
+
+          <p>
+            Una neurona es la unidad básica de procesamiento de información en una red
+            neuronal. De forma similar a una neurona biológica, tiene conexiones de
+            entrada a través de las cuales recibe estímulos externos (los valores de
+            entrada). Con esos valores hace un cálculo interno y devuelve un valor de
+            salida. En definitiva, es una función matemática.
+          </p>
+
+          <h2>¿De qué se trata ese cálculo?</h2>
+          <p>
+            Internamente, la neurona usa todos los valores para hacer una <em>suma
+            ponderada</em>: multiplica cada valor de entrada por un peso asociado a su
+            conexión. Ese peso es un número que hace que una entrada sea más intensa
+            que otra. Los pesos son los parámetros de nuestro modelo: podemos
+            modificarlos positiva o negativamente para cambiar el valor de la suma.
+          </p>
+          <p>
+            Vemos que esta función es la misma que ya conocíamos:
+          </p>
+          <div class="eq">$$z = w_1 x_1 + w_2 x_2 + \dots + w_n x_n + b$$</div>
+          <p>
+            Se puede decir que una neurona hace algo muy parecido a una regresión
+            lineal. Al término $b$ aquí lo llamamos <em>sesgo</em>, y es otra entrada
+            de la neurona: lo modificamos para que la neurona esté “sesgada” hacia un
+            valor específico.
+          </p>
+
+          <figure class="diagram diagram--sm">
+            <div class="gate-sub">la neurona suma las entradas por sus pesos y le agrega el sesgo b</div>
+            <svg id="neuron-diagram" viewBox="0 0 300 200" aria-hidden="true"></svg>
+          </figure>
+
+          <div class="cite">
+            A una red formada por una <strong>sola neurona</strong> de este tipo se la
+            conoce como <strong>Perceptrón</strong>: el modelo más simple posible, y el
+            punto de partida histórico de las redes neuronales.
+          </div>
+
+          <p>
+            Con esta pieza en mano, en el próximo capítulo la pondremos a trabajar en
+            un ejemplo concreto, tomado de los papers de IA sobre agentes.
+          </p>
+        </div>
+
+        <div class="doc-progress">Página 4 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap3">
+            &larr; La neurona artificial
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap5">
+            Un ejemplo: compuertas lógicas &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 5 — UN EJEMPLO: UMBRAL, AND Y OR
+         ============================================================ -->
+    <section id="cap5" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 5</span>
+          <h1 class="doc-title">Un ejemplo: el agente y las compuertas lógicas</h1>
+
+          <p>
+            Imaginemos que queremos modelar un sistema que prediga si un agente
+            autónomo basado en LLM será capaz de resolver con éxito una tarea compleja
+            de ingeniería de software. Analizando los papers, determinamos que un
+            despliegue exitoso depende críticamente de la combinación de dos variables
+            binarias de entrada ($0$ o $1$):
+          </p>
+          <ul class="defs">
+            <li><span class="sym">$x_1$</span> (estrategia Monte Carlo / saber preguntar): vale $1$ si implementamos el framework del estudio de Battleship para que el agente valide sus dudas generando código ejecutable, y $0$ si pregunta sin verificar.</li>
+            <li><span class="sym">$x_2$</span> (múltiples caminos / saber explorar): vale $1$ si activamos el algoritmo de EnCompass para que el agente explore varias trayectorias y retroceda ante fallos, y $0$ si acepta ciegamente la primera respuesta.</li>
+          </ul>
+          <p>
+            Nuestra salida deseada ($y$) también será binaria: $1$ si el rendimiento es
+            <em>exitoso</em> y $0$ si el agente <em>falla</em>. Pero la neurona realiza
+            una suma ponderada lineal ($z$) que devuelve un número continuo, no una
+            decisión binaria.
+          </p>
+
+          <h2>El umbral</h2>
+          <p>
+            Para resolverlo, el diseño clásico evalúa el resultado de la regresión
+            lineal con un <em>umbral</em>: si la suma ponderada lo supera, la salida es
+            $1$; si queda por debajo, la salida es $0$. Si integramos el sesgo ($b$) con
+            un valor igual al opuesto del umbral, la lógica se simplifica y la salida
+            depende solo de si $z$ es mayor o menor que cero:
+          </p>
+          <div class="eq">$$y = \begin{cases} 1 & \text{si } z \ge 0 \\ 0 & \text{si } z &lt; 0 \end{cases} \qquad z = w_1 x_1 + w_2 x_2 + b$$</div>
+
+          <h2>Caso A: el agente estricto (compuerta AND)</h2>
+          <p>
+            Supongamos que, para tener éxito en un software complejo, necesitamos
+            obligatoriamente que se cumplan <em>ambas</em> condiciones a la vez (saber
+            preguntar con Monte Carlo <em>y</em> explorar múltiples trayectorias).
+            Cualquier combinación parcial causa el fallo. Esto equivale a una compuerta
+            lógica AND. Eligiendo $w_1 = 2$, $w_2 = 2$ y $b = -3$:
+          </p>
+          <table class="truth-table">
+            <thead>
+              <tr><th>$x_1$ (Monte Carlo)</th><th>$x_2$ (caminos)</th><th>Éxito real $y$</th><th>Cómputo $z$</th><th>Salida</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td class="no">0</td><td>$2(0)+2(0)-3=-3$</td><td class="no">0</td></tr>
+              <tr><td>0</td><td>1</td><td class="no">0</td><td>$2(0)+2(1)-3=-1$</td><td class="no">0</td></tr>
+              <tr><td>1</td><td>0</td><td class="no">0</td><td>$2(1)+2(0)-3=-1$</td><td class="no">0</td></tr>
+              <tr><td>1</td><td>1</td><td class="ok">1</td><td>$2(1)+2(1)-3=+1$</td><td class="ok">1</td></tr>
+            </tbody>
+          </table>
+          <p>
+            La neurona solo arroja un valor positivo, y por ende salida $1$, cuando
+            ambas entradas están activadas. Si visualizamos la tabla en una gráfica,
+            estos parámetros trazan una recta (la <em>frontera de decisión</em>) que
+            separa perfectamente el único punto de éxito de los tres de fallo.
+          </p>
+
+          <figure class="fig">
+            <h4 class="fig-cap">Compuerta AND &mdash; w₁ = 2, w₂ = 2, b = −3</h4>
+            <div class="fig-row">
+              <svg id="neuron-and" class="fig-neuron" viewBox="0 0 300 190" aria-hidden="true"></svg>
+              <svg id="plot-and" class="fig-plot" viewBox="0 0 270 230" aria-hidden="true"></svg>
+            </div>
+          </figure>
+
+          <h2>Caso B: el agente flexible (compuerta OR)</h2>
+          <p>
+            Imaginemos ahora un entorno más flexible, donde el agente saca adelante la
+            tarea si cuenta con al menos una de las dos optimizaciones (porque sabe
+            preguntar con precisión <em>o</em> porque sabe explorar varias ramas para
+            corregirse). Esto equivale a una compuerta OR. Modificamos las palancas de
+            los parámetros: con $w_1 = 2$, $w_2 = 2$ y un sesgo menos defensivo $b = -1$,
+            basta con que cualquiera de las entradas sea $1$ para que $z$ resulte
+            positivo —por ejemplo $2(1)+2(0)-1=+1$— y se active el éxito. Una única
+            neurona lineal resuelve este caso sin problema.
+          </p>
+
+          <figure class="fig">
+            <h4 class="fig-cap">Compuerta OR &mdash; w₁ = 2, w₂ = 2, b = −1</h4>
+            <div class="fig-row">
+              <svg id="neuron-or" class="fig-neuron" viewBox="0 0 300 190" aria-hidden="true"></svg>
+              <svg id="plot-or" class="fig-plot" viewBox="0 0 270 230" aria-hidden="true"></svg>
+            </div>
+          </figure>
+        </div>
+
+        <div class="doc-progress">Página 5 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap4">
+            &larr; ¿Qué es una neurona?
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap6">
+            La paradoja XOR &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 6 — LA PARADOJA XOR
+         ============================================================ -->
+    <section id="cap6" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 6</span>
+          <h1 class="doc-title">La paradoja multi-agente y la frontera no lineal (XOR)</h1>
+
+          <p>
+            Enfrentemos ahora nuestro modelo a un escenario real sumamente complejo,
+            extraído del paper de Google DeepMind y el MIT
+            <em>“Towards a Science of Scaling Agent Systems”</em><sup class="ref"><a href="https://arxiv.org/abs/2512.08296" target="_blank" rel="noopener">[3]</a></sup>. Tras evaluar más de
+            260 configuraciones de software, los investigadores descubrieron un
+            comportamiento fascinante y contradictorio (no lineal):
+          </p>
+          <div class="cite">
+            Si una tarea es altamente <strong>paralelizable</strong>, desplegar un
+            sistema masivo de multi-agentes coordinados dispara el éxito un
+            <strong>+80,8&nbsp;%</strong>. Pero si la tarea es estrictamente
+            <strong>secuencial</strong>, usar multi-agentes degrada el rendimiento entre
+            un <strong>−39&nbsp;%</strong> y un <strong>−70&nbsp;%</strong> por los
+            cuellos de botella y el caos de comunicación. En tareas secuenciales, es
+            rotundamente mejor un agente solo.
+          </div>
+          <p>
+            Modelamos este escenario como una compuerta lógica XOR (OR exclusiva), para
+            predecir si una arquitectura será exitosa ($1$) o fallará ($0$) según dos
+            entradas:
+          </p>
+          <ul class="defs">
+            <li><span class="sym">$x_1$</span> (naturaleza de la tarea): $1$ si es paralelizable, $0$ si es secuencial.</li>
+            <li><span class="sym">$x_2$</span> (infraestructura): $1$ si es multi-agente, $0$ si es un agente solo.</li>
+          </ul>
+          <table class="truth-table">
+            <thead>
+              <tr><th>$x_1$</th><th>$x_2$</th><th>Éxito $y$</th><th>Escenario real</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td class="ok">1</td><td>Secuencial + agente solo: ágil y óptimo.</td></tr>
+              <tr><td>0</td><td>1</td><td class="no">0</td><td>Secuencial + multi-agente: caos y colapso.</td></tr>
+              <tr><td>1</td><td>0</td><td class="no">0</td><td>Paralelizable + agente solo: desperdicio de recursos.</td></tr>
+              <tr><td>1</td><td>1</td><td class="ok">1</td><td>Paralelizable + multi-agente: coordinación perfecta.</td></tr>
+            </tbody>
+          </table>
+
+          <figure class="gate-card" style="max-width: 320px; margin: 18px auto;">
+            <h4>Compuerta XOR</h4>
+            <div class="gate-sub">ninguna recta separa los éxitos de los fallos</div>
+            <svg id="plot-xor" class="fig-plot" style="max-width: 270px;" viewBox="0 0 270 230" aria-hidden="true"></svg>
+          </figure>
+
+          <p>
+            Si intentamos ajustar los parámetros de una <em>única</em> neurona para
+            resolver esto, nos topamos con una pared. Para separar los éxitos —los
+            puntos $[0,0]$ y $[1,1]$— de los fallos —$[0,1]$ y $[1,0]$— necesitaríamos
+            una recta, y descubrimos que ¡es geométricamente imposible! No existe
+            ninguna línea recta capaz de segmentar este patrón cruzado (la línea
+            punteada roja lo intenta, y siempre deja un punto del lado equivocado).
+          </p>
+          <p>
+            Esta limitación de una sola neurona para resolver problemas no lineales
+            como el XOR se conoce formalmente desde 1969. El hito ilustró de forma
+            contundente la necesidad de <em>combinar múltiples neuronas en red</em> para
+            modelar conocimiento verdaderamente complejo.
+          </p>
+        </div>
+
+        <div class="doc-progress">Página 6 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap5">
+            &larr; AND y OR
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap7">
+            Redes y activación &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 7 — REDES COMPLEJAS Y FUNCIONES DE ACTIVACIÓN
+         ============================================================ -->
+    <section id="cap7" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 7</span>
+          <h1 class="doc-title">Resolviendo el problema: redes complejas y funciones de activación</h1>
+
+          <p>
+            La solución a la encrucijada del XOR de los agentes es, en retrospectiva,
+            muy elegante: necesitamos <em>duplicar y encadenar</em> nuestras neuronas.
+            Si colocamos varias neuronas en una misma columna (una <em>capa oculta</em>),
+            pasamos a tener múltiples rectas independientes actuando en el espacio a la
+            vez. Combinando las conclusiones de esas rectas intermedias mediante una
+            neurona en la capa de salida, generamos dos separadores que, juntos, aíslan
+            correctamente ambas clases. Esta es la demostración de cómo, agregando
+            neuronas, empezamos a modelar información jerárquica y abstracta.
+          </p>
+
+          <figure class="fig">
+            <h4 class="fig-cap">La estructura en capas</h4>
+            <div class="fig-row">
+              <svg id="layers-diagram" class="fig-layers" viewBox="0 0 480 250" aria-hidden="true"></svg>
+            </div>
+          </figure>
+
+          <p>
+            Cada neurona de la capa oculta traza su propia recta. Una dibuja la frontera
+            $2x_1 + 2x_2 - 1 = 0$ y la otra la $2x_1 + 2x_2 - 3 = 0$: dos rectas paralelas
+            que dejan una franja en el medio. La neurona de salida combina ambas y declara
+            “éxito” solo a los puntos que quedan <em>fuera</em> de esa franja, logrando lo
+            que una sola recta no podía.
+          </p>
+
+          <figure class="fig">
+            <h4 class="fig-cap">XOR resuelto con dos neuronas</h4>
+            <div class="fig-row">
+              <svg id="neuron-xor" class="fig-neuron" viewBox="0 0 300 330" aria-hidden="true"></svg>
+              <svg id="plot-xor2" class="fig-plot" viewBox="0 0 270 230" aria-hidden="true"></svg>
+            </div>
+          </figure>
+
+          <p>
+            Sin embargo, para que este encadenamiento sea efectivo y no sufra el colapso
+            lineal que vimos antes (donde la suma de rectas simplemente colapsa en otra
+            recta), necesitamos el último componente crítico: la <em>función de
+            activación no lineal</em>.
+          </p>
+          <p>
+            En lugar de un umbral rígido que corta de golpe, pasamos la suma ponderada
+            ($z$) por una función de activación no lineal, encargada de distorsionar,
+            doblar y deformar el plano. Es el equivalente matemático a hacer
+            <em>papiroflexia</em> con los datos: doblamos el papel de la gráfica para que
+            una simple recta final logre separar los puntos cruzados de éxito y fallo.
+          </p>
+
+          <h2>Las funciones de activación más usadas</h2>
+          <div class="gate-grid">
+            <figure class="gate-card">
+              <h4>Sigmoide</h4>
+              <div class="gate-sub">comprime z al rango (0, 1) — una probabilidad</div>
+              <svg viewBox="0 0 240 150">
+                <line x1="20" y1="120" x2="225" y2="120" stroke="#9b97a3" stroke-width="1.5"/>
+                <line x1="122" y1="20" x2="122" y2="135" stroke="#cbc7bd" stroke-width="1.2"/>
+                <line x1="20" y1="30" x2="225" y2="30" stroke="#f1eee6" stroke-width="1.2"/>
+                <path d="M20 118 C 80 116, 100 112, 122 75 C 144 38, 165 32, 225 31" fill="none" stroke="#2bae7e" stroke-width="3"/>
+                <text x="206" y="44" font-size="11" fill="#9b97a3">1</text>
+                <text x="206" y="133" font-size="11" fill="#9b97a3">0</text>
+              </svg>
+              <div class="eq" style="margin-top:6px">$$a = \sigma(z) = \frac{1}{1 + e^{-z}}$$</div>
+            </figure>
+
+            <figure class="gate-card">
+              <h4>ReLU</h4>
+              <div class="gate-sub">lineal si z &gt; 0; cero si z ≤ 0</div>
+              <svg viewBox="0 0 240 150">
+                <line x1="20" y1="120" x2="225" y2="120" stroke="#9b97a3" stroke-width="1.5"/>
+                <line x1="122" y1="20" x2="122" y2="135" stroke="#cbc7bd" stroke-width="1.2"/>
+                <path d="M20 120 L122 120 L210 35" fill="none" stroke="#4f88e6" stroke-width="3"/>
+                <text x="150" y="60" font-size="11" fill="#9b97a3">z</text>
+              </svg>
+              <div class="eq" style="margin-top:6px">$$a = \max(0,\, z)$$</div>
+            </figure>
+          </div>
+          <p>
+            La <em>sigmoide</em> es fantástica porque su salida se interpreta
+            directamente como una probabilidad de éxito. La <em>ReLU</em> (unidad
+            rectificada lineal) tiene la enorme ventaja práctica de permitir que las
+            redes se entrenen y converjan muchísimo más rápido en nuestros servidores.
+          </p>
+
+          <h2>La sigmoide en tres dimensiones</h2>
+          <p>
+            Para cerrar, veamos la sigmoide en tres dimensiones. Aplicada sobre la suma
+            ponderada $z = w_1 x_1 + w_2 x_2 + b$, convierte el plano inclinado en una
+            superficie suave con forma de escalón curvo: a un lado satura cerca de $0$ y
+            al otro cerca de $1$, con una transición continua en el medio. Esa curvatura
+            es justo lo que nos permite separar las compuertas: en lugar de un corte
+            recto y abrupto como el del umbral, obtenemos una <em>frontera suave y
+            deformable</em> que, encadenada entre capas, puede rodear los puntos cruzados
+            del XOR.
+          </p>
+
+          <figure class="video-card">
+            <div class="video-card__frame">
+              <video
+                class="js-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+              >
+                <source src="videos/sigmoide3d.mp4" type="video/mp4" />
+              </video>
+              <div class="video-card__missing" style="display: none;">
+                <span>Falta el video</span>
+                <code>videos/sigmoide3d.mp4</code>
+              </div>
+            </div>
+            <figcaption class="video-card__caption">
+              La superficie sigmoide sobre el plano (x₁, x₂) y cómo curva la frontera de decisión.
+            </figcaption>
+          </figure>
+
+          <h2>¿Y si la frontera tiene que ser curva?</h2>
+          <p>
+            Pensemos en este caso: ¿cómo podemos encerrar en una función lo que está
+            dentro de los puntos rojos? Necesitamos una frontera que rodee a la nube
+            central.
+          </p>
+          <figure class="diagram diagram--sm">
+            <h4>El reto</h4>
+            <div class="gate-sub">queremos separar lo de adentro de lo de afuera</div>
+            <svg id="circle-data" viewBox="0 0 300 230" aria-hidden="true"></svg>
+          </figure>
+          <p>
+            Antes usábamos una función escalonada (el umbral). El efecto de la función de
+            activación es <em>distorsionar el plano</em> que genera la neurona; si
+            hubiéramos usado las otras, veríamos que igual queda una recta como frontera.
+            ¿Cómo conseguimos entonces una frontera <em>curva</em>? Lo solucionamos gracias
+            a que ahora, al usar funciones de activación, ya podemos encadenar varias
+            neuronas al mismo tiempo.
+          </p>
+          <p>
+            Una posible solución es colocar en una capa oculta una sigmoide. Su forma la
+            podemos ir variando conforme cambiamos los parámetros de la red: cambiando los
+            parámetros cambiamos la orientación de la figura. En vez de una sola, colocamos
+            cuatro, cada una con una orientación diferente.
+          </p>
+          <div class="diagram-row">
+            <figure class="diagram">
+              <h4>Cuatro neuronas sigmoide</h4>
+              <svg id="four-neurons" viewBox="0 0 240 290" aria-hidden="true"></svg>
+            </figure>
+            <figure class="diagram">
+              <h4>Cuatro orientaciones</h4>
+              <svg id="sigmoid-panels" viewBox="0 0 228 228" aria-hidden="true"></svg>
+            </figure>
+          </div>
+          <p>
+            Con una nueva neurona a la derecha podemos construir la combinación de las
+            cuatro figuras que nos habían quedado, obteniendo como resultado una superficie
+            plana con un bulto en el medio: justo la solución que necesitábamos, con una
+            <em>frontera circular</em>.
+          </p>
+          <div class="diagram-row">
+            <figure class="diagram">
+              <h4>La combinación: un bulto</h4>
+              <svg id="bump-surface" viewBox="0 0 300 220" aria-hidden="true"></svg>
+            </figure>
+            <figure class="diagram">
+              <h4>Frontera circular lograda</h4>
+              <svg id="circle-result" viewBox="0 0 300 230" aria-hidden="true"></svg>
+            </figure>
+          </div>
+        </div>
+
+        <div class="doc-progress">Página 7 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap6">
+            &larr; La paradoja XOR
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap8">
+            Backpropagation &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 8 — BACKPROPAGATION
+         ============================================================ -->
+    <section id="cap8" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 8</span>
+          <h1 class="doc-title">Escalando el aprendizaje: el algoritmo de backpropagation</h1>
+
+          <p>
+            Una vez que decidimos interconectar cientos de neuronas en múltiples capas
+            ocultas para formar una red neuronal profunda (<em>deep learning</em>), nos
+            enfrentamos al problema definitivo: ¿cómo logramos que la red autoajuste los
+            millones de pesos y sesgos de sus entrañas de forma totalmente autónoma a
+            partir de los datos? El algoritmo que usábamos para una neurona simple no era
+            extensible a redes de múltiples capas, lo que nos dejó a ciegas durante más
+            de 15 años, en el llamado <em>invierno de la IA</em>.
+          </p>
+          <div class="cite">
+            Por suerte, en 1986, <strong>Rumelhart, Hinton y Williams</strong><sup class="ref"><a href="https://www.nature.com/articles/323533a0" target="_blank" rel="noopener">[4]</a></sup> publicaron
+            el artículo que cambiaría el destino de la disciplina: demostraron cómo, con
+            un nuevo algoritmo de optimización, una red multicapa podía autoajustar todos
+            sus parámetros de forma iterativa y eficiente. Esa técnica es la
+            <strong>backpropagation</strong> (retropropagación de errores).
+          </div>
+
+          <h2>Del gradiente simple al gradiente de una red</h2>
+          <p>
+            Cuando trabajábamos con regresión lineal, obtener el vector gradiente era
+            sencillo: bastaba con responder cómo variaba el coste ante un cambio de cada
+            parámetro $w$. Es decir, la <em>derivada parcial</em> de la función de coste
+            respecto a cada parámetro:
+          </p>
+          <div class="eq">$$\nabla C = \left( \frac{\partial C}{\partial w_1},\ \frac{\partial C}{\partial w_2},\ \dots \right)$$</div>
+          <p>
+            En una red neuronal, sin embargo, el gradiente es mucho más complejo, porque
+            cada parámetro afecta al resto, generando una <em>cadena de
+            responsabilidades</em>. Para desenredarla usaremos un algoritmo que nos dará
+            justo el valor que buscamos: <strong>backpropagation</strong>. La usaremos para
+            calcular el vector de gradientes dentro de la complejidad de esta red.
+          </p>
+
+          <h2>La intuición: ¿de quién es la culpa?</h2>
+          <p>
+            Para entenderla sin naufragar en la nomenclatura, usemos el marco de la
+            <em>ingeniería de harness</em> (andamiaje evolutivo) del equipo de
+            Anthropic<sup class="ref"><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">[5]</a></sup>.
+            Imaginemos que desplegamos nuestro agente en un benchmark exigente. El agente
+            ejecuta todo su flujo, pero al final la traza arroja un fallo: el sistema
+            registra una fuerte señal de error en la última capa.
+          </p>
+          <p>
+            Backpropagation reparte la “culpa” operando de forma recursiva <em>hacia
+            atrás</em>, desde el error de la salida hacia las capas iniciales, y penaliza
+            con más fuerza a la neurona con mayor responsabilidad, sabiendo así también
+            cuánto debemos modificar sus parámetros. A ese valor de responsabilidad lo
+            llamamos el error de la neurona ($\delta$).
+          </p>
+
+          <figure class="diagram diagram--lg">
+            <h4>Reparto de responsabilidades en la última capa</h4>
+            <div class="gate-sub">el grosor de la flecha y el tamaño del nodo crecen con la “culpa”</div>
+            <svg id="backprop-resp" viewBox="0 0 460 250" aria-hidden="true"></svg>
+          </figure>
+
+          <p>
+            Una vez imputados los errores en esta capa, pasamos a la capa anterior y
+            repetimos el mismo proceso. Así, recursivamente, recorremos todas las capas:
+            movemos el error hacia atrás hasta llegar a la primera, habiendo obtenido el
+            error de cada neurona y de cada uno de sus parámetros, y todo
+            <em>propagando el error una sola vez hacia atrás</em>.
+          </p>
+
+          <h2>De los errores al vector gradiente</h2>
+          <p>
+            Para medir cuánto contribuyó cada peso, backpropagation se apoya en la
+            <em>regla de la cadena</em>: como la red es una enorme composición de
+            funciones encadenadas, la derivada se obtiene multiplicando las derivadas
+            parciales de cada eslabón.
+          </p>
+          <div class="eq">$$\frac{\partial C}{\partial w} = \frac{\partial C}{\partial a} \cdot \frac{\partial a}{\partial z} \cdot \frac{\partial z}{\partial w}$$</div>
+          <p>
+            Estos errores los usaremos para calcular las derivadas parciales de cada
+            parámetro de la red, conformando así el <em>vector gradiente</em>, que es
+            justamente lo que necesitamos para minimizar el error y entrenar la red.
+          </p>
+
+          <h2>El descenso del gradiente</h2>
+          <p>
+            Con el vector gradiente en mano, el <em>descenso del gradiente</em> actualiza
+            cada parámetro restándole una fracción del gradiente, regulada por la tasa de
+            aprendizaje ($\alpha$), siempre en la dirección que más reduce el error. Es
+            como bajar una montaña de coste paso a paso hacia su valle:
+          </p>
+          <figure class="diagram diagram--md">
+            <h4>Descenso por la superficie de error</h4>
+            <div class="gate-sub">cada paso baja en la dirección opuesta al gradiente</div>
+            <svg id="gradient-surface" viewBox="0 0 370 230" aria-hidden="true"></svg>
+          </figure>
+          <div class="eq">$$\theta := \theta - \alpha\,\nabla C \qquad\Longrightarrow\qquad w_{\text{nuevo}} = w_{\text{actual}} - \alpha\,\frac{\partial C}{\partial w}$$</div>
+          <p>
+            Repetido miles de veces sobre los datos, este bucle va esculpiendo los pesos
+            hasta que la red predice con precisión.
+          </p>
+
+          <div class="cite" style="border-left-color: var(--green);">
+            <strong>En conclusión:</strong> hemos visto distintas herramientas que nos
+            pueden ayudar a entender cómo se mejoran recursivamente los modelos. Mediante
+            estas herramientas, Anthropic puede obtener el <em>“sweet spot”</em> de
+            combinación entre computación, iteraciones, estrategias, forma de elegir el
+            camino, etcétera. ¡A tenerlo en cuenta para nuestros futuros trabajos!
+          </div>
+        </div>
+
+        <div class="doc-progress">Página 8 de 8</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap7">
+            &larr; Redes y activación
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="splash">
+            Volver al inicio &#8635;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
