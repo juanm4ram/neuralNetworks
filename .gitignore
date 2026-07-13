@@ -1,0 +1,9 @@
+# Configuración local del entorno de desarrollo
+.claude/
+
+# Versiones anteriores del final del trabajo (se conservan solo en local)
+sandbox.js
+laboratorio.js
+
+# Capturas de trabajo de sesiones anteriores
+preview_capturas/

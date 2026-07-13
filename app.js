@@ -24,6 +24,10 @@
     showScreen(t.getAttribute('data-goto'));
   });
 
+  // Deep-link: abrir una página puntual con #id (p. ej. index.html#cap9)
+  var hashId = (location.hash || '').replace('#', '');
+  if (hashId && document.getElementById(hashId)) showScreen(hashId);
+
   /* ---------- Video: aviso "falta el archivo" SOLO si no hay fuente cargable ----------
      No ocultamos el video por errores transitorios de decodificación durante el loop.
      Solo mostramos el aviso si el navegador no encontró ninguna fuente válida
@@ -65,14 +69,30 @@
     wireVideos();
   }
 
-  /* ---------- Datos compartidos (capítulos 1 y 2) ---------- */
-  // [caminos explorados, tasa de éxito %]
+  /* ---------- Datos compartidos (capítulos 1 y 2) ----------
+     Puntos aproximados de la Figura 1 (izquierda) de
+     "Scaling Laws for Neural Language Models" (OpenAI, 2020).
+     x = órdenes de magnitud de cómputo (log10 de PF-days, corrido +6:
+         0 ↔ 10⁻⁶ PF-days, 9 ↔ 10³ PF-days)
+     y = test loss (cross-entropy) */
   var DATA = [
-    [1, 40],
-    [3, 55],
-    [5, 70],
-    [10, 85],
+    [0, 5.2],
+    [1.5, 4.4],
+    [3, 3.7],
+    [4.5, 3.1],
+    [6, 2.6],
+    [7.5, 2.2],
+    [9, 1.9],
   ];
+
+  // Marcas del eje X en escala logarítmica (PF-days).
+  var XTICKS = [
+    [0, '10⁻⁶'],
+    [3, '10⁻³'],
+    [6, '10⁰'],
+    [9, '10³'],
+  ];
+  var XLABEL = 'cómputo de entrenamiento (PF-days)';
 
   // Mejor ajuste por mínimos cuadrados (para el botón y la referencia).
   function bestFit(data) {
@@ -122,8 +142,8 @@
       x1 = W - mr,
       y0 = H - mb,
       y1 = mt;
-    var maxX = 11,
-      maxY = 100;
+    var maxX = 10,
+      maxY = 6;
     function px(x) {
       return x0 + (x / maxX) * (x1 - x0);
     }
@@ -133,11 +153,17 @@
     // ejes
     svg.appendChild(svgEl('line', { x1: x0, y1: y0, x2: x1, y2: y0, stroke: '#9b97a3', 'stroke-width': 2 }));
     svg.appendChild(svgEl('line', { x1: x0, y1: y0, x2: x0, y2: y1, stroke: '#9b97a3', 'stroke-width': 2 }));
-    // líneas guía y etiquetas Y
-    [25, 50, 75, 100].forEach(function (v) {
+    // líneas guía y etiquetas Y (test loss)
+    [2, 4, 6].forEach(function (v) {
       svg.appendChild(svgEl('line', { x1: x0, y1: py(v), x2: x1, y2: py(v), stroke: '#f1eee6', 'stroke-width': 1 }));
       var t = svgEl('text', { x: x0 - 6, y: py(v) + 4, 'font-size': 10, fill: '#9b97a3', 'text-anchor': 'end' });
       t.textContent = v;
+      svg.appendChild(t);
+    });
+    // marcas X (escala logarítmica)
+    XTICKS.forEach(function (tk) {
+      var t = svgEl('text', { x: px(tk[0]), y: y0 + 16, 'font-size': 10, fill: '#9b97a3', 'text-anchor': 'middle' });
+      t.textContent = tk[1];
       svg.appendChild(t);
     });
     // recta de tendencia (mejor ajuste)
@@ -152,8 +178,8 @@
     DATA.forEach(function (d) {
       svg.appendChild(svgEl('circle', { cx: px(d[0]), cy: py(d[1]), r: 6, fill: '#e8543f' }));
     });
-    var lx = svgEl('text', { x: (x0 + x1) / 2, y: H - 6, 'font-size': 11, fill: '#6f6b78', 'text-anchor': 'middle' });
-    lx.textContent = 'caminos explorados';
+    var lx = svgEl('text', { x: (x0 + x1) / 2, y: H - 4, 'font-size': 11, fill: '#6f6b78', 'text-anchor': 'middle' });
+    lx.textContent = XLABEL;
     svg.appendChild(lx);
   }
 
@@ -188,8 +214,8 @@
       x1 = CW - mr,
       y0 = CH - mb,
       y1 = mt;
-    var maxX = 11,
-      maxY = 100;
+    var maxX = 10,
+      maxY = 6;
     function px(x) {
       return x0 + (x / maxX) * (x1 - x0);
     }
@@ -202,18 +228,18 @@
       var b = parseFloat(bEl.value);
       ctx.clearRect(0, 0, CW, CH);
 
-      // grilla + etiquetas Y
+      // grilla + etiquetas Y (test loss)
       ctx.font = '13px FuturaHandwritten, sans-serif';
       ctx.fillStyle = '#9b97a3';
       ctx.textAlign = 'right';
-      [0, 25, 50, 75, 100].forEach(function (v) {
+      [0, 1, 2, 3, 4, 5, 6].forEach(function (v) {
         ctx.strokeStyle = '#f1eee6';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x0, py(v));
         ctx.lineTo(x1, py(v));
         ctx.stroke();
-        ctx.fillText(v + '%', x0 - 8, py(v) + 4);
+        ctx.fillText(v, x0 - 8, py(v) + 4);
       });
       // ejes
       ctx.strokeStyle = '#9b97a3';
@@ -224,14 +250,14 @@
       ctx.moveTo(x0, y0);
       ctx.lineTo(x0, y1);
       ctx.stroke();
-      // etiquetas X
+      // etiquetas X (escala logarítmica)
       ctx.textAlign = 'center';
       ctx.fillStyle = '#9b97a3';
-      [1, 3, 5, 10].forEach(function (v) {
-        ctx.fillText(v, px(v), y0 + 20);
+      XTICKS.forEach(function (tk) {
+        ctx.fillText(tk[1], px(tk[0]), y0 + 20);
       });
       ctx.fillStyle = '#6f6b78';
-      ctx.fillText('caminos explorados', (x0 + x1) / 2, CH - 10);
+      ctx.fillText(XLABEL, (x0 + x1) / 2, CH - 10);
 
       // recta del modelo
       ctx.strokeStyle = '#4f88e6';
@@ -266,11 +292,11 @@
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
       ctx.fillRect(x0 + 4, y1 - 4, 168, 26);
       ctx.fillStyle = '#e8543f';
-      ctx.fillText('Error (MSE) = ' + err.toFixed(1), x0 + 10, y1 + 14);
+      ctx.fillText('Error (MSE) = ' + err.toFixed(2), x0 + 10, y1 + 14);
 
-      wVal.textContent = w.toFixed(1);
-      bVal.textContent = Math.round(b);
-      mseEl.textContent = err.toFixed(1);
+      wVal.textContent = w.toFixed(2);
+      bVal.textContent = b.toFixed(1);
+      mseEl.textContent = err.toFixed(2);
     }
 
     wEl.addEventListener('input', draw);
@@ -278,8 +304,8 @@
     if (bestBtn) {
       bestBtn.addEventListener('click', function () {
         var bf = bestFit(DATA);
-        wEl.value = bf.w.toFixed(1);
-        bEl.value = Math.round(bf.b);
+        wEl.value = bf.w.toFixed(2);
+        bEl.value = bf.b.toFixed(1);
         draw();
       });
     }
@@ -482,10 +508,6 @@
     svg.appendChild(t);
     return t;
   }
-  function drawX(svg, x, y, col) {
-    svg.appendChild(svgEl('line', { x1: x - 4, y1: y - 4, x2: x + 4, y2: y + 4, stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round' }));
-    svg.appendChild(svgEl('line', { x1: x - 4, y1: y + 4, x2: x + 4, y2: y - 4, stroke: col, 'stroke-width': 2, 'stroke-linecap': 'round' }));
-  }
   function vir(t) {
     t = Math.max(0, Math.min(1, t));
     if (t < 0.25) return '#39477e';
@@ -502,78 +524,6 @@
     svg.appendChild(svgEl('polygon', { points: p, fill: col }));
   }
   function mx2(x, y) { return x + ',' + y; }
-
-  /* ---------- Nube de puntos con frontera circular (capítulos 7-8) ---------- */
-  function buildCircleData(svgId, withBoundary) {
-    var svg = document.getElementById(svgId);
-    if (!svg) return;
-    var cx = 150, cy = 118, R = 60;
-    if (withBoundary) {
-      svg.appendChild(svgEl('rect', { x: 30, y: 18, width: 240, height: 198, fill: 'rgba(232,84,63,0.10)' }));
-      svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: R + 12, fill: 'rgba(43,174,126,0.20)' }));
-      svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: R + 12, fill: 'none', stroke: '#2bae7e', 'stroke-width': 3 }));
-    }
-    svg.appendChild(svgEl('line', { x1: 30, y1: 216, x2: 282, y2: 216, stroke: '#9b97a3', 'stroke-width': 2 }));
-    svg.appendChild(svgEl('line', { x1: 30, y1: 216, x2: 30, y2: 14, stroke: '#9b97a3', 'stroke-width': 2 }));
-    for (var gx = 52; gx <= 250; gx += 21) {
-      for (var gy = 32; gy <= 204; gy += 21) {
-        var jx = ((gx * 7 + gy * 13) % 13) - 6,
-          jy = ((gx * 11 + gy * 5) % 13) - 6;
-        var x = gx + jx, y = gy + jy;
-        var inside = (x - cx) * (x - cx) + (y - cy) * (y - cy) < R * R;
-        if (inside) svg.appendChild(svgEl('circle', { cx: x, cy: y, r: 5, fill: 'none', stroke: '#7bc043', 'stroke-width': 2.5 }));
-        else drawX(svg, x, y, '#e8543f');
-      }
-    }
-  }
-
-  function sigGlyph(svg, cx, cy, r) {
-    svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: r, fill: '#ffe14d', stroke: '#caa200', 'stroke-width': 2 }));
-    svg.appendChild(svgEl('path', { d: 'M' + (cx - 9) + ' ' + (cy + 7) + ' C ' + (cx - 1) + ' ' + (cy + 7) + ', ' + (cx - 1) + ' ' + (cy - 7) + ', ' + (cx + 9) + ' ' + (cy - 7), fill: 'none', stroke: '#3b3743', 'stroke-width': 2 }));
-  }
-
-  /* ---------- Dos entradas hacia cuatro neuronas sigmoide (capítulo 7) ---------- */
-  function buildFourNeurons(svgId) {
-    var svg = document.getElementById(svgId);
-    if (!svg) return;
-    var inx = 50, hx = 196;
-    var ins = [{ y: 110, l: 'x₁' }, { y: 178, l: 'x₂' }];
-    var hs = [50, 116, 182, 248];
-    ins.forEach(function (p) {
-      hs.forEach(function (hy) {
-        svg.appendChild(svgEl('line', { x1: inx + 18, y1: p.y, x2: hx - 15, y2: hy, stroke: '#bdb9ae', 'stroke-width': 2, 'stroke-dasharray': '2 4' }));
-      });
-    });
-    ins.forEach(function (p) {
-      svg.appendChild(svgEl('circle', { cx: inx, cy: p.y, r: 18, fill: '#9ad26b', stroke: '#5a9e2a', 'stroke-width': 2.5 }));
-      txt(svg, inx, p.y + 5, p.l, 14, '#22420a');
-    });
-    hs.forEach(function (hy) { sigGlyph(svg, hx, hy, 15); });
-  }
-
-  /* ---------- Cuatro planos con distinta orientación (capítulo 7) ---------- */
-  function buildSigmoidPanels(svgId) {
-    var svg = document.getElementById(svgId);
-    if (!svg) return;
-    var P = [[6, 6], [122, 6], [6, 122], [122, 122]];
-    var greens = ['M0 0 L100 0 L100 52 L0 44 Z', 'M0 0 L52 0 L44 100 L0 100 Z', 'M0 0 L100 0 L0 100 Z', 'M100 0 L100 100 L8 100 Z'];
-    P.forEach(function (p, i) {
-      var g = svgEl('g', { transform: 'translate(' + p[0] + ' ' + p[1] + ')' });
-      g.appendChild(svgEl('rect', { x: 0, y: 0, width: 100, height: 100, fill: 'rgba(232,84,63,0.16)', stroke: '#e7e3d8', 'stroke-width': 1.5, rx: 6 }));
-      g.appendChild(svgEl('path', { d: greens[i], fill: 'rgba(43,174,126,0.32)' }));
-      svg.appendChild(g);
-    });
-  }
-
-  /* ---------- Resultado: plano plano con un bulto en el medio (capítulo 7) ---------- */
-  function buildBump(svgId) {
-    var svg = document.getElementById(svgId);
-    if (!svg) return;
-    svg.appendChild(svgEl('path', { d: 'M55 150 L150 108 L245 150 L150 192 Z', fill: 'rgba(232,84,63,0.16)', stroke: '#cbbfb0', 'stroke-width': 1.5 }));
-    svg.appendChild(svgEl('path', { d: 'M105 132 L150 150 L195 132 L150 116 Z', fill: 'rgba(43,174,126,0.18)' }));
-    svg.appendChild(svgEl('ellipse', { cx: 150, cy: 112, rx: 48, ry: 22, fill: 'rgba(43,174,126,0.55)', stroke: '#2bae7e', 'stroke-width': 2.5 }));
-    txt(svg, 150, 210, 'frontera circular', 12, '#6f6b78');
-  }
 
   /* ---------- Superficie 3D del error (descenso del gradiente, capítulo 8) ---------- */
   function buildGradientSurface(svgId) {
@@ -698,16 +648,27 @@
 
   buildLayers('layers-diagram');
 
-  // Gráficos nuevos (frontera curva, descenso de gradiente, backpropagation)
-  buildCircleData('circle-data', false);
-  buildFourNeurons('four-neurons');
-  buildSigmoidPanels('sigmoid-panels');
-  buildBump('bump-surface');
-  buildCircleData('circle-result', true);
+  // Gráficos nuevos (descenso de gradiente, backpropagation)
   buildGradientSurface('gradient-surface');
   buildBackpropResp('backprop-resp');
+  buildReferencias();
   } catch (err) {
     if (window.console && console.error) console.error('Figuras:', err);
+  }
+
+  /* ---------- Tabla de referencias (página 9), generada desde papers.js ---------- */
+  function buildReferencias() {
+    var tbody = document.getElementById('papers-tbody');
+    if (!tbody || !window.PAPERS) return;
+    var html = '';
+    window.PAPERS.forEach(function (p) {
+      html += '<tr>' +
+        '<td><strong>' + p.factor + '</strong><br><span class="term-desc">' + p.descripcion + '</span></td>' +
+        '<td><a href="' + p.url + '" target="_blank" rel="noopener">' + p.paper + '</a></td>' +
+        '<td>' + p.fuente + '</td>' +
+        '</tr>';
+    });
+    tbody.innerHTML = html;
   }
 
   /* ---------- Animación de portada (canvas) ---------- */

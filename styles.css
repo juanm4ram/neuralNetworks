@@ -791,6 +791,24 @@ button {
   padding: 0 0 4px;
 }
 
+/* ---------- Cierre (página 9) ---------- */
+.table-wrap {
+  overflow-x: auto;
+}
+.papers-table td,
+.papers-table th {
+  font-size: 0.85rem;
+  text-align: left;
+}
+.papers-table .term-desc {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+.papers-table a {
+  color: var(--blue);
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 540px) {

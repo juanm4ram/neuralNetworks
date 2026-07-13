@@ -77,9 +77,11 @@
           <span class="page__kicker">Introducción</span>
 
           <p class="lead">
-            En esta semana, el presidente de Estados Unidos ha bloqueado un nuevo
-            modelo anunciado por Anthropic porque supuestamente representaba una
-            amenaza para la seguridad Nacional.
+            Una parte muy importante para entender cómo trabajar con agentes
+            de IA es aprender cómo ellos aprenden, cómo se los optimiza y cómo
+            surgieron. Sabemos que detrás de ellos hay una función matemática
+            enorme. Pero ¿cómo se creó esa función? ¿Qué llevó a los
+            investigadores a poder desarrollarla?
           </p>
 
           <!-- VIDEO 1: canyoufeelit_edit.mp4 (loop, sin audio, autoplay) -->
@@ -105,15 +107,11 @@
             </div>
           </figure>
 
-          <p class="question">
-            ¿Tiene Anthropic la piedra filosofal definitiva que puede acabarlo
-            con todo?
-          </p>
-
           <p class="prose">
-            Honestamente no creo, pero en este trabajo, trataremos de explicar
-            la forma en la cual los ingenieros de esta empresa diseñan los
-            agentes, utilizando conocimientos obtenidos en Análisis Matemático 2.
+            Sorprendentemente, es la propia máquina quien se las arregla para
+            obtener esa función. En este trabajo veremos cómo las herramientas
+            de Análisis Matemático 2 nos ayudarán a entender cómo la
+            inteligencia artificial es capaz de generar texto con sentido.
           </p>
         </div>
 
@@ -142,46 +140,91 @@
 
         <div class="doc page__body">
           <span class="doc-kicker">Página 1</span>
-          <h1 class="doc-title">El origen: modelando la realidad con regresión lineal</h1>
+          <h1 class="doc-title">¿Qué es modelar la realidad?</h1>
 
           <p>
-            Imaginemos que somos un investigador de inteligencia artificial
-            experimentado y que acabamos de ser contratados por Anthropic (ya
-            quisiéramos). Un nuevo plan, una nueva vida que construir, unos buenos
-            cientos de dólares. Nuestro primer proyecto es optimizar un agente de IA.
+            Modelar la realidad significa representarla de una forma más simple
+            —mediante números, palabras y relaciones— de modo que podamos
+            entenderla, predecirla y tomar decisiones sobre ella.
           </p>
           <p>
-            Tras analizar el rendimiento de distintos modelos, empezamos a divagar
-            y a preguntarnos cómo se podría modelar esta realidad donde los modelos
-            actúan con retraso madurativo, y cómo podríamos mejorarlo.
+            Este mismo trabajo también lo podrá llevar a cabo una máquina. El
+            trabajo será llevar la realidad a un modelo, luego del modelo a la
+            realidad, y ver cómo esto interactúa.
+          </p>
+          <p>
+            Ahora vale la pena preguntarse: ¿cómo se podría modelar esta
+            realidad donde los modelos actúan con retraso madurativo, y cómo
+            podríamos mejorarlo? Es lo que se preguntan las grandes empresas de
+            IA todos los días. Y uno de los factores más influyentes que
+            observaron fue el <em>cómputo</em>.
           </p>
 
           <div class="cite">
-            Investigando, nos encontramos con el estudio de <strong>EnCompass</strong><sup class="ref"><a href="https://news.mit.edu/2026/helping-ai-agents-search-to-get-best-results-from-llms-0205" target="_blank" rel="noopener">[1]</a></sup>
-            (MIT CSAIL + Asari AI). Proponen que un agente no debe quedarse con la
-            primera respuesta que genera un LLM, sino explorar múltiples caminos,
-            retroceder y elegir la mejor ejecución: una especie de <em>beam search</em>.
+            <strong>“Scaling Laws for Neural Language Models”</strong><sup class="ref"><a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener">[1]</a></sup>
+            (OpenAI, enero de 2020) midió cómo cambiaba el error de sus
+            modelos al agrandar el tamaño, los datos y el cómputo, y encontró
+            empíricamente un patrón asombrosamente regular: el error caía
+            siguiendo una <em>ley de potencias</em>. Con esa regularidad se
+            podía estimar cuánto iba a bajar la pérdida si se seguía
+            escalando. La estimación convenció a OpenAI de invertir millones
+            de dólares en fabricar GPT-3 ese mismo año, esperando algo
+            bastante mejor que GPT-2. Y funcionó.
           </div>
 
           <p>
-            Empezamos a anotar nuestros primeros datos. Si el agente explora un solo
-            camino, su tasa de éxito es del 40&nbsp;%. Si explora 3 caminos, sube al
-            55&nbsp;%. Si explora 10 caminos, alcanza el 85&nbsp;%
-            <span class="doc-aside">(datos hipotéticos)</span>.
+            ¿Y qué es ese “error” que baja? El paper lo llama
+            <em>cross-entropy loss</em>, y se entiende mejor recordando cómo
+            escribe un modelo de lenguaje: palabra por palabra. Antes de cada
+            palabra, el modelo reparte probabilidades entre todas las
+            candidatas; a las que le parecen más naturales les da más, a las
+            raras les da menos. Después se mira qué palabra venía de verdad en
+            el texto, y se lo penaliza según cuánta probabilidad le había
+            dado. Supongamos que la palabra que venía era <em>casa</em>:
+          </p>
+          <ul class="defs">
+            <li><span class="sym">80&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización chica: $-\ln(0{,}8) \approx 0{,}22$.</li>
+            <li><span class="sym">10&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización grande: $-\ln(0{,}1) \approx 2{,}30$.</li>
+          </ul>
+          <p>
+            Para puntuar un modelo completo se repite esa cuenta sobre miles
+            de tokens y se promedia. Cuando el promedio se calcula sobre
+            textos que el modelo nunca vio durante el entrenamiento, se lo
+            llama <em>test loss</em>. Usar texto nuevo es lo que permite saber
+            si el modelo de verdad aprendió el idioma o si solo memorizó sus
+            ejemplos:
+          </p>
+          <div class="eq">$$\text{test loss} = \frac{1}{T} \sum_{t=1}^{T} -\ln P(\text{token correcto}_t)$$</div>
+          <p>
+            Un test loss bajo significa que el modelo le viene dando buena
+            probabilidad a las palabras que efectivamente aparecen. Eso queda
+            lejos todavía de medir “inteligencia”, pero como termómetro del
+            desempeño funciona muy bien, y es la vara que usa el paper: más
+            cómputo, menor test loss, mejor modelo de lenguaje. Con un dataset
+            suficientemente grande y un modelo de tamaño óptimo, la pérdida
+            baja siguiendo una ley de potencia:
+          </p>
+          <div class="eq">$$L(C_{\min}) = \left(\frac{C_c^{\min}}{C_{\min}}\right)^{\alpha_C}, \qquad \alpha_C \approx 0{.}050$$</div>
+          <p>
+            Es decir, el rendimiento mejora de forma predecible pero con
+            <em>rendimientos decrecientes</em>: para bajar mucho la pérdida,
+            necesitás aumentar muchísimo el cómputo. Anotamos algunos puntos
+            aproximados de la Figura 1 del paper (eje X = cómputo de
+            entrenamiento en PF-days, eje Y = test loss, ambos en escala
+            logarítmica):
           </p>
 
           <figure class="gate-card" style="max-width: 460px; margin: 18px auto;">
-            <h4>Tasa de éxito vs. caminos explorados</h4>
-            <div class="gate-sub">los puntos sugieren una tendencia casi recta</div>
+            <h4>Test loss vs. cómputo de entrenamiento</h4>
+            <div class="gate-sub">en escala log-log, los puntos caen casi sobre una recta</div>
             <svg id="scatter-cap1" viewBox="0 0 380 240" aria-hidden="true"></svg>
           </figure>
 
           <p>
-            Poco a poco seguimos completando esta gráfica con los datos reales y
-            empezamos a darnos cuenta de una cosa: parece que existe una relación
-            directa. Viendo la gráfica, trazamos una línea que representa esta
-            tendencia. Lo creamos o no, lo que acabamos de dibujar es un
-            <em>modelo</em>.
+            En escala log-log, la curva baja casi como una línea recta: esa es
+            la firma de una ley de potencia. Viendo la gráfica, trazamos una
+            línea que representa esta tendencia. Lo creamos o no, lo que
+            acabamos de dibujar es un <em>modelo</em>.
           </p>
           <p>
             Matemáticamente, en un espacio bidimensional, una recta se define con la
@@ -189,9 +232,9 @@
           </p>
           <div class="eq">$$\hat{y} = w \cdot x + b$$</div>
           <ul class="defs">
-            <li><span class="sym">$\hat{y}$</span> (salida): la predicción de nuestro modelo (p.&nbsp;ej. la tasa de éxito del agente).</li>
-            <li><span class="sym">$x$</span> (entrada): nuestra variable independiente (p.&nbsp;ej. la cantidad de caminos explorados).</li>
-            <li><span class="sym">$w$</span> (peso / pendiente): define la inclinación de la recta y, conceptualmente, la relación entre la entrada y la salida.</li>
+            <li><span class="sym">$\hat{y}$</span> (salida): la predicción de nuestro modelo (p.&nbsp;ej. el test loss que tendrá el modelo de lenguaje).</li>
+            <li><span class="sym">$x$</span> (entrada): nuestra variable independiente (p.&nbsp;ej. los órdenes de magnitud de cómputo invertidos).</li>
+            <li><span class="sym">$w$</span> (peso / pendiente): define la inclinación de la recta; aquí es negativa: a más cómputo, menos error.</li>
             <li><span class="sym">$b$</span> (sesgo / término independiente): nos muestra a qué altura la recta corta al eje.</li>
           </ul>
           <p>
@@ -202,7 +245,7 @@
           </p>
         </div>
 
-        <div class="doc-progress">Página 1 de 8</div>
+        <div class="doc-progress">Página 1 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="intro">
             &larr; Introducción
@@ -232,37 +275,12 @@
 
           <p>
             ¿Cómo sabe el algoritmo si una línea es mejor que otra? Aquí entra el
-            concepto de <em>error</em>. Para un punto determinado (por ejemplo, 5
-            caminos explorados), nuestro modelo predice un éxito del 65&nbsp;%, pero
-            el dato real de EnCompass marca un 70&nbsp;%. La distancia entre el valor
-            predicho y el valor real es nuestro error.
+            concepto de <em>error</em>. Para un punto determinado (por ejemplo,
+            un cómputo de $10^{0} = 1$ PF-day), nuestro modelo predice un test
+            loss de 2,9, pero el dato real del paper de Scaling Laws marca 2,6.
+            La distancia entre el valor predicho y el valor real es nuestro
+            error.
           </p>
-
-          <!-- VIDEO 2: funcionpruebaerror.mp4 -->
-          <figure class="video-card">
-            <div class="video-card__frame">
-              <video
-                class="js-video"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="auto"
-              >
-                <source src="videos/funcionpruebaerror.mp4" type="video/mp4" />
-              </video>
-              <div class="video-card__missing" style="display: none;">
-                <span>Falta el video</span>
-                <code>videos/funcionpruebaerror.mp4</code>
-                <span style="font-size: 0.8rem; opacity: 0.7;">
-                  Copialo dentro de la carpeta <em>videos/</em> del proyecto.
-                </span>
-              </div>
-            </div>
-            <figcaption class="video-card__caption">
-              La idea de medir y reducir el error, de forma visual.
-            </figcaption>
-          </figure>
 
           <p>
             Para evaluar el modelo completo, calculamos el <em>Error Cuadrático Medio</em>
@@ -287,12 +305,12 @@
             </div>
             <div class="tool__controls">
               <div class="tool__row">
-                <label>Pendiente <span class="sym">$w$</span><span class="val" id="reg-w-val">5.0</span></label>
-                <input type="range" id="reg-w" min="0" max="10" step="0.1" value="5" />
+                <label>Pendiente <span class="sym">$w$</span><span class="val" id="reg-w-val">-0.10</span></label>
+                <input type="range" id="reg-w" min="-1" max="0" step="0.02" value="-0.1" />
               </div>
               <div class="tool__row">
-                <label>Sesgo <span class="sym">$b$</span><span class="val" id="reg-b-val">35</span></label>
-                <input type="range" id="reg-b" min="0" max="60" step="1" value="35" />
+                <label>Sesgo <span class="sym">$b$</span><span class="val" id="reg-b-val">3.0</span></label>
+                <input type="range" id="reg-b" min="0" max="8" step="0.1" value="3" />
               </div>
             </div>
             <div class="tool__foot">
@@ -304,20 +322,20 @@
           </div>
         </div>
 
-        <div class="doc-progress">Página 2 de 8</div>
+        <div class="doc-progress">Página 2 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap1">
             &larr; El origen
           </button>
           <button type="button" class="btn btn--primary" data-goto="cap3">
-            La neurona artificial &rarr;
+            Añadiendo dimensiones &rarr;
           </button>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         CAPÍTULO 3 — AÑADIENDO DIMENSIONES: LA NEURONA ARTIFICIAL
+         CAPÍTULO 3 — AÑADIENDO DIMENSIONES
          ============================================================ -->
     <section id="cap3" class="screen">
       <div class="page page--doc">
@@ -330,18 +348,28 @@
 
         <div class="doc page__body">
           <span class="doc-kicker">Página 3</span>
-          <h1 class="doc-title">Añadiendo dimensiones: la neurona artificial</h1>
+          <h1 class="doc-title">Añadiendo dimensiones</h1>
 
           <p>
             La realidad nos demuestra que es mucho más compleja, y que un fenómeno
             rara vez está afectado por un solo factor. El éxito de un agente depende
-            de los caminos que explora, sí, pero también de su capacidad deductiva.
+            del cómputo que posea, sí, pero también del tiempo en que elabora su
+            pensamiento o <em>Test-Time Compute</em> (Chain-of-Thought,
+            2022)<sup class="ref"><a href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener">[2]</a></sup>.
           </p>
           <div class="cite">
-            El estudio <strong>“Teaching AI agents to ask better questions by playing
-            Battleship”</strong><sup class="ref"><a href="https://news.mit.edu/2026/teaching-ai-agents-ask-better-questions-playing-battleship-0603" target="_blank" rel="noopener">[2]</a></sup> (MIT CSAIL + Harvard) demostró que la tasa de éxito
-            depende drásticamente de si el agente usa una estrategia de inferencia
-            Monte Carlo, pasando de un éxito del 8&nbsp;% al 82&nbsp;%.
+            A diferencia del tamaño del modelo o de los datos de internet (donde
+            necesitás multiplicar los recursos de forma exponencial para ver una
+            mejora mínima), el tiempo de pensamiento que le das a un modelo
+            durante la inferencia (usando <em>Chain of Thought</em>) muestra un
+            beneficio directo y constante: más tiempo de cómputo = más pasos
+            lógicos = mayor tasa de acierto. Si a un modelo avanzado de
+            razonamiento le das un problema matemático sumamente complejo: si
+            piensa durante 1 segundo, su probabilidad de éxito es baja; si lo
+            dejás buscar caminos y corregirse durante 10 segundos, su precisión
+            escala fuertemente; y si piensa por 60 segundos, la probabilidad de
+            resolver el problema sigue subiendo de forma casi proporcional al
+            tiempo invertido.
           </div>
           <p>
             Si introducimos esta nueva variable al modelo, ya no estaríamos ante una
@@ -350,9 +378,9 @@
           </p>
           <div class="eq">$$z = w_1 x_1 + w_2 x_2 + \dots + w_n x_n + b$$</div>
           <p>
-            Esto, en esencia, es lo que hace matemáticamente una <em>neurona
-            artificial</em>: recibe varias entradas, las multiplica por sus pesos
-            correspondientes, las suma y añade el sesgo.
+            Esta operación —recibir varias entradas, multiplicar cada una por su
+            peso correspondiente, sumarlas y añadir el sesgo— es la pieza
+            matemática fundamental sobre la que construiremos todo lo que sigue.
           </p>
           <p>
             Y aquí ya no buscaríamos la recta que mejor se ajuste a datos
@@ -416,25 +444,25 @@
           <p>
             Así que necesitamos un método que nos garantice reducir el coste de forma
             general: un método iterativo que se vaya acercando al mínimo error, el
-            <em>descenso del gradiente</em>. Pero antes de llegar a él, veamos bien qué
-            es una neurona.
+            <em>descenso del gradiente</em>. Pero antes de llegar a él, veamos bien
+            de qué se trata esa pieza fundamental: el perceptrón.
           </p>
         </div>
 
-        <div class="doc-progress">Página 3 de 8</div>
+        <div class="doc-progress">Página 3 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap2">
             &larr; La función de coste
           </button>
           <button type="button" class="btn btn--primary" data-goto="cap4">
-            ¿Qué es una neurona? &rarr;
+            El perceptrón &rarr;
           </button>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         CAPÍTULO 4 — ¿QUÉ ES UNA NEURONA?
+         CAPÍTULO 4 — EL PERCEPTRÓN
          ============================================================ -->
     <section id="cap4" class="screen">
       <div class="page page--doc">
@@ -447,7 +475,7 @@
 
         <div class="doc page__body">
           <span class="doc-kicker">Página 4</span>
-          <h1 class="doc-title">¿Qué es una neurona?</h1>
+          <h1 class="doc-title">El perceptrón</h1>
 
           <p>
             Una neurona es la unidad básica de procesamiento de información en una red
@@ -493,10 +521,10 @@
           </p>
         </div>
 
-        <div class="doc-progress">Página 4 de 8</div>
+        <div class="doc-progress">Página 4 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap3">
-            &larr; La neurona artificial
+            &larr; Añadiendo dimensiones
           </button>
           <button type="button" class="btn btn--primary" data-goto="cap5">
             Un ejemplo: compuertas lógicas &rarr;
@@ -529,8 +557,8 @@
             binarias de entrada ($0$ o $1$):
           </p>
           <ul class="defs">
-            <li><span class="sym">$x_1$</span> (estrategia Monte Carlo / saber preguntar): vale $1$ si implementamos el framework del estudio de Battleship para que el agente valide sus dudas generando código ejecutable, y $0$ si pregunta sin verificar.</li>
-            <li><span class="sym">$x_2$</span> (múltiples caminos / saber explorar): vale $1$ si activamos el algoritmo de EnCompass para que el agente explore varias trayectorias y retroceda ante fallos, y $0$ si acepta ciegamente la primera respuesta.</li>
+            <li><span class="sym">$x_1$</span> (cómputo de entrenamiento / Scaling Laws): vale $1$ si el modelo fue entrenado con el cómputo y los datos que exige la ley de potencias para su tamaño, y $0$ si es un modelo pequeño o sub-entrenado.</li>
+            <li><span class="sym">$x_2$</span> (Test-Time Compute / Chain of Thought): vale $1$ si le damos al agente tiempo de pensamiento durante la inferencia para razonar paso a paso, explorar caminos y corregirse, y $0$ si lo obligamos a responder de inmediato.</li>
           </ul>
           <p>
             Nuestra salida deseada ($y$) también será binaria: $1$ si el rendimiento es
@@ -552,14 +580,15 @@
           <h2>Caso A: el agente estricto (compuerta AND)</h2>
           <p>
             Supongamos que, para tener éxito en un software complejo, necesitamos
-            obligatoriamente que se cumplan <em>ambas</em> condiciones a la vez (saber
-            preguntar con Monte Carlo <em>y</em> explorar múltiples trayectorias).
-            Cualquier combinación parcial causa el fallo. Esto equivale a una compuerta
-            lógica AND. Eligiendo $w_1 = 2$, $w_2 = 2$ y $b = -3$:
+            obligatoriamente que se cumplan <em>ambas</em> condiciones a la vez (un
+            modelo entrenado con cómputo suficiente <em>y</em> tiempo de pensamiento
+            en la inferencia). Cualquier combinación parcial causa el fallo. Esto
+            equivale a una compuerta lógica AND. Eligiendo $w_1 = 2$, $w_2 = 2$ y
+            $b = -3$:
           </p>
           <table class="truth-table">
             <thead>
-              <tr><th>$x_1$ (Monte Carlo)</th><th>$x_2$ (caminos)</th><th>Éxito real $y$</th><th>Cómputo $z$</th><th>Salida</th></tr>
+              <tr><th>$x_1$ (cómputo)</th><th>$x_2$ (razonamiento)</th><th>Éxito real $y$</th><th>Suma $z$</th><th>Salida</th></tr>
             </thead>
             <tbody>
               <tr><td>0</td><td>0</td><td class="no">0</td><td>$2(0)+2(0)-3=-3$</td><td class="no">0</td></tr>
@@ -586,9 +615,10 @@
           <h2>Caso B: el agente flexible (compuerta OR)</h2>
           <p>
             Imaginemos ahora un entorno más flexible, donde el agente saca adelante la
-            tarea si cuenta con al menos una de las dos optimizaciones (porque sabe
-            preguntar con precisión <em>o</em> porque sabe explorar varias ramas para
-            corregirse). Esto equivale a una compuerta OR. Modificamos las palancas de
+            tarea si cuenta con al menos una de las dos ventajas (porque el modelo es
+            tan grande y bien entrenado que acierta a la primera, <em>o</em> porque un
+            modelo modesto que razona paso a paso llega igual a la respuesta). Esto
+            equivale a una compuerta OR. Modificamos las palancas de
             los parámetros: con $w_1 = 2$, $w_2 = 2$ y un sesgo menos defensivo $b = -1$,
             basta con que cualquiera de las entradas sea $1$ para que $z$ resulte
             positivo —por ejemplo $2(1)+2(0)-1=+1$— y se active el éxito. Una única
@@ -604,10 +634,10 @@
           </figure>
         </div>
 
-        <div class="doc-progress">Página 5 de 8</div>
+        <div class="doc-progress">Página 5 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap4">
-            &larr; ¿Qué es una neurona?
+            &larr; El perceptrón
           </button>
           <button type="button" class="btn btn--primary" data-goto="cap6">
             La paradoja XOR &rarr;
@@ -648,6 +678,54 @@
             cuellos de botella y el caos de comunicación. En tareas secuenciales, es
             rotundamente mejor un agente solo.
           </div>
+          <h2>¿Qué es una tarea paralelizable?</h2>
+          <p>
+            Una tarea es <em>paralelizable</em> cuando puede descomponerse en
+            subtareas independientes: ninguna necesita el resultado de otra para
+            empezar, así que pueden resolverse todas al mismo tiempo y combinar
+            los resultados al final. El tiempo total deja de ser la suma de los
+            pasos y pasa a ser, aproximadamente, el del paso más lento.
+          </p>
+          <p>
+            <strong>Ejemplo: operaciones financieras.</strong> Supongamos que un
+            fondo le pide a un agente evaluar una cartera de 50 empresas antes
+            del cierre del día. Analizar cada empresa (leer su balance, calcular
+            flujo de caja, estimar riesgo) no depende en nada de lo que pase con
+            las otras 49: la valuación de una aerolínea no necesita el resultado
+            de la valuación de un banco. Un sistema multi-agente puede lanzar 50
+            sub-agentes en simultáneo, cada uno con su empresa, y un coordinador
+            que al final agrega todo en un único informe de cartera. Donde un
+            agente solo tardaría 50 análisis consecutivos, el sistema termina en
+            el tiempo de un solo análisis: por eso en este tipo de tareas los
+            multi-agentes disparan el éxito.
+          </p>
+
+          <h2>¿Qué es una tarea secuencial?</h2>
+          <p>
+            Una tarea es <em>secuencial</em> cuando cada paso depende del
+            resultado del paso anterior: existe una cadena de dependencias que
+            impone un orden estricto, y ningún paso puede empezar hasta que
+            termina el que lo precede. Agregar más agentes no acelera nada,
+            porque todos quedarían esperando el mismo resultado intermedio; solo
+            suman ruido y costos de coordinación.
+          </p>
+          <p>
+            <strong>Ejemplo: craftear en Minecraft.</strong> El paper
+            <em>Plancraft</em><sup class="ref"><a href="https://arxiv.org/abs/2412.21033" target="_blank" rel="noopener">[4]</a></sup>
+            (Universidad de Edimburgo) evalúa agentes LLM justamente sobre este
+            tipo de tarea, usando la interfaz de crafteo de Minecraft. Para
+            craftear una <em>cama verde</em>, el agente primero tiene que
+            fundir el cactus para obtener el tinte verde; recién con el tinte en
+            mano puede moverlo a la grilla de crafteo junto con la cama blanca;
+            y solo entonces puede craftear la cama verde. Es imposible teñir la
+            cama antes de tener el tinte: las recetas encadenan dependencias
+            (una cama requiere tablones, y los tablones requieren madera), que
+            el paper representa como un árbol donde cada nodo necesita a sus
+            hijos resueltos. Poner 50 agentes a “ayudar” no fabrica el tinte más
+            rápido: el plan es una cadena, y la cadena se recorre de a un
+            eslabón por vez.
+          </p>
+
           <p>
             Modelamos este escenario como una compuerta lógica XOR (OR exclusiva), para
             predecir si una arquitectura será exitosa ($1$) o fallará ($0$) según dos
@@ -691,7 +769,7 @@
           </p>
         </div>
 
-        <div class="doc-progress">Página 6 de 8</div>
+        <div class="doc-progress">Página 6 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap5">
             &larr; AND y OR
@@ -836,60 +914,16 @@
             </figcaption>
           </figure>
 
-          <h2>¿Y si la frontera tiene que ser curva?</h2>
           <p>
-            Pensemos en este caso: ¿cómo podemos encerrar en una función lo que está
-            dentro de los puntos rojos? Necesitamos una frontera que rodee a la nube
-            central.
+            Con esto la arquitectura está completa: neuronas que suman ponderado,
+            organizadas en capas, con activaciones no lineales entre medio. Pero
+            hasta ahora los pesos los elegimos <em>nosotros</em>, a mano, mirando
+            el dibujo. La verdadera magia del machine learning es que la red los
+            encuentre sola. ¿Cómo? Ese es el tema de la próxima página.
           </p>
-          <figure class="diagram diagram--sm">
-            <h4>El reto</h4>
-            <div class="gate-sub">queremos separar lo de adentro de lo de afuera</div>
-            <svg id="circle-data" viewBox="0 0 300 230" aria-hidden="true"></svg>
-          </figure>
-          <p>
-            Antes usábamos una función escalonada (el umbral). El efecto de la función de
-            activación es <em>distorsionar el plano</em> que genera la neurona; si
-            hubiéramos usado las otras, veríamos que igual queda una recta como frontera.
-            ¿Cómo conseguimos entonces una frontera <em>curva</em>? Lo solucionamos gracias
-            a que ahora, al usar funciones de activación, ya podemos encadenar varias
-            neuronas al mismo tiempo.
-          </p>
-          <p>
-            Una posible solución es colocar en una capa oculta una sigmoide. Su forma la
-            podemos ir variando conforme cambiamos los parámetros de la red: cambiando los
-            parámetros cambiamos la orientación de la figura. En vez de una sola, colocamos
-            cuatro, cada una con una orientación diferente.
-          </p>
-          <div class="diagram-row">
-            <figure class="diagram">
-              <h4>Cuatro neuronas sigmoide</h4>
-              <svg id="four-neurons" viewBox="0 0 240 290" aria-hidden="true"></svg>
-            </figure>
-            <figure class="diagram">
-              <h4>Cuatro orientaciones</h4>
-              <svg id="sigmoid-panels" viewBox="0 0 228 228" aria-hidden="true"></svg>
-            </figure>
-          </div>
-          <p>
-            Con una nueva neurona a la derecha podemos construir la combinación de las
-            cuatro figuras que nos habían quedado, obteniendo como resultado una superficie
-            plana con un bulto en el medio: justo la solución que necesitábamos, con una
-            <em>frontera circular</em>.
-          </p>
-          <div class="diagram-row">
-            <figure class="diagram">
-              <h4>La combinación: un bulto</h4>
-              <svg id="bump-surface" viewBox="0 0 300 220" aria-hidden="true"></svg>
-            </figure>
-            <figure class="diagram">
-              <h4>Frontera circular lograda</h4>
-              <svg id="circle-result" viewBox="0 0 300 230" aria-hidden="true"></svg>
-            </figure>
-          </div>
         </div>
 
-        <div class="doc-progress">Página 7 de 8</div>
+        <div class="doc-progress">Página 7 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap6">
             &larr; La paradoja XOR
@@ -927,7 +961,7 @@
             de 15 años, en el llamado <em>invierno de la IA</em>.
           </p>
           <div class="cite">
-            Por suerte, en 1986, <strong>Rumelhart, Hinton y Williams</strong><sup class="ref"><a href="https://www.nature.com/articles/323533a0" target="_blank" rel="noopener">[4]</a></sup> publicaron
+            Por suerte, en 1986, <strong>Rumelhart, Hinton y Williams</strong><sup class="ref"><a href="https://www.nature.com/articles/323533a0" target="_blank" rel="noopener">[5]</a></sup> publicaron
             el artículo que cambiaría el destino de la disciplina: demostraron cómo, con
             un nuevo algoritmo de optimización, una red multicapa podía autoajustar todos
             sus parámetros de forma iterativa y eficiente. Esa técnica es la
@@ -952,12 +986,12 @@
 
           <h2>La intuición: ¿de quién es la culpa?</h2>
           <p>
-            Para entenderla sin naufragar en la nomenclatura, usemos el marco de la
-            <em>ingeniería de harness</em> (andamiaje evolutivo) del equipo de
-            Anthropic<sup class="ref"><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank" rel="noopener">[5]</a></sup>.
-            Imaginemos que desplegamos nuestro agente en un benchmark exigente. El agente
-            ejecuta todo su flujo, pero al final la traza arroja un fallo: el sistema
-            registra una fuerte señal de error en la última capa.
+            Para entenderla sin naufragar en la nomenclatura, imaginemos la red
+            como una <em>línea de montaje</em>: cada capa recibe piezas de la
+            anterior, las transforma y se las pasa a la siguiente. Un día el
+            producto sale defectuoso: la red predijo mal, y ese error se detecta
+            al final de la línea. La pregunta que hay que responder para
+            arreglar la fábrica es: ¿qué estación tuvo la culpa, y cuánta?
           </p>
           <p>
             Backpropagation reparte la “culpa” operando de forma recursiva <em>hacia
@@ -1013,19 +1047,128 @@
             hasta que la red predice con precisión.
           </p>
 
-          <div class="cite" style="border-left-color: var(--green);">
-            <strong>En conclusión:</strong> hemos visto distintas herramientas que nos
-            pueden ayudar a entender cómo se mejoran recursivamente los modelos. Mediante
-            estas herramientas, Anthropic puede obtener el <em>“sweet spot”</em> de
-            combinación entre computación, iteraciones, estrategias, forma de elegir el
-            camino, etcétera. ¡A tenerlo en cuenta para nuestros futuros trabajos!
-          </div>
+          <p>
+            Así encuentra la red sus parámetros: el gradiente hace todo el
+            trabajo. Y con esto la historia queda completa. Solo falta la
+            conclusión.
+          </p>
         </div>
 
-        <div class="doc-progress">Página 8 de 8</div>
+        <div class="doc-progress">Página 8 de 9</div>
         <div class="doc-nav">
           <button type="button" class="btn btn--ghost" data-goto="cap7">
             &larr; Redes y activación
+          </button>
+          <button type="button" class="btn btn--primary" data-goto="cap9">
+            Conclusión &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 9 — CONCLUSIÓN
+         ============================================================ -->
+    <section id="cap9" class="screen">
+      <div class="page page--doc">
+        <div class="page__bar">
+          <span class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="doc page__body">
+          <span class="doc-kicker">Página 9</span>
+          <h1 class="doc-title">Conclusión</h1>
+
+          <p>
+            En retrospectiva, todo lo que utilizamos fue lo siguiente:
+          </p>
+          <ul class="defs">
+            <li>
+              <strong>Una recta y una forma de medir el error</strong>
+              (páginas 1 y 2) — arrancamos con los datos reales de las Scaling
+              Laws y los modelamos con lo más simple que existe:
+              $\hat{y} = w \cdot x + b$. Para decidir cuál recta era la mejor
+              definimos el error cuadrático medio, y ahí cambió todo: modelar
+              dejó de ser dibujar a ojo y pasó a ser <em>minimizar una
+              función</em>.
+            </li>
+            <li>
+              <strong>Más dimensiones</strong> (página 3) — la realidad casi
+              nunca depende de una sola variable, así que la recta se volvió
+              plano y las cuentas pasaron a matrices: $Y = XW$. Derivando el
+              coste respecto de los parámetros e igualando a cero obtuvimos la
+              fórmula de mínimos cuadrados, y también encontramos su límite:
+              fuera de la regresión lineal esa fórmula cerrada no siempre
+              existe, y hace falta un método iterativo.
+            </li>
+            <li>
+              <strong>Una neurona</strong> (páginas 4 y 5) — la misma suma
+              ponderada, con un sesgo y un umbral encima, resultó ser el
+              perceptrón. Eligiendo tres números a mano le hicimos calcular
+              las compuertas AND y OR: en el plano, su recta separa las
+              combinaciones de éxito de las de fallo.
+            </li>
+            <li>
+              <strong>Un límite geométrico</strong> (página 6) — el hallazgo
+              multi-agente de DeepMind y el MIT tiene forma de XOR, y ninguna
+              recta puede separar ese patrón cruzado. Una neurona sola no
+              alcanza. Esta limitación se conoce desde 1969, y durante años
+              frenó al campo entero.
+            </li>
+            <li>
+              <strong>Capas y funciones de activación</strong> (página 7) —
+              con dos neuronas en una capa oculta hay dos rectas actuando a la
+              vez, y al pasar cada suma por una función no lineal (la
+              sigmoide, la ReLU) las fronteras se curvan y se combinan. Juntas
+              separan lo que una recta sola no podía: el XOR quedó resuelto.
+            </li>
+            <li>
+              <strong>Un algoritmo para aprender</strong> (página 8) — para
+              que la red ajuste sola sus millones de parámetros,
+              backpropagation reparte la culpa del error hacia atrás usando la
+              regla de la cadena y arma el vector gradiente $\nabla C$. El
+              descenso del gradiente hace el resto: $\theta := \theta -
+              \alpha\,\nabla C$, un pasito cuesta abajo tras otro. Repetido
+              miles de veces, eso es entrenar.
+            </li>
+          </ul>
+          <p>
+            Eso es una red neuronal. Los sistemas gigantes que motivaron este
+            trabajo —los LLMs, los agentes que programan solos— son esta misma
+            idea repetida a una escala inimaginable: más entradas, más neuronas,
+            más capas. Pero adentro no hay nada más misterioso que lo que vimos:
+            sumas ponderadas, funciones que se curvan y derivadas que reparten
+            responsabilidades.
+          </p>
+
+          <div class="cite" style="border-left-color: var(--green);">
+            Todo el edificio se sostiene con la matemática de este curso:
+            derivadas parciales, la regla de la cadena y un procedimiento
+            humilde que insiste en equivocarse un poco menos en cada paso.
+            No hace falta más para empezar a entender lo que viene.
+          </div>
+
+          <h2>Referencias</h2>
+          <p>
+            Los hallazgos que motivaron cada página, con su paper y su fuente:
+          </p>
+          <div class="table-wrap">
+            <table class="truth-table papers-table">
+              <thead>
+                <tr><th>Hallazgo</th><th>Paper</th><th>Fuente</th></tr>
+              </thead>
+              <tbody id="papers-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="doc-progress">Página 9 de 9</div>
+        <div class="doc-nav">
+          <button type="button" class="btn btn--ghost" data-goto="cap8">
+            &larr; Backpropagation
           </button>
           <button type="button" class="btn btn--primary" data-goto="splash">
             Volver al inicio &#8635;
@@ -1034,6 +1177,7 @@
       </div>
     </section>
 
+    <script src="papers.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
