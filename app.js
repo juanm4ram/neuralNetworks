@@ -92,7 +92,10 @@
     [6, '10⁰'],
     [9, '10³'],
   ];
-  var XLABEL = 'cómputo de entrenamiento (PF-days)';
+  // Textos de los gráficos: los provee i18n.js según el idioma elegido.
+  var T = (window.I18N && window.I18N.t) || function (k) { return k; };
+  var LANG = (window.I18N && window.I18N.lang) || 'es';
+  var XLABEL = T('chartXLabel');
 
   // Mejor ajuste por mínimos cuadrados (para el botón y la referencia).
   function bestFit(data) {
@@ -292,7 +295,7 @@
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
       ctx.fillRect(x0 + 4, y1 - 4, 168, 26);
       ctx.fillStyle = '#e8543f';
-      ctx.fillText('Error (MSE) = ' + err.toFixed(2), x0 + 10, y1 + 14);
+      ctx.fillText(T('chartError') + err.toFixed(2), x0 + 10, y1 + 14);
 
       wVal.textContent = w.toFixed(2);
       bVal.textContent = b.toFixed(1);
@@ -473,9 +476,9 @@
     var svg = document.getElementById(svgId);
     if (!svg) return;
     var cols = [
-      { x: 95, fill: '#eceae3', stroke: '#9b97a3', tag: 'CAPA N−1', name: 'ENTRADA' },
-      { x: 240, fill: '#fde9c8', stroke: '#e9962f', tag: 'CAPA N', name: 'OCULTAS' },
-      { x: 385, fill: '#eceae3', stroke: '#9b97a3', tag: 'CAPA N+1', name: 'SALIDA' },
+      { x: 95, fill: '#eceae3', stroke: '#9b97a3', tag: T('layerPrev'), name: T('layerInput') },
+      { x: 240, fill: '#fde9c8', stroke: '#e9962f', tag: T('layerCurr'), name: T('layerHidden') },
+      { x: 385, fill: '#eceae3', stroke: '#9b97a3', tag: T('layerNext'), name: T('layerOutput') },
     ];
     var ys = [92, 158];
     // conexiones entre columnas
@@ -574,10 +577,10 @@
       txt(svg, hX, y + 4, 'δ' + (i + 1), 12, '#3b3743');
     });
     svg.appendChild(svgEl('circle', { cx: outX, cy: 125, r: 20, fill: '#e8543f', stroke: '#a3291b', 'stroke-width': 2.5 }));
-    txt(svg, outX, 129, 'error', 11, '#fff');
-    txt(svg, hX, 235, 'capa oculta', 12, '#6f6b78');
-    txt(svg, outX, 235, 'salida', 12, '#6f6b78');
-    txt(svg, inX, 235, 'entrada', 12, '#6f6b78');
+    txt(svg, outX, 129, T('respError'), 11, '#fff');
+    txt(svg, hX, 235, T('respHidden'), 12, '#6f6b78');
+    txt(svg, outX, 235, T('respOutput'), 12, '#6f6b78');
+    txt(svg, inX, 235, T('respInput'), 12, '#6f6b78');
   }
 
   /* ---------- Construcción de figuras de los capítulos ---------- */
@@ -662,10 +665,12 @@
     if (!tbody || !window.PAPERS) return;
     var html = '';
     window.PAPERS.forEach(function (p) {
+      // Cada entrada trae su versión en inglés en p.en (ver papers.js).
+      var r = LANG === 'en' && p.en ? p.en : p;
       html += '<tr>' +
-        '<td><strong>' + p.factor + '</strong><br><span class="term-desc">' + p.descripcion + '</span></td>' +
-        '<td><a href="' + p.url + '" target="_blank" rel="noopener">' + p.paper + '</a></td>' +
-        '<td>' + p.fuente + '</td>' +
+        '<td><strong>' + r.factor + '</strong><br><span class="term-desc">' + r.descripcion + '</span></td>' +
+        '<td><a href="' + p.url + '" target="_blank" rel="noopener">' + r.paper + '</a></td>' +
+        '<td>' + r.fuente + '</td>' +
         '</tr>';
     });
     tbody.innerHTML = html;
