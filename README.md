@@ -2,7 +2,7 @@
 
 A **Calculus II** project: an interactive web page that explains what is behind neural networks — how they learn, how they are optimised and where they came from — using nothing but the mathematics of the course.
 
-**➜ Live site:** https://juanm4ram.github.io/tp-pagina-web-analisis/
+**➜ Live site:** https://juanm4ram.github.io/neuralNetworks/
 
 *🇦🇷 [Leer este README en español](README.es.md) · the site itself is bilingual (EN / ES switch in the top bar).*
 
