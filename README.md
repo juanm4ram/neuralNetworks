@@ -2,7 +2,7 @@
 
 A **Calculus II** project: an interactive web page that explains what is behind neural networks — how they learn, how they are optimised and where they came from — using nothing but the mathematics of the course.
 
-**➜ Live site:** https://juanm4ram.github.io/neuralNetworks/
+**➜ Live site:** [Open the project](https://juanm4ram.github.io/neuralNetworks/) · [Introduction](https://juanm4ram.github.io/neuralNetworks/#intro)
 
 *🇦🇷 [Leer este README en español](README.es.md) · the site itself is bilingual (EN / ES switch in the top bar).*
 
@@ -18,14 +18,23 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 
 ## How we approached it
 
+- **An expanded introduction.** A learning analogy leads into language models, token IDs, embeddings, Transformer blocks and learned parameters. The introduction uses LaTeX formulas, colored text panels and a visual token-to-vector example.
 - **A story in 9 pages, from simple to complex.** The site reads like a notebook: a line fitted to real data (page 1) → the error as a function to minimise (page 2) → more dimensions and least squares (page 3) → the perceptron (page 4) → AND/OR gates (page 5) → the XOR limit (page 6) → layers and activation functions (page 7) → backpropagation and gradient descent (page 8) → conclusion and references (page 9).
 - **Real papers as the through-line.** Each mathematical concept enters when a real finding demands it: linear regression shows up to model OpenAI's Scaling Laws, and XOR shows up because the DeepMind + MIT multi-agent finding (multi-agents help on parallelisable tasks and hurt on sequential ones) has exactly that shape.
 - **Interactive where it adds value, static where it does not.** Page 2 has a tool to drag the slope and bias of the line and watch the mean squared error change live. The rest are SVG charts drawn in code, with no libraries.
-- **Bilingual by design.** The site ships in English by default and can be switched to Spanish from the top bar of any page (or from the cover). The choice is remembered across visits.
+- **Language selection.** Navigation and the nine chapters support English and Spanish, with English selected by default. The expanded introduction is currently in Spanish in both modes. The language choice is remembered across visits.
 - **Handmade aesthetic.** Handwritten typography, paper colours and an animated cover (a homage to Nicky Case's *The Evolution of Trust*): it should feel like a notebook, not a corporate deck.
 - **No dependencies, no build step.** Vanilla HTML + CSS + JS; only MathJax from a CDN for the formulas. Deploying means copying static files.
 
 ## The walkthrough, in screenshots
+
+**Introduction — learning and language models.** The opening analogy and video introduce the model, with color highlights for key concepts.
+
+![Introduction: learning analogy and video](assets/readme/introduccion.png)
+
+**Introduction — from tokens to the input vector.** Separate token boxes correspond to the IDs in the LaTeX vector, inside a dedicated text panel.
+
+![Introduction: tokens and their positions in the input vector](assets/readme/introduccion-tokens.png)
 
 **Page 1 — the real data and the first line.** The test loss of OpenAI's models falls with compute following a power law; on a log-log scale it is almost a straight line, and that line is our first model:
 
@@ -60,8 +69,8 @@ Open `http://localhost:8000` and navigate with the buttons, or with the numbered
 ## Project structure
 
 ```
-tp_ML/
-├── index.html      # The 9 pages of the presentation (Spanish source text)
+neuralNetworks/
+├── index.html      # Introduction and 9 chapters (Spanish source text)
 ├── styles.css      # "Handmade" aesthetic (paper, handwritten type)
 ├── app.js          # Navigation, animated cover, charts and references table
 ├── i18n.js         # ★ English dictionary + language engine (default: English)

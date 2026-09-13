@@ -2,7 +2,7 @@
 
 Trabajo práctico de **Análisis Matemático 2**: una página web interactiva que explica qué hay detrás de las redes neuronales — cómo aprenden, cómo se las optimiza y cómo surgieron — usando la matemática del curso.
 
-**➜ Ver la página:** https://juanm4ram.github.io/tp-pagina-web-analisis/
+**➜ Ver la página:** https://juanm4ram.github.io/neuralNetworks/
 
 *🇬🇧 [Read this README in English](README.md) · el sitio es bilingüe (selector EN / ES en la barra superior).*
 
@@ -18,14 +18,23 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 
 ## Cómo lo pensamos
 
+- **Una introducción ampliada.** Una analogía sobre el aprendizaje presenta los modelos de lenguaje, los IDs de tokens, los embeddings, los bloques Transformer y los parámetros aprendidos. Incluye fórmulas en LaTeX, recuadros, resaltados por color y un ejemplo visual de tokens y su vector de entrada.
 - **Una historia en 9 páginas, de lo simple a lo complejo.** El sitio se lee como un cuadernillo: una recta sobre datos reales (página 1) → el error como función a minimizar (página 2) → más dimensiones y mínimos cuadrados (página 3) → el perceptrón (página 4) → compuertas AND/OR (página 5) → el límite del XOR (página 6) → capas y funciones de activación (página 7) → backpropagation y descenso del gradiente (página 8) → conclusión y referencias (página 9).
 - **Papers reales como hilo conductor.** Cada concepto matemático entra cuando un hallazgo real lo pide: la regresión lineal aparece para modelar las Scaling Laws de OpenAI, y el XOR aparece porque el hallazgo multi-agente de DeepMind + MIT (los multi-agentes ayudan en tareas paralelizables y perjudican en secuenciales) tiene exactamente esa forma.
 - **Interactivo donde suma, estático donde no.** La página 2 tiene una herramienta para mover la pendiente y el sesgo de la recta y ver el error cuadrático medio cambiar en vivo. El resto son gráficos SVG dibujados por código, sin librerías.
 - **Estética hecha a mano.** Tipografía manuscrita, colores de papel y una portada animada (homenaje a *The Evolution of Trust* de Nicky Case): la idea es que se sienta como un cuaderno de apuntes y no como una presentación corporativa.
-- **Bilingüe por diseño.** El sitio arranca en inglés y se puede pasar a español desde la barra superior de cualquier página (o desde la portada). La elección se recuerda entre visitas.
+- **Selección de idioma.** La navegación y los nueve capítulos están disponibles en inglés y español; el inglés es el idioma predeterminado. La introducción ampliada está actualmente en español en ambos modos. La elección se recuerda entre visitas.
 - **Sin dependencias ni build.** HTML + CSS + JS vanilla; solo MathJax por CDN para las fórmulas. Desplegar es copiar archivos estáticos.
 
 ## El recorrido, en capturas
+
+**Introducción — aprendizaje y modelos de lenguaje.** La analogía inicial y el video presentan el modelo, con palabras clave resaltadas por color.
+
+![Introducción: analogía del aprendizaje y video](assets/readme/introduccion.png)
+
+**Introducción — de los tokens al vector de entrada.** Los fragmentos se muestran separados y se corresponden con los IDs de la fórmula en LaTeX, dentro de un recuadro.
+
+![Introducción: tokens y posiciones en el vector de entrada](assets/readme/introduccion-tokens.png)
 
 **Página 1 — los datos reales y la primera recta.** El test loss de los modelos de OpenAI cae con el cómputo siguiendo una ley de potencias; en escala log-log es casi una recta, y esa recta es nuestro primer modelo:
 
@@ -60,7 +69,7 @@ Abrí `http://localhost:8000` y navegá con los botones, o con el paginador num�
 ## Estructura del proyecto
 
 ```
-tp_ML/
+neuralNetworks/
 ├── index.html      # Las 9 páginas de la presentación
 ├── styles.css      # Estética "hecha a mano" (papel, tipografía manuscrita)
 ├── app.js          # Navegación, portada animada, gráficos y tabla de referencias
