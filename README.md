@@ -22,7 +22,7 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 - **A story in 9 pages, from simple to complex.** The site reads like a notebook: a line fitted to real data (page 1) → the error as a function to minimise (page 2) → more dimensions and least squares (page 3) → the perceptron (page 4) → AND/OR gates (page 5) → the XOR limit (page 6) → layers and activation functions (page 7) → backpropagation and gradient descent (page 8) → conclusion and references (page 9).
 - **Real papers as the through-line.** Each mathematical concept enters when a real finding demands it: linear regression shows up to model OpenAI's Scaling Laws, and XOR shows up because the DeepMind + MIT multi-agent finding (multi-agents help on parallelisable tasks and hurt on sequential ones) has exactly that shape.
 - **Interactive where it adds value, static where it does not.** Page 2 has a tool to drag the slope and bias of the line and watch the mean squared error change live. The rest are SVG charts drawn in code, with no libraries.
-- **Language selection.** Navigation and the nine chapters support English and Spanish, with English selected by default. The expanded introduction is currently in Spanish in both modes. The language choice is remembered across visits.
+- **Language selection.** The introduction, navigation and nine chapters support English and Spanish, with English selected by default. Color highlights, text panels and LaTeX formulas are preserved when switching languages. Spanish example tokens are retained to keep their IDs and vectors consistent. The language choice is remembered across visits.
 - **Handmade aesthetic.** Handwritten typography, paper colours and an animated cover (a homage to Nicky Case's *The Evolution of Trust*): it should feel like a notebook, not a corporate deck.
 - **No dependencies, no build step.** Vanilla HTML + CSS + JS; only MathJax from a CDN for the formulas. Deploying means copying static files.
 
@@ -30,11 +30,11 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 
 **Introduction — learning and language models.** The opening analogy and video introduce the model, with color highlights for key concepts.
 
-![Introduction: learning analogy and video](assets/readme/introduccion.png)
+![Introduction: learning analogy and video](assets/readme/introduccion-en.png)
 
 **Introduction — from tokens to the input vector.** Separate token boxes correspond to the IDs in the LaTeX vector, inside a dedicated text panel.
 
-![Introduction: tokens and their positions in the input vector](assets/readme/introduccion-tokens.png)
+![Introduction: tokens and their positions in the input vector](assets/readme/introduccion-tokens-en.png)
 
 **Page 1 — the real data and the first line.** The test loss of OpenAI's models falls with compute following a power law; on a log-log scale it is almost a straight line, and that line is our first model:
 

@@ -23,7 +23,7 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 - **Papers reales como hilo conductor.** Cada concepto matemático entra cuando un hallazgo real lo pide: la regresión lineal aparece para modelar las Scaling Laws de OpenAI, y el XOR aparece porque el hallazgo multi-agente de DeepMind + MIT (los multi-agentes ayudan en tareas paralelizables y perjudican en secuenciales) tiene exactamente esa forma.
 - **Interactivo donde suma, estático donde no.** La página 2 tiene una herramienta para mover la pendiente y el sesgo de la recta y ver el error cuadrático medio cambiar en vivo. El resto son gráficos SVG dibujados por código, sin librerías.
 - **Estética hecha a mano.** Tipografía manuscrita, colores de papel y una portada animada (homenaje a *The Evolution of Trust* de Nicky Case): la idea es que se sienta como un cuaderno de apuntes y no como una presentación corporativa.
-- **Selección de idioma.** La navegación y los nueve capítulos están disponibles en inglés y español; el inglés es el idioma predeterminado. La introducción ampliada está actualmente en español en ambos modos. La elección se recuerda entre visitas.
+- **Selección de idioma.** La introducción, la navegación y los nueve capítulos están disponibles en inglés y español; el inglés es el idioma predeterminado. El cambio de idioma conserva los colores, los recuadros y las fórmulas LaTeX. Los tokens de ejemplo permanecen en español para conservar la correspondencia con sus IDs y vectores. La elección se recuerda entre visitas.
 - **Sin dependencias ni build.** HTML + CSS + JS vanilla; solo MathJax por CDN para las fórmulas. Desplegar es copiar archivos estáticos.
 
 ## El recorrido, en capturas

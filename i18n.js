@@ -21,6 +21,65 @@
   var STORE_KEY = 'tp-ml-lang';
 
   var EN = {
+    /* Expanded introduction: preserve colors, panels and mathematical notation. */
+    "intro_p00": "When studying <span class=\"concept concept--red\">how a baby's brain learns</span>, we know that it comes with a <span class=\"concept concept--context\">structure</span> that develops as the baby grows, and with <span class=\"concept concept--learn\">information preloaded through genetics</span>. Part of studying human pedagogy involves understanding how the brain works at these stages and what it can be exposed to in order to encourage its best responses.",
+    "intro_p01": "Just as a tutor uses techniques based on understanding how our brain works to help a learner achieve the best performance, training <span class=\"concept concept--learn\">artificial intelligence</span> requires understanding the structure in which its thinking unfolds and how it is optimised.",
+    "intro_p02": "We call a mathematical model that produces text output according to a <span class=\"concept concept--learn\">probability function</span> (which varies between models), based on text input, a Large Language Model (LLM). We could think of it as the scaffolding or structure formed in a brain with millions of connections, some stronger than others, and areas organised by specialisation. We will now see why this analogy is useful.",
+    "intro_p03": "This model calculates probabilities for the <span class=\"concept concept--text\">next token</span> it will write, and then the entire text is sent to the function again.",
+    "intro_p04": "<span class=\"concept concept--text\">Tokens</span> are <span class=\"concept concept--text\">character fragments</span> with an associated <span class=\"concept concept--text\">numerical ID</span>. Which fragments are worth representing as separate units with a unique ID depends on how often they occur in the texts used to train a tokenizer. For example, a tokenizer would not assign an ID to a fragment such as &quot;jkdjfkdjfk&quot; because it does not appear in any word. In contrast, &quot;in&quot; is a common fragment in Spanish words such as &quot;inteligencia&quot; and &quot;intento&quot;. This makes it worth assigning an ID and allows text to be processed more economically: assigning IDs to every combination of characters would require a great deal of memory.",
+    "intro_p05": "Also, using frequent fragments requires <span class=\"concept concept--gold\">fewer steps</span> than processing text letter by letter, reducing computation costs and allowing more text to fit in the context.",
+    "intro_p06": "On the other hand, combining small fragments makes it possible to represent <span class=\"concept concept--vector\">new words</span> without storing every possible word.<br>A first tip to keep in mind: one tokenizer may be better than another <span class=\"concept concept--context\">depending on the context</span>. For example, one trained on a lot of English may split Spanish into more fragments. Something similar happens with code or scientific texts.",
+    "intro_p07": "So, for example, suppose we have a sentence like this:",
+    "intro_p08": "&quot;Hola, qué lindo día!&quot; (&quot;Hello, what a lovely day!&quot;)",
+    "intro_p09": "And the tokens were these fragments:",
+    "intro_p10": "The function's input will be represented by the <span class=\"concept concept--text\">ID of each token</span>, in the same order:",
+    "intro_p11": "Each component of the vector corresponds to a token in the text. This example has <span class=\"concept concept--gold\">eight</span>; longer texts will produce vectors with more components.",
+    "intro_p12": "The probability function of an LLM looks like this:",
+    "intro_p13": "That is: “the probability of the next token given the preceding text”.",
+    "intro_p14": "Where does this probability function come from, and how can it produce intelligent answers? Let's look at how it is designed...",
+    "intro_p15": "We will call $f$ the <span class=\"concept concept--red\">function representing the entire model</span> (or model function), and $\\theta$ the set of all its <span class=\"concept concept--learn\">learned parameters</span> (we will explain this later). $x$ will be the vector made up of the token IDs.",
+    "intro_p16": "This model function has many stages. Each modification at a stage must work with what the previous stage produced. That is what a <span class=\"concept concept--context\">composition of functions</span> does, expressed as follows:",
+    "intro_p17": "Composition is read from right to left: stage 1 acts first, followed by stage 2 and finally stage 3.",
+    "intro_p18": "Next, we will give a broad overview of these stages. Interestingly, how they are built varies between companies, and final designs are only partially public. As an example, Google's Gemini model has a structure similar to the following:",
+    "intro_p19": "Each block $B_i$ includes attention and an MLP network or a mixture of experts (MoE). This diagram omits details to show the main stages.",
+    "intro_p20": "Explaining each stage can take quite a while, so here we will work with the first stage used (the one furthest to the right): Embeddings.",
+    "intro_p21": "Once the tokenizer converts text into IDs, each ID is used to look up a vector in a large embedding table.<br><span class=\"concept concept--vector\">An embedding</span> is a <span class=\"concept concept--vector\">vector of numbers</span> learned during training and assigned to a token. Unlike the tokenizer, this assignment does not assign numbers by frequency, but according to how close tokens are in meaning.",
+    "intro_p22": "Think of it as a table where each row belongs to a token in the vocabulary.<br>Suppose the vocabulary has 4 tokens:",
+    "intro_p23": "And the <span class=\"concept concept--vector\">embedding matrix</span> is:",
+    "intro_p24": "Each row is a vector associated with a token.<br>If the tokenizer produces:",
+    "intro_p25": "the model uses that $1$ as a row index:",
+    "intro_p26": "Once the row is found, the entire vector replaces the ID as the token's representation for the next stages of the model function, because transformations can be applied to the embedding matrix (the main objective of the next stage).<br>That is:",
+    "intro_p27": "was simply the identifier for &quot;perro&quot; (Spanish for &quot;dog&quot;).<br>After the lookup:",
+    "intro_p28": "is the numerical representation that the network can start transforming.<br>If your input were:<br>perro corre",
+    "intro_p29": "the tokenizer could return:",
+    "intro_p30": "Both rows are looked up:",
+    "intro_p31": "And a matrix is assembled:",
+    "intro_p32": "We now have:",
+    "intro_p33": "That $X$ is what the next stage, the Transformer, starts receiving.",
+    "intro_p34": "Where do those numbers come from?<br>The values in the embedding matrix are part of the model's parameters:",
+    "intro_p35": "They are initialised with small, usually pseudorandom values and are modified during training through <span class=\"concept concept--learn\">gradient descent</span> (a key concept explained later).<br>For example, initially:",
+    "intro_p36": "After a great deal of training, it might end up as:",
+    "intro_p37": "No person says:<br>“The first coordinate of perro will be 0.42 because it represents animals.”",
+    "intro_p38": "Training adjusts those numbers because certain values help the model predict the next tokens better.",
+    "intro_p39": "After obtaining the embeddings, those representations enter Transformer blocks.<br>The main function of a Transformer block is to take the tokens' initial vectors and turn them into representations that <span class=\"concept concept--context\">incorporate context</span>.<br>For example, the initial embedding of &quot;banco&quot; (Spanish for either &quot;bank&quot; or &quot;bench&quot;) is always the same:",
+    "intro_p40": "But the Transformer transforms that vector differently depending on whether it appears in:<br>“I deposited money in the bank.”",
+    "intro_p41": "or<br>“I sat on the bench.”",
+    "intro_p42": "The idea is:",
+    "intro_p43": "A Transformer block does this mainly with two components:<br><span class=\"concept concept--context\">1. Attention</span>: lets each token “look at” other tokens and determine which are relevant.<br><span class=\"concept concept--context\">2. Feed-forward neural network</span>: further transforms each token's representation.<br>Very simply:",
+    "intro_p44": "where $X$ is the embedding matrix and $X'$ is a new matrix of more contextualised vectors.<br>For example:",
+    "intro_p45": "starts as four independent embeddings:",
+    "intro_p46": "After a Transformer layer, the vector for &quot;tomó&quot; can already incorporate information from &quot;gato&quot; and &quot;leche&quot;:",
+    "intro_p47": "And this is repeated many times:",
+    "intro_p48": "Each layer refines the representations.<br>In a few words: a Transformer block receives the tokens' embeddings and transforms them into new <span class=\"concept concept--context\">representations that incorporate contextual information</span>, mainly through attention mechanisms and internal neural networks.",
+    "intro_p49": "So, researchers determine the model's architecture and its mathematical operations, but do not manually set all its parameter values. During training, the model adjusts them through an optimisation process that seeks to <span class=\"concept concept--learn\">progressively reduce</span> an <span class=\"concept concept--learn\">error function</span>, the distance from the objective.",
+    "intro_p50": "In this project, we will see how tools from Calculus and Linear Algebra, such as functions of several variables, partial derivatives and the gradient, help us understand a fundamental part of that learning and optimisation process, and how it contributes to a language model's ability to generate coherent text.",
+    "intro_math0": "$$f_{\\theta}(x)=(\\mathrm{Stage}_3\\circ\\mathrm{Stage}_2\\circ\\mathrm{Stage}_1)(x)$$",
+    "intro_math1": "$$\\begin{aligned}f_{\\theta}={}&amp;\\operatorname{Softmax}\\circ\\operatorname{OutputProjection}\\\\&amp;\\circ\\underbrace{B_L\\circ\\cdots\\circ B_1}_{L\\text{ Transformer blocks}}\\\\&amp;\\circ\\operatorname{Embedding}\\end{aligned}$$",
+    "intro_math2": "$$\\boxed{\n\\text{2 tokens}\\times\\text{3 internal features}\n}$$",
+    "intro_math3": "$$\\boxed{\\text{initial embedding}}\n\\rightarrow\n\\boxed{\\text{contextual representation}}$$",
+    "intro_math4": "$$\\mathbf h_{\\text{tomó}}\n=\n\\text{a representation of &quot;tomó&quot; in that context}$$",
+    "intro_tokens_label": "Ho, la, comma, qué, lin, do, día, exclamation mark",
+
     /* ---------- Cover & intro ---------- */
     t002: 'The evolution of',
     t003: 'AGENTS',
@@ -308,6 +367,10 @@
       var key = nodes[i].getAttribute('data-i18n');
       if (EN[key] !== undefined) nodes[i].innerHTML = EN[key];
     }
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(function (node) {
+      var key = node.getAttribute('data-i18n-aria-label');
+      if (EN[key] !== undefined) node.setAttribute('aria-label', EN[key]);
+    });
     // Si MathJax ya compuso la página, volvemos a componer el texto nuevo.
     if (window.MathJax && window.MathJax.typesetPromise && window.MathJax.startup && window.MathJax.startup.document) {
       window.MathJax.typesetPromise().catch(function () {});
