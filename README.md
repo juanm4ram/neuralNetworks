@@ -99,3 +99,8 @@ To translate a new block: add `data-i18n="tNNN"` to the element in `index.html` 
 | [3] | Multi-agent: it depends on the task (XOR) | [Towards a Science of Scaling Agent Systems](https://arxiv.org/abs/2512.08296) | DeepMind + MIT — 2025 |
 | [4] | Sequential tasks chain dependencies | [Plancraft (Minecraft)](https://arxiv.org/abs/2412.21033) | Univ. of Edinburgh — 2025 |
 | [5] | Multi-layer networks can tune themselves | [Learning representations by back-propagating errors](https://www.nature.com/articles/323533a0) | Rumelhart, Hinton and Williams — 1986 |
+
+## Credits and inspiration
+
+Special thanks to **[Nicky Case (@ncase)](https://github.com/ncase)**. The project's handmade visual style and animated cover are inspired by *The Evolution of Trust*, and its approach to interactive explanations is an educational inspiration for this project.
+

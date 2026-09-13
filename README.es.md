@@ -99,3 +99,8 @@ Para traducir un bloque nuevo: agregá `data-i18n="tNNN"` al elemento en `index.
 | [3] | Multi-agente: depende de la tarea (XOR) | [Towards a Science of Scaling Agent Systems](https://arxiv.org/abs/2512.08296) | DeepMind + MIT — 2025 |
 | [4] | Tareas secuenciales encadenan dependencias | [Plancraft (Minecraft)](https://arxiv.org/abs/2412.21033) | Univ. de Edimburgo — 2025 |
 | [5] | Las redes multicapa se autoajustan | [Learning representations by back-propagating errors](https://www.nature.com/articles/323533a0) | Rumelhart, Hinton y Williams — 1986 |
+
+## Créditos e inspiración
+
+Un agradecimiento especial a **[Nicky Case (@ncase)](https://github.com/ncase)**. La estética hecha a mano y la portada animada del proyecto se inspiran en *The Evolution of Trust*, y su manera de explicar mediante experiencias interactivas es una referencia educativa para este trabajo.
+
