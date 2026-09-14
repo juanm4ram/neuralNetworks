@@ -19,9 +19,9 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 ## Cómo lo pensamos
 
 - **Una introducción ampliada.** Una analogía sobre el aprendizaje presenta los modelos de lenguaje, los IDs de tokens, los embeddings, los bloques Transformer y los parámetros aprendidos. Incluye fórmulas en LaTeX, recuadros, resaltados por color y un ejemplo visual de tokens y su vector de entrada.
-- **Una historia en 9 páginas, de lo simple a lo complejo.** El sitio se lee como un cuadernillo: una recta sobre datos reales (página 1) → el error como función a minimizar (página 2) → más dimensiones y mínimos cuadrados (página 3) → el perceptrón (página 4) → compuertas AND/OR (página 5) → el límite del XOR (página 6) → capas y funciones de activación (página 7) → backpropagation y descenso del gradiente (página 8) → conclusión y referencias (página 9).
+- **Una historia en 11 páginas, de lo simple a lo complejo.** El sitio se lee como un cuadernillo: la introducción y la función de probabilidad de un LLM (páginas 1 y 2) → una recta sobre datos reales (página 3) → el error como función a minimizar (página 4) → más dimensiones y mínimos cuadrados (página 5) → el perceptrón (página 6) → compuertas AND/OR (página 7) → el límite del XOR (página 8) → capas y funciones de activación (página 9) → backpropagation y descenso del gradiente (página 10) → conclusión y referencias (página 11).
 - **Papers reales como hilo conductor.** Cada concepto matemático entra cuando un hallazgo real lo pide: la regresión lineal aparece para modelar las Scaling Laws de OpenAI, y el XOR aparece porque el hallazgo multi-agente de DeepMind + MIT (los multi-agentes ayudan en tareas paralelizables y perjudican en secuenciales) tiene exactamente esa forma.
-- **Interactivo donde suma, estático donde no.** La página 2 tiene una herramienta para mover la pendiente y el sesgo de la recta y ver el error cuadrático medio cambiar en vivo. El resto son gráficos SVG dibujados por código, sin librerías.
+- **Interactivo donde suma, estático donde no.** La página 4 tiene una herramienta para mover la pendiente y el sesgo de la recta y ver el error cuadrático medio cambiar en vivo. El resto son gráficos SVG dibujados por código, sin librerías.
 - **Estética hecha a mano.** Tipografía manuscrita, colores de papel y una portada animada (homenaje a *The Evolution of Trust* de Nicky Case): la idea es que se sienta como un cuaderno de apuntes y no como una presentación corporativa.
 - **Selección de idioma.** La introducción, la navegación y los nueve capítulos están disponibles en inglés y español; el inglés es el idioma predeterminado. El cambio de idioma conserva los colores, los recuadros y las fórmulas LaTeX. Los tokens de ejemplo permanecen en español para conservar la correspondencia con sus IDs y vectores. La elección se recuerda entre visitas.
 - **Sin dependencias ni build.** HTML + CSS + JS vanilla; solo MathJax por CDN para las fórmulas. Desplegar es copiar archivos estáticos.
@@ -36,21 +36,21 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 
 ![Introducción: tokens y posiciones en el vector de entrada](assets/readme/introduccion-tokens.png)
 
-**Página 1 — los datos reales y la primera recta.** El test loss de los modelos de OpenAI cae con el cómputo siguiendo una ley de potencias; en escala log-log es casi una recta, y esa recta es nuestro primer modelo:
+**Página 3 — los datos reales y la primera recta.** El test loss de los modelos de OpenAI cae con el cómputo siguiendo una ley de potencias; en escala log-log es casi una recta, y esa recta es nuestro primer modelo:
 
-![Página 1: scaling laws](assets/readme/scaling-laws.png)
+![Página 3: scaling laws](assets/readme/scaling-laws.png)
 
-**Página 2 — el error como función.** La herramienta interactiva: movés la pendiente y el sesgo, y el error cuadrático medio te dice qué tan buena es tu recta:
+**Página 4 — el error como función.** La herramienta interactiva: movés la pendiente y el sesgo, y el error cuadrático medio te dice qué tan buena es tu recta:
 
-![Página 2: herramienta de regresión](assets/readme/herramienta-mse.png)
+![Página 4: herramienta de regresión](assets/readme/herramienta-mse.png)
 
-**Página 6 — el límite.** El hallazgo multi-agente tiene forma de XOR y ninguna recta puede separar ese patrón: la razón geométrica por la que hacen falta redes:
+**Página 8 — el límite.** El hallazgo multi-agente tiene forma de XOR y ninguna recta puede separar ese patrón: la razón geométrica por la que hacen falta redes:
 
-![Página 6: la paradoja XOR](assets/readme/xor.png)
+![Página 8: la paradoja XOR](assets/readme/xor.png)
 
-**Página 9 — la conclusión.** El repaso de todo lo utilizado, etapa por etapa, y las referencias:
+**Página 11 — la conclusión.** El repaso de todo lo utilizado, etapa por etapa, y las referencias:
 
-![Página 9: conclusión](assets/readme/conclusion.png)
+![Página 11: conclusión](assets/readme/conclusion.png)
 
 ## Cómo correrlo local
 
@@ -64,20 +64,20 @@ python -m http.server 8000
 npx http-server -p 8000 -c-1
 ```
 
-Abrí `http://localhost:8000` y navegá con los botones, o con el paginador numérico (1–9) que aparece al pie de cada página. También podés saltar a una página puntual con el hash: `http://localhost:8000/#cap6`.
+Abrí `http://localhost:8000` y navegá con los botones, o con el paginador numérico (1–11) que aparece al pie de cada página. También podés saltar a una página puntual con el hash: `http://localhost:8000/#cap6`.
 
 ## Estructura del proyecto
 
 ```
 neuralNetworks/
-├── index.html      # Las 9 páginas de la presentación
+├── index.html      # Las 11 páginas: introducción (2) y 9 capítulos
 ├── styles.css      # Estética "hecha a mano" (papel, tipografía manuscrita)
 ├── app.js          # Navegación, portada animada, gráficos y tabla de referencias
 ├── i18n.js         # ★ Diccionario inglés + motor de idioma (por defecto: inglés)
 ├── papers.js       # Bibliografía: solo los papers citados en el texto (solo datos)
 ├── assets/         # Fuente, imágenes y capturas del README
 ├── videos/         # Animaciones de apoyo
-└── PaperSequentialParallel.pdf  # Paper de Plancraft (página 6)
+└── PaperSequentialParallel.pdf  # Paper de Plancraft (página 8)
 ```
 
 ### Cómo funciona la capa bilingüe
@@ -88,7 +88,7 @@ Cambiar de idioma recarga la página (conservando la sección actual mediante el
 
 Para traducir un bloque nuevo: agregá `data-i18n="tNNN"` al elemento en `index.html` y su cadena en inglés al diccionario `EN` de `i18n.js`. Las etiquetas de los gráficos y demás textos que no viven en el DOM se piden con `I18N.t('clave')`.
 
-`papers.js` contiene únicamente los papers **citados en el texto** ([1]–[5]), en el mismo orden que las citas; la tabla de referencias de la página 9 se genera automáticamente desde ahí. Cada entrada trae un bloque `en` con su versión en inglés. Para agregar una referencia alcanza con añadir una entrada al array y citarla en el texto.
+`papers.js` contiene únicamente los papers **citados en el texto** ([1]–[5]), en el mismo orden que las citas; la tabla de referencias de la página 11 se genera automáticamente desde ahí. Cada entrada trae un bloque `en` con su versión en inglés. Para agregar una referencia alcanza con añadir una entrada al array y citarla en el texto.
 
 ## Referencias
 

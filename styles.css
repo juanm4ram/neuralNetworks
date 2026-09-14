@@ -791,7 +791,7 @@ button {
   padding: 0 0 4px;
 }
 
-/* ---------- Paginador numérico (1 … 9), presente en todas las páginas ---------- */
+/* ---------- Paginador numérico (1 … 11), presente en todas las páginas ---------- */
 .pager {
   display: flex;
   justify-content: center;

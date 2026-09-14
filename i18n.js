@@ -40,7 +40,7 @@
     "intro_p13": "That is: “the probability of the next token given the preceding text”.",
     "intro_p14": "Where does this probability function come from, and how can it produce intelligent answers? Let's look at how it is designed...",
     "intro_p15": "We will call $f$ the <span class=\"concept concept--red\">function representing the entire model</span> (or model function), and $\\theta$ the set of all its <span class=\"concept concept--learn\">learned parameters</span> (we will explain this later). $x$ will be the vector made up of the token IDs.",
-    "intro_p16": "This model function has many stages. Each modification at a stage must work with what the previous stage produced. That is what a <span class=\"concept concept--context\">composition of functions</span> does, expressed as follows:",
+    "intro_p16": "The model function has many stages. Each transformation works with the result of the previous stage: that is a <span class=\"concept concept--context\">composition of functions</span>, which can be expressed as follows:",
     "intro_p17": "Composition is read from right to left: stage 1 acts first, followed by stage 2 and finally stage 3.",
     "intro_p18": "Next, we will give a broad overview of these stages. Their implementation varies between models and companies, and many details of final designs are only partially published. As a simplified example, a language model can be represented by a structure like this:",
     "intro_p19": "Each block $B_i$ includes attention and an MLP network or a mixture of experts (MoE). This diagram omits details to show the main stages.",
@@ -85,6 +85,8 @@
     "intro_transformer_title": "Transformer blocks",
     "intro_next_probability": "The probability function &rarr;",
     "intro_probability_back": "&larr; Introduction",
+    "intro_progress": "Page 1 of 11",
+    "intro_probability_progress": "Page 2 of 11",
     "intro_tokens_label": "Ho, la, comma, qué, lin, do, día, exclamation mark",
 
     /* ---------- Cover & intro ---------- */
@@ -105,8 +107,8 @@
     t018: '&larr; Cover',
     t019: 'Start the project &rarr;',
 
-    /* ---------- Page 1 · Modelling reality ---------- */
-    t020: 'Page 1',
+    /* ---------- Page 3 · Modelling reality ---------- */
+    t020: 'Page 3',
     t021: 'What does it mean to model reality?',
     t022: 'Modelling reality means representing it in a simpler form — through numbers, words and relationships — so that we can understand it, predict it and make decisions about it.',
     t023: 'A machine can carry out this very same job. The work consists of taking reality into a model, then going from the model back to reality, and seeing how the two interact.',
@@ -127,12 +129,12 @@
     t038: '<span class="sym">$w$</span> (weight / slope): sets the tilt of the line; here it is negative: more compute, less error.',
     t039: '<span class="sym">$b$</span> (bias / intercept): tells us at what height the line crosses the axis.',
     t040: 'This is the structure of the <em>simple linear regression</em> model. But of course, what we would really want is an algorithm able to draw this line automatically from the data. How does such an algorithm decide which line is best? We will see that in the next chapter.',
-    t041: 'Page 1 of 9',
-    t042: '&larr; Introduction',
+    t041: 'Page 3 of 11',
+    t042: '&larr; The probability function',
     t043: 'The cost function &rarr;',
 
-    /* ---------- Page 2 · Cost function ---------- */
-    t044: 'Page 2',
+    /* ---------- Page 4 · Cost function ---------- */
+    t044: 'Page 4',
     t045: 'The cost function and the error',
     t046: 'How does the algorithm know whether one line is better than another? This is where the concept of <em>error</em> comes in. For a given point (say, a compute budget of $10^{0} = 1$), our model predicts a test loss of 2.9, but the real figure from the Scaling Laws paper is 2.6. The distance between the predicted value and the actual value is our error.',
     t047: 'To evaluate the model as a whole we compute the <em>Mean Squared Error</em> (MSE), a cost function that penalises the furthest points more heavily:',
@@ -143,11 +145,11 @@
     t053: 'Bias <span class="sym">$b$</span><span class="val" id="reg-b-val">3.0</span>',
     t054: 'Show best fit',
     t055: 'The best fit minimises the mean squared error.',
-    t056: 'Page 2 of 9',
+    t056: 'Page 4 of 11',
     t057: '&larr; The origin',
     t058: 'Adding dimensions &rarr;',
-    /* ---------- Page 3 · Adding dimensions ---------- */
-    t059: 'Page 3',
+    /* ---------- Page 5 · Adding dimensions ---------- */
+    t059: 'Page 5',
     t060: 'Adding dimensions',
     t061: 'Reality shows us it is far more complex, and that a phenomenon is rarely affected by a single factor. An agent’s success depends on the compute it has, yes, but also on the time it spends elaborating its thinking, or <em>Test-Time Compute</em> (Chain-of-Thought, 2022)<sup class="ref"><a href="https://arxiv.org/abs/2201.11903" rel="noopener" target="_blank">[2]</a></sup>.',
     t062: 'Unlike model size or internet data (where you need to multiply resources exponentially to see a minimal improvement), the thinking time you give a model during inference (using <em>Chain of Thought</em>) shows a direct and steady benefit: more compute time = more logical steps = higher accuracy. Give an advanced reasoning model an extremely complex maths problem: if it thinks for 1 second, its probability of success is low; if you let it explore paths and correct itself for 10 seconds, its accuracy scales sharply; and if it thinks for 60 seconds, the probability of solving the problem keeps rising almost in proportion to the time invested.',
@@ -169,12 +171,12 @@
     t078: 'Why is this formula not enough?',
     t079: 'In this case we were lucky to get a closed-form formula with which to compute the parameters. But that will not always happen. If we work with other models or other cost functions, we will not always be able to find the minimum analytically. And even applying the method above, we have to invert $X^{T}X$, and <em>inverting a matrix</em> is an operation that can be very inefficient for a computer.',
     t080: 'So we need a method that guarantees reducing the cost in general: an iterative method that gradually approaches the minimum error, <em>gradient descent</em>. But before getting there, let us take a good look at that fundamental piece: the perceptron.',
-    t081: 'Page 3 of 9',
+    t081: 'Page 5 of 11',
     t082: '&larr; The cost function',
     t083: 'The perceptron &rarr;',
 
-    /* ---------- Page 4 · The perceptron ---------- */
-    t084: 'Page 4',
+    /* ---------- Page 6 · The perceptron ---------- */
+    t084: 'Page 6',
     t085: 'The perceptron',
     t086: 'A neuron is the basic information-processing unit of a neural network. Much like a biological neuron, it has input connections through which it receives external stimuli (the input values). With those values it performs an internal computation and returns an output value. In short, it is a mathematical function.',
     t087: 'What does that computation involve?',
@@ -184,12 +186,12 @@
     t091: 'the neuron adds up the inputs times their weights and adds the bias b',
     t092: 'A network made of a <strong>single neuron</strong> of this kind is known as a <strong>Perceptron</strong>: the simplest possible model, and the historical starting point of neural networks.',
     t093: 'With this piece in hand, in the next chapter we will put it to work on a concrete example taken from AI papers on agents.',
-    t094: 'Page 4 of 9',
+    t094: 'Page 6 of 11',
     t095: '&larr; Adding dimensions',
     t096: 'An example: logic gates &rarr;',
 
-    /* ---------- Page 5 · Logic gates ---------- */
-    t097: 'Page 5',
+    /* ---------- Page 7 · Logic gates ---------- */
+    t097: 'Page 7',
     t098: 'An example: the agent and logic gates',
     t099: 'Imagine we want to model a system that predicts whether an autonomous LLM-based agent will successfully solve a complex software engineering task. Analysing the papers, we determine that a successful deployment depends critically on the combination of two binary input variables ($0$ or $1$):',
     t100: '<span class="sym">$x_1$</span> (training compute / Scaling Laws): it is $1$ if the model was trained with the compute and data the power law demands for its size, and $0$ if it is a small or under-trained model.',
@@ -209,11 +211,11 @@
     t114: 'Case B: the flexible agent (OR gate)',
     t115: 'Now imagine a more forgiving setting, where the agent gets the task done if it has at least one of the two advantages (either because the model is so large and well trained that it gets it right first try, <em>or</em> because a modest model reasoning step by step still reaches the answer). This is equivalent to an OR gate. We adjust the parameter levers: with $w_1 = 2$, $w_2 = 2$ and a less defensive bias $b = -1$, it is enough for either input to be $1$ for $z$ to come out positive — for example $2(1)+2(0)-1=+1$ — and success is triggered. A single linear neuron handles this case without trouble.',
     t116: 'OR gate &mdash; w₁ = 2, w₂ = 2, b = −1',
-    t117: 'Page 5 of 9',
+    t117: 'Page 7 of 11',
     t118: '&larr; The perceptron',
     t119: 'The XOR paradox &rarr;',
-    /* ---------- Page 6 · XOR ---------- */
-    t120: 'Page 6',
+    /* ---------- Page 8 · XOR ---------- */
+    t120: 'Page 8',
     t121: 'The multi-agent paradox and the non-linear boundary (XOR)',
     t122: 'Let us now confront our model with a genuinely complex real-world scenario, taken from the Google DeepMind and MIT paper <em>“Towards a Science of Scaling Agent Systems”</em><sup class="ref"><a href="https://arxiv.org/abs/2512.08296" rel="noopener" target="_blank">[3]</a></sup>. After evaluating more than 260 software configurations, the researchers discovered a fascinating and contradictory (non-linear) behaviour:',
     t123: 'If a task is highly <strong>parallelisable</strong>, deploying a massive system of coordinated multi-agents boosts success by <strong>+80.8%</strong>. But if the task is strictly <strong>sequential</strong>, using multi-agents degrades performance by between <strong>−39%</strong> and <strong>−70%</strong> because of bottlenecks and communication chaos. On sequential tasks, a single agent is decisively better.',
@@ -236,12 +238,12 @@
     t140: 'no straight line separates the successes from the failures',
     t141: 'If we try to tune the parameters of a <em>single</em> neuron to solve this, we hit a wall. To separate the successes — the points $[0,0]$ and $[1,1]$ — from the failures — $[0,1]$ and $[1,0]$ — we would need a straight line, and it turns out to be geometrically impossible! There is no straight line capable of segmenting this crossed pattern (the dashed red line tries, and always leaves one point on the wrong side).',
     t142: 'This limitation of a single neuron for solving non-linear problems such as XOR has been formally known since 1969. The milestone illustrated forcefully the need to <em>combine multiple neurons into a network</em> in order to model truly complex knowledge.',
-    t143: 'Page 6 of 9',
+    t143: 'Page 8 of 11',
     t144: '&larr; AND and OR',
     t145: 'Networks and activation &rarr;',
 
-    /* ---------- Page 7 · Layers and activations ---------- */
-    t146: 'Page 7',
+    /* ---------- Page 9 · Layers and activations ---------- */
+    t146: 'Page 9',
     t147: 'Solving the problem: complex networks and activation functions',
     t148: 'The solution to the agents’ XOR dilemma is, in hindsight, very elegant: we need to <em>duplicate and chain</em> our neurons. If we place several neurons in the same column (a <em>hidden layer</em>), we now have multiple independent lines acting in the space at once. By combining the conclusions of those intermediate lines through a neuron in the output layer, we generate two separators that together isolate both classes correctly. This is the demonstration of how, by adding neurons, we begin to model hierarchical and abstract information.',
     t149: 'The layered structure',
@@ -259,11 +261,11 @@
     t161: 'To close, let us look at the sigmoid in three dimensions. Applied to the weighted sum $z = w_1 x_1 + w_2 x_2 + b$, it turns the tilted plane into a smooth surface shaped like a curved step: on one side it saturates near $0$ and on the other near $1$, with a continuous transition in between. That curvature is exactly what lets us separate the gates: instead of a straight, abrupt cut like the threshold’s, we get a <em>smooth, deformable boundary</em> which, chained across layers, can wrap around the crossed XOR points.',
     t163: 'The sigmoid surface over the (x₁, x₂) plane and how it curves the decision boundary.',
     t164: 'With this the architecture is complete: neurons that compute weighted sums, organised in layers, with non-linear activations in between. But so far <em>we</em> have chosen the weights by hand, by looking at the picture. The real magic of machine learning is that the network finds them on its own. How? That is the subject of the next page.',
-    t165: 'Page 7 of 9',
+    t165: 'Page 9 of 11',
     t166: '&larr; The XOR paradox',
     t167: 'Backpropagation &rarr;',
-    /* ---------- Page 8 · Backpropagation ---------- */
-    t168: 'Page 8',
+    /* ---------- Page 10 · Backpropagation ---------- */
+    t168: 'Page 10',
     t169: 'Scaling up learning: the backpropagation algorithm',
     t170: 'Once we decide to interconnect hundreds of neurons across multiple hidden layers to form a deep neural network (<em>deep learning</em>), we face the ultimate problem: how do we get the network to self-adjust the millions of weights and biases in its guts completely autonomously from the data? The algorithm we used for a single neuron did not extend to multi-layer networks, which left us in the dark for over 15 years, in the so-called <em>AI winter</em>.',
     t171: 'Fortunately, in 1986, <strong>Rumelhart, Hinton and Williams</strong><sup class="ref"><a href="https://www.nature.com/articles/323533a0" rel="noopener" target="_blank">[5]</a></sup> published the paper that would change the fate of the discipline: they showed how, with a new optimisation algorithm, a multi-layer network could self-adjust all its parameters iteratively and efficiently. That technique is <strong>backpropagation</strong> (backward propagation of errors).',
@@ -285,20 +287,20 @@
     t187: 'each step goes down in the direction opposite to the gradient',
     t188: 'Repeated thousands of times over the data, this loop gradually sculpts the weights until the network predicts accurately.',
     t189: 'This is how the network finds its parameters: the gradient does all the work. And with that the story is complete. All that is left is the conclusion.',
-    t190: 'Page 8 of 9',
+    t190: 'Page 10 of 11',
     t191: '&larr; Networks and activation',
     t192: 'Conclusion &rarr;',
 
-    /* ---------- Page 9 · Conclusion ---------- */
-    t193: 'Page 9',
+    /* ---------- Page 11 · Conclusion ---------- */
+    t193: 'Page 11',
     t194: 'Conclusion',
     t195: 'Looking back, everything we used was the following:',
-    t196: '<strong>A line and a way to measure error</strong> (pages 1 and 2) — we started from the real Scaling Laws data and modelled it with the simplest thing there is: $\\hat{y} = w \\cdot x + b$. To decide which line was best we defined the mean squared error, and that changed everything: modelling stopped being drawing by eye and became <em>minimising a function</em>.',
-    t197: '<strong>More dimensions</strong> (page 3) — reality almost never depends on a single variable, so the line became a plane and the arithmetic became matrices: $Y = XW$. Differentiating the cost with respect to the parameters and setting it to zero gave us the least-squares formula, and also showed us its limit: outside linear regression that closed form does not always exist, and an iterative method is needed.',
-    t198: '<strong>A neuron</strong> (pages 4 and 5) — that same weighted sum, with a bias and a threshold on top, turned out to be the perceptron. By choosing three numbers by hand we made it compute the AND and OR gates: in the plane, its line separates the successful combinations from the failing ones.',
-    t199: '<strong>A geometric limit</strong> (page 6) — DeepMind and MIT’s multi-agent finding has the shape of an XOR, and no straight line can separate that crossed pattern. A single neuron is not enough. This limitation has been known since 1969, and for years it held back the entire field.',
-    t200: '<strong>Layers and activation functions</strong> (page 7) — with two neurons in a hidden layer there are two lines acting at once, and by passing each sum through a non-linear function (the sigmoid, the ReLU) the boundaries curve and combine. Together they separate what a single line could not: XOR solved.',
-    t201: '<strong>An algorithm for learning</strong> (page 8) — so that the network tunes its millions of parameters on its own, backpropagation distributes the blame for the error backwards using the chain rule and assembles the gradient vector $\\nabla C$. Gradient descent does the rest: $\\theta := \\theta - \\alpha\\,\\nabla C$, one small step downhill after another. Repeated thousands of times, that is what training is.',
+    t196: '<strong>A line and a way to measure error</strong> (pages 3 and 4) — we started from the real Scaling Laws data and modelled it with the simplest thing there is: $\\hat{y} = w \\cdot x + b$. To decide which line was best we defined the mean squared error, and that changed everything: modelling stopped being drawing by eye and became <em>minimising a function</em>.',
+    t197: '<strong>More dimensions</strong> (page 5) — reality almost never depends on a single variable, so the line became a plane and the arithmetic became matrices: $Y = XW$. Differentiating the cost with respect to the parameters and setting it to zero gave us the least-squares formula, and also showed us its limit: outside linear regression that closed form does not always exist, and an iterative method is needed.',
+    t198: '<strong>A neuron</strong> (pages 6 and 7) — that same weighted sum, with a bias and a threshold on top, turned out to be the perceptron. By choosing three numbers by hand we made it compute the AND and OR gates: in the plane, its line separates the successful combinations from the failing ones.',
+    t199: '<strong>A geometric limit</strong> (page 8) — DeepMind and MIT’s multi-agent finding has the shape of an XOR, and no straight line can separate that crossed pattern. A single neuron is not enough. This limitation has been known since 1969, and for years it held back the entire field.',
+    t200: '<strong>Layers and activation functions</strong> (page 9) — with two neurons in a hidden layer there are two lines acting at once, and by passing each sum through a non-linear function (the sigmoid, the ReLU) the boundaries curve and combine. Together they separate what a single line could not: XOR solved.',
+    t201: '<strong>An algorithm for learning</strong> (page 10) — so that the network tunes its millions of parameters on its own, backpropagation distributes the blame for the error backwards using the chain rule and assembles the gradient vector $\\nabla C$. Gradient descent does the rest: $\\theta := \\theta - \\alpha\\,\\nabla C$, one small step downhill after another. Repeated thousands of times, that is what training is.',
     t202: 'That is a neural network. The giant systems that motivated this project — LLMs, agents that program by themselves — are this same idea repeated at an unimaginable scale: more inputs, more neurons, more layers. But inside there is nothing more mysterious than what we have seen: weighted sums, functions that curve and derivatives that hand out responsibility.',
     t203: 'The whole edifice rests on the mathematics of this course: partial derivatives, the chain rule and a humble procedure that insists on being a little less wrong at every step. You do not need more than that to start understanding what is coming.',
     t204: 'References',
@@ -306,7 +308,7 @@
     t206: 'Finding',
     t207: 'Paper',
     t208: 'Source',
-    t209: 'Page 9 of 9',
+    t209: 'Page 11 of 11',
     t210: '&larr; Backpropagation',
     t211: 'Back to the cover &#8635;',
 
@@ -326,7 +328,9 @@
     respInput: 'input',
     respError: 'error',
     pagerLabel: 'Pages',
+    pagerItem: 'Page',
     langLabel: 'Language',
+    shareEmail: 'Share by email',
   };
 
   /* Spanish strings that do not live in the HTML (chart labels, chrome). */
@@ -346,7 +350,9 @@
     respInput: 'entrada',
     respError: 'error',
     pagerLabel: 'Páginas',
+    pagerItem: 'Página',
     langLabel: 'Idioma',
+    shareEmail: 'Compartir por correo',
   };
 
   /* ---------- Current language ---------- */
@@ -368,6 +374,11 @@
     document.title = t('docTitle');
     var meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', t('docDesc'));
+    var mail = document.querySelector('.splash__email');
+    if (mail) {
+      mail.setAttribute('href', 'mailto:?subject=' + encodeURIComponent(t('docTitle')));
+      mail.setAttribute('aria-label', t('shareEmail'));
+    }
     if (lang !== 'en') return;
     var nodes = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < nodes.length; i++) {
@@ -429,17 +440,22 @@
     }
   }
 
-  /* ---------- Numbered pager (1 … N) available on every page ---------- */
+  /* ---------- Numbered pager (1 … N) available on every page ----------
+     The two introduction pages come first, followed by the chapters. */
   function buildPager() {
-    var paginas = [];
+    var paginas = ['intro', 'probability'].filter(function (id) {
+      return document.getElementById(id);
+    });
+    var caps = [];
     var secs = document.querySelectorAll('.screen');
     for (var i = 0; i < secs.length; i++) {
-      if (/^cap\d+$/.test(secs[i].id)) paginas.push(secs[i].id);
+      if (/^cap\d+$/.test(secs[i].id)) caps.push(secs[i].id);
     }
-    if (!paginas.length) return;
-    paginas.sort(function (a, b) {
+    caps.sort(function (a, b) {
       return parseInt(a.replace('cap', ''), 10) - parseInt(b.replace('cap', ''), 10);
     });
+    paginas = paginas.concat(caps);
+    if (!paginas.length) return;
 
     function pagerPara(idActual) {
       var nav = document.createElement('nav');
@@ -451,7 +467,7 @@
         b.className = 'pager__btn' + (id === idActual ? ' is-current' : '');
         b.textContent = String(idx + 1);
         b.setAttribute('data-goto', id);          // lo maneja app.js
-        b.setAttribute('aria-label', t('pagerLabel') + ' ' + (idx + 1));
+        b.setAttribute('aria-label', t('pagerItem') + ' ' + (idx + 1));
         if (id === idActual) b.setAttribute('aria-current', 'page');
         nav.appendChild(b);
       });

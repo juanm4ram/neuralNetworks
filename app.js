@@ -659,7 +659,7 @@
     if (window.console && console.error) console.error('Figuras:', err);
   }
 
-  /* ---------- Tabla de referencias (página 9), generada desde papers.js ---------- */
+  /* ---------- Tabla de referencias (página 11), generada desde papers.js ---------- */
   function buildReferencias() {
     var tbody = document.getElementById('papers-tbody');
     if (!tbody || !window.PAPERS) return;

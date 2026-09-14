@@ -19,9 +19,9 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 ## How we approached it
 
 - **An expanded introduction.** A learning analogy leads into language models, token IDs, embeddings, Transformer blocks and learned parameters. The introduction uses LaTeX formulas, colored text panels and a visual token-to-vector example.
-- **A story in 9 pages, from simple to complex.** The site reads like a notebook: a line fitted to real data (page 1) → the error as a function to minimise (page 2) → more dimensions and least squares (page 3) → the perceptron (page 4) → AND/OR gates (page 5) → the XOR limit (page 6) → layers and activation functions (page 7) → backpropagation and gradient descent (page 8) → conclusion and references (page 9).
+- **A story in 11 pages, from simple to complex.** The site reads like a notebook: the introduction and an LLM's probability function (pages 1 and 2) → a line fitted to real data (page 3) → the error as a function to minimise (page 4) → more dimensions and least squares (page 5) → the perceptron (page 6) → AND/OR gates (page 7) → the XOR limit (page 8) → layers and activation functions (page 9) → backpropagation and gradient descent (page 10) → conclusion and references (page 11).
 - **Real papers as the through-line.** Each mathematical concept enters when a real finding demands it: linear regression shows up to model OpenAI's Scaling Laws, and XOR shows up because the DeepMind + MIT multi-agent finding (multi-agents help on parallelisable tasks and hurt on sequential ones) has exactly that shape.
-- **Interactive where it adds value, static where it does not.** Page 2 has a tool to drag the slope and bias of the line and watch the mean squared error change live. The rest are SVG charts drawn in code, with no libraries.
+- **Interactive where it adds value, static where it does not.** Page 4 has a tool to drag the slope and bias of the line and watch the mean squared error change live. The rest are SVG charts drawn in code, with no libraries.
 - **Language selection.** The introduction, navigation and nine chapters support English and Spanish, with English selected by default. Color highlights, text panels and LaTeX formulas are preserved when switching languages. Spanish example tokens are retained to keep their IDs and vectors consistent. The language choice is remembered across visits.
 - **Handmade aesthetic.** Handwritten typography, paper colours and an animated cover (a homage to Nicky Case's *The Evolution of Trust*): it should feel like a notebook, not a corporate deck.
 - **No dependencies, no build step.** Vanilla HTML + CSS + JS; only MathJax from a CDN for the formulas. Deploying means copying static files.
@@ -36,21 +36,21 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 
 ![Introduction: tokens and their positions in the input vector](assets/readme/introduccion-tokens-en.png)
 
-**Page 1 — the real data and the first line.** The test loss of OpenAI's models falls with compute following a power law; on a log-log scale it is almost a straight line, and that line is our first model:
+**Page 3 — the real data and the first line.** The test loss of OpenAI's models falls with compute following a power law; on a log-log scale it is almost a straight line, and that line is our first model:
 
-![Page 1: scaling laws](assets/readme/scaling-laws.png)
+![Page 3: scaling laws](assets/readme/scaling-laws.png)
 
-**Page 2 — the error as a function.** The interactive tool: you move the slope and the bias, and the mean squared error tells you how good your line is:
+**Page 4 — the error as a function.** The interactive tool: you move the slope and the bias, and the mean squared error tells you how good your line is:
 
-![Page 2: regression tool](assets/readme/herramienta-mse.png)
+![Page 4: regression tool](assets/readme/herramienta-mse.png)
 
-**Page 6 — the limit.** The multi-agent finding has the shape of an XOR and no straight line can separate that pattern: the geometric reason why networks are needed:
+**Page 8 — the limit.** The multi-agent finding has the shape of an XOR and no straight line can separate that pattern: the geometric reason why networks are needed:
 
-![Page 6: the XOR paradox](assets/readme/xor.png)
+![Page 8: the XOR paradox](assets/readme/xor.png)
 
-**Page 9 — the conclusion.** A recap of everything used, stage by stage, plus the references:
+**Page 11 — the conclusion.** A recap of everything used, stage by stage, plus the references:
 
-![Page 9: conclusion](assets/readme/conclusion.png)
+![Page 11: conclusion](assets/readme/conclusion.png)
 
 ## Running it locally
 
@@ -64,20 +64,20 @@ python -m http.server 8000
 npx http-server -p 8000 -c-1
 ```
 
-Open `http://localhost:8000` and navigate with the buttons, or with the numbered pager (1–9) available at the bottom of every page. You can also jump straight to a page with the hash: `http://localhost:8000/#cap6`.
+Open `http://localhost:8000` and navigate with the buttons, or with the numbered pager (1–11) available at the bottom of every page. You can also jump straight to a page with the hash: `http://localhost:8000/#cap6`.
 
 ## Project structure
 
 ```
 neuralNetworks/
-├── index.html      # Introduction and 9 chapters (Spanish source text)
+├── index.html      # 2 introduction pages and 9 chapters (Spanish source text)
 ├── styles.css      # "Handmade" aesthetic (paper, handwritten type)
 ├── app.js          # Navigation, animated cover, charts and references table
 ├── i18n.js         # ★ English dictionary + language engine (default: English)
 ├── papers.js       # Bibliography: only the papers cited in the text (data only)
 ├── assets/         # Font, images and README screenshots
 ├── videos/         # Supporting animations
-└── PaperSequentialParallel.pdf  # The Plancraft paper (page 6)
+└── PaperSequentialParallel.pdf  # The Plancraft paper (page 8)
 ```
 
 ### How the bilingual layer works
@@ -88,7 +88,7 @@ Switching language reloads the page (keeping the current section through the `#h
 
 To translate a new block: add `data-i18n="tNNN"` to the element in `index.html` and its English string to the `EN` dictionary in `i18n.js`. Chart labels and other strings that never live in the DOM are looked up with `I18N.t('key')`.
 
-`papers.js` contains only the papers **cited in the text** (\[1]–\[5]), in the same order as the citations; the references table on page 9 is generated from it. Each entry carries an `en` block with its English version. To add a reference, append an entry to the array and cite it in the text.
+`papers.js` contains only the papers **cited in the text** (\[1]–\[5]), in the same order as the citations; the references table on page 11 is generated from it. Each entry carries an `en` block with its English version. To add a reference, append an entry to the array and cite it in the text.
 
 ## References
 
