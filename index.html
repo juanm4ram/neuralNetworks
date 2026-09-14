@@ -77,9 +77,9 @@
           <span data-i18n="t012" class="page__kicker">Introducción</span>
 
           <div class="intro-text">
-<p class="prose" data-i18n="intro_p00">Cuando uno estudia <span class="concept concept--red">cómo aprende el cerebro de un bebé</span>, sabemos que viene con una <span class="concept concept--context">estructura</span> que se irá desarrollando conforme crezca, y que tiene <span class="concept concept--learn">información precargada por genética</span>. Parte del estudio de la pedagogía en humanos se trata de entender cómo funciona el cerebro en tales etapas, y a qué se le puede exponer para propiciar las mejores respuestas del mismo.</p>
+<p class="prose" data-i18n="intro_p00">Algo que puede ser útil para mejorar nuestro <span class="concept concept--red">discernimiento al utilizar herramientas de IA</span> es comprender cómo funciona la estadística que tienen por detrás.</p>
 
-<p class="prose" data-i18n="intro_p01">Y bien, tal y como un tutor posee técnicas las cuales se basan en conocer como funciona nuestro cerebro y obtener del aprendiz, los mejores puntajes en desempeño, es importante para el entrenamiento de una <span class="concept concept--learn">inteligencia artificial</span>, entender bajo qué estructura se desenvuelve su pensamiento y cómo se optimiza.</p>
+<p class="prose" data-i18n="intro_p01">De esta manera podremos reconocer <span class="concept concept--context">cuándo una respuesta puede ser confiable</span>, cuándo conviene verificarla y cuáles son los límites de la herramienta.</p>
 
           <!-- VIDEO 1: AwesomeClip.mp4 (loop, sin audio, autoplay) -->
           <figure class="video-card">
@@ -105,12 +105,47 @@
           </figure>
 
 
-<p class="prose" data-i18n="intro_p02">Llamamos Large Language model (LLM) o modelo del lenguaje a un modelo matemático que permite dar un output de texto según una <span class="concept concept--learn">función de probabilidad</span> (que variará de modelo en modelo), en base a un input de texto. Podríamos pensarlo como el andamiaje o estructura que queda formada en un cerebro con millones de conexiones, algunas más fuertes que otras y sectorizaciones según especialización. Veremos a continuación el por qué de esta analogía.</p>
+<p class="prose" data-i18n="intro_p02">Llamamos <em>Large Language Model</em> (LLM), o modelo de lenguaje, a un modelo matemático que permite generar una respuesta en texto mediante una <span class="concept concept--learn">función de probabilidad</span> —que variará de un modelo a otro— a partir de un mensaje de texto. Esta función depende de millones de parámetros ajustados durante el entrenamiento, comparables, como analogía, con las millones de conexiones sinápticas que se dan en nuestro cerebro. A continuación veremos por qué esta comparación resulta útil.</p>
 
-<p class="prose" data-i18n="intro_p03">Este modelo calcula probabilidades para el <span class="concept concept--text">próximo token</span> que va a escribir, y luego se vuelve a enviar todo el texto a la función.</p>
+          </div>
+        </div>
+
+        <div class="page__nav">
+          <button data-i18n="t018" type="button" class="btn btn--ghost" data-goto="splash">
+            &larr; Portada
+          </button>
+          <button data-i18n="intro_next_probability" type="button" class="btn btn--primary" data-goto="probability">
+            La función de probabilidad &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PANTALLA 3 — LA FUNCIÓN DE PROBABILIDAD
+         ============================================================ -->
+    <section id="probability" class="screen">
+      <div class="page">
+        <div class="page__bar">
+          <span data-i18n="t010" class="page__logo">La evolución de los agentes y las redes neuronales</span>
+          <button data-i18n="t011" type="button" class="page__home" data-goto="splash">
+            &#8635; Inicio
+          </button>
+        </div>
+
+        <div class="page__body">
+          <span data-i18n="intro_probability_title" class="page__kicker">La función de probabilidad</span>
+
+          <div class="intro-text">
+
+<p class="prose" data-i18n="intro_p03">Un LLM calcula probabilidades para el <span class="concept concept--text">próximo token</span> que va a escribir. Una vez elegido y agregado ese token a la respuesta, vuelve a enviar todo el texto anterior a la misma función para calcular el siguiente.</p>
 
 <div class="intro-card intro-card--text">
-<p class="prose" data-i18n="intro_p04"><span class="concept concept--text">Los tokens</span> son <span class="concept concept--text">fragmentos de caracteres</span> que tienen un <span class="concept concept--text">ID numérico</span> asociado. Qué fragmentos merecen la pena ser representados como división y etiquetados con un id único, depende de la repetición que tiene el mismo en los textos con los que se entrena a un tokenizador. Por ejemplo, un tokenizador no asignará un ID a un fragmento de caracteres como &quot;jkdjfkdjfk&quot; porque no se encuentra en ninguna palabra. Por el contrario &quot;in&quot; es un fragmento común que puede estar en &quot;inteligencia&quot;, &quot;intento&quot;, etc. Con lo cual se sabe que merece la pena llevar un ID y esto permite procesar el texto de una forma más económica, ya que si asignaramos IDs a cada combinación de caracteres tendríamos que ocupar mucho espacio de memoria.</p>
+<p class="prose" data-i18n="intro_p04"><span class="concept concept--text">Los tokens</span> son <span class="concept concept--text">fragmentos de caracteres</span> que tienen un <span class="concept concept--text">ID numérico</span> asociado.</p>
+
+<p class="prose" data-i18n="intro_p04a">Qué fragmentos merece la pena representar como divisiones independientes y etiquetar con un ID único depende de la frecuencia con la que aparecen en los textos usados para entrenar al tokenizador.</p>
+
+<p class="prose" data-i18n="intro_p04b">Por ejemplo, un tokenizador no asignará un ID a un fragmento de caracteres como &quot;jkdjfkdjfk&quot; porque no se encuentra en ninguna palabra. Por el contrario, &quot;in&quot; es un fragmento común que puede estar en &quot;inteligencia&quot;, &quot;intento&quot;, etc.</p>
 </div>
 
 <p class="prose" data-i18n="intro_p05">Además, usar fragmentos frecuentes permite trabajar con <span class="concept concept--gold">menos pasos</span> que si se procesara letra por letra, reduciendo el costo de cálculo y permitiendo incluir más texto en el contexto.</p>
@@ -125,9 +160,9 @@ Como primer tip a tener en cuenta: un tokenizador puede ser mejor que otro, <spa
 <p class="prose" data-i18n="intro_p08">&quot;Hola, qué lindo día!&quot;</p>
 <p class="prose" data-i18n="intro_p09">Y los tokens fueran estos fragmentos:</p>
 <div class="token-sequence" data-i18n-aria-label="intro_tokens_label" aria-label="Ho, la, coma, qué, lin, do, día, signo de exclamación"><span>Ho</span> <span>la</span> <span>,</span> <span>qué</span> <span>lin</span> <span>do</span> <span>día</span> <span>!</span></div>
-<p class="prose" data-i18n="intro_p10">La entrada de la función se representará con el <span class="concept concept--text">ID de cada token</span>, en el mismo orden:</p>
-<div class="math-block token-vector">$$\begin{aligned}x=(&amp;\underbrace{\mathrm{ID}_{\mathrm{Ho}}}_{\text{Ho}},\;\underbrace{\mathrm{ID}_{\mathrm{la}}}_{\text{la}},\;\underbrace{\mathrm{ID}_{\text{,}}}_{\text{,}},\;\underbrace{\mathrm{ID}_{\text{qué}}}_{\text{qué}},\\&amp;\underbrace{\mathrm{ID}_{\mathrm{lin}}}_{\text{lin}},\;\underbrace{\mathrm{ID}_{\mathrm{do}}}_{\text{do}},\;\underbrace{\mathrm{ID}_{\text{día}}}_{\text{día}},\;\underbrace{\mathrm{ID}_{\text{!}}}_{\text{!}})\end{aligned}$$</div>
-<p class="prose" data-i18n="intro_p11">Cada componente del vector corresponde a un token del texto. En este ejemplo hay <span class="concept concept--gold">ocho</span>; con textos más largos, el vector tendrá más componentes.</p>
+<p class="prose" data-i18n="intro_p10">La entrada de la función se representará con el <span class="concept concept--text">ID numérico de cada token</span>, en el mismo orden. Por ejemplo, usando valores ilustrativos:</p>
+<div class="math-block token-vector">$$\begin{aligned}x=(&amp;\underbrace{1542}_{\text{Ho}},\;\underbrace{87}_{\text{la}},\;\underbrace{11}_{\text{,}},\;\underbrace{920}_{\text{qué}},\\&amp;\underbrace{3145}_{\text{lin}},\;\underbrace{206}_{\text{do}},\;\underbrace{781}_{\text{día}},\;\underbrace{0}_{\text{!}})\end{aligned}$$</div>
+<p class="prose" data-i18n="intro_p11">Cada componente del vector corresponde a un token del texto. En este ejemplo hay <span class="concept concept--gold">ocho</span>. Los números concretos dependen del vocabulario de cada tokenizador; con textos más largos, el vector tendrá más componentes.</p>
 </div>
 
 <p class="prose" data-i18n="intro_p12">La función de probabilidad de un LLM se ve así:</p>
@@ -136,25 +171,27 @@ Como primer tip a tener en cuenta: un tokenizador puede ser mejor que otro, <spa
 
 <p class="prose" data-i18n="intro_p13">Es decir: «probabilidad del próximo token dado el texto anterior».</p>
 
-<p class="prose" data-i18n="intro_p14">Esta función de probabilidad... ¿De dónde sale y como es capaz de dar respuestas inteligentes? Veamos cómo está diseñada...</p>
+<p class="prose" data-i18n="intro_p14">Esta función de probabilidad... ¿De dónde sale y cómo es capaz de dar respuestas inteligentes? Veamos cómo está diseñada...</p>
 
 <div class="math-block">$$f_{\theta}(x)$$</div>
 
-<p class="prose" data-i18n="intro_p15">Llamaremos  $f$ a la <span class="concept concept--red">función que representa al modelo completo</span> (o función de modelo) y $\theta$ es el conjunto de todos sus <span class="concept concept--learn">parámetros aprendidos</span> (explicaremos esto más adelante). $x$ será el vector formado por los IDs de los tokens.</p>
+<p class="prose" data-i18n="intro_p15">Llamaremos $f$ a la <span class="concept concept--red">función que representa al modelo completo</span> (o función de modelo) y $\theta$ será el conjunto de todos sus <span class="concept concept--learn">parámetros aprendidos</span> (explicaremos esto más adelante). $x$ será el vector formado por los IDs de los tokens.</p>
 
-<p class="prose" data-i18n="intro_p16">Esta función de modelo, tendrá muchas etapas. Cada una de las modificaciones que se haga a cada etapa tendrá que trabajar con lo que dejó la etapa anterior, y bien, eso es lo que hace una <span class="concept concept--context">composición de funciones</span>, expresado así:</p>
+<p class="prose" data-i18n="intro_p16">La función del modelo tendrá muchas etapas. Cada transformación trabaja con el resultado de la etapa anterior: eso es una <span class="concept concept--context">composición de funciones</span>, que puede expresarse así:</p>
 
 <div class="math-block" data-i18n="intro_math0">$$f_{\theta}(x)=(\mathrm{Etapa}_3\circ\mathrm{Etapa}_2\circ\mathrm{Etapa}_1)(x)$$</div><p class="prose" data-i18n="intro_p17">La composición se lee de derecha a izquierda: primero actúa la etapa 1, luego la 2 y finalmente la 3.</p>
 
-<p class="prose" data-i18n="intro_p18">A continuación describiremos a grandes rasgos cuales son cada una de estas etapas. Como curiosidad puedo decir que cómo están hechas estas etapas varía de empresa en empresa y los diseños finales no son públicos, solo parcialmente. Pero, por dar un ejemplo, el modelo de Google, Gemini, tiene una estructura similar a la siguiente:</p>
+<p class="prose" data-i18n="intro_p18">A continuación describiremos a grandes rasgos cuáles son estas etapas. Su implementación varía entre modelos y empresas, y muchos detalles de los diseños finales solo se publican parcialmente. Como ejemplo simplificado, un modelo de lenguaje puede representarse con una estructura como la siguiente:</p>
 
 <div class="math-block" data-i18n="intro_math1">$$\begin{aligned}f_{\theta}={}&amp;\operatorname{Softmax}\circ\operatorname{OutputProjection}\\&amp;\circ\underbrace{B_L\circ\cdots\circ B_1}_{L\text{ bloques Transformer}}\\&amp;\circ\operatorname{Embedding}\end{aligned}$$</div><p class="prose" data-i18n="intro_p19">Cada bloque $B_i$ incluye atención y una red MLP o una mezcla de expertos (MoE). Este esquema omite detalles para mostrar las etapas principales.</p>
 
-<p class="prose" data-i18n="intro_p20">Explicar cada una de estas etapas puede ser un poco extenso, así que en este trabajaremos solo con la primera que se usa (la que está más a la derecha), la de Embeddings.</p>
+<p class="prose" data-i18n="intro_p20">Explicar cada una de estas etapas en profundidad puede ser extenso. En este trabajo comenzaremos con la primera que se utiliza —la que está más a la derecha—, los <em>embeddings</em>, y luego explicaremos cómo los bloques Transformer les incorporan contexto.</p>
+
+<h2 data-i18n="intro_embeddings_title">Embeddings</h2>
 
 <div class="intro-card intro-card--vector">
 <p class="prose" data-i18n="intro_p21">Una vez que el tokenizador convierte el texto en IDs, cada ID se usa para buscar un vector en una gran tabla de embeddings.<br>
-<span class="concept concept--vector">Un embedding</span> es un <span class="concept concept--vector">vector de números</span> aprendido durante el entrenamiento y asignado a un token;asignación que a diferencia del tokenizador, no asigna los números según la frecuencia, sino que asigna según la cercanía que hay entre cada token según su significado.</p>
+<span class="concept concept--vector">Un embedding</span> es un <span class="concept concept--vector">vector de números</span> aprendido durante el entrenamiento y asignado a un token. A diferencia del ID definido por el tokenizador, las coordenadas del embedding se ajustan según los contextos en los que aparece el token y terminan capturando relaciones de significado.</p>
 </div>
 
 <p class="prose" data-i18n="intro_p22">Pensémoslo como una tabla donde cada fila pertenece a un token del vocabulario.<br>
@@ -189,7 +226,7 @@ Si el tokenizer produce:</p>
 =
 (-0.1,\;0.8,\;0.3)$$</div>
 
-<p class="prose" data-i18n="intro_p26">Una vez encontrada la fila, se toma ese vector entero y ese vector reemplaza al ID como representación del token para las siguientes etapas de la funcion del modelo, porque a partir de la matriz de embeddings se pueden aplicar transformaciones (principal objetivo de la próxima etapa).<br>
+<p class="prose" data-i18n="intro_p26">Una vez encontrada la fila, se toma el vector completo y este reemplaza al ID como representación del token para las siguientes etapas de la función del modelo. Sobre la matriz de embeddings ya pueden aplicarse transformaciones, que serán el objetivo de la próxima etapa.<br>
 Es decir:</p>
 
 <div class="math-block">$$\boxed{1}$$</div>
@@ -253,11 +290,13 @@ Por ejemplo, inicialmente:</p>
 
 <p class="prose" data-i18n="intro_p38">El entrenamiento ajusta esos números porque ciertos valores ayudan al modelo a predecir mejor los siguientes tokens.</p>
 
+<h2 data-i18n="intro_transformer_title">Bloques Transformer</h2>
+
 <p class="prose" data-i18n="intro_p39">Después de obtener los embeddings, esas representaciones entran en bloques Transformer.<br>
 La función principal de un bloque Transformer es tomar los vectores iniciales de los tokens y convertirlos en representaciones que <span class="concept concept--context">incorporen contexto</span>.<br>
 Por ejemplo, el embedding inicial de &quot;banco&quot; es siempre el mismo:</p>
 
-<div class="math-block">$$E(\text{&quot;banco&quot;})=\mathbf e_{\text{banco}}$$</div>
+<div class="math-block">$$E(\text{&quot;banco&quot;})=\mathbf e_{\text{banco}}=(0.32434,\;-1.234324,\;\ldots)$$</div>
 
 <p class="prose" data-i18n="intro_p40">Pero el Transformer transforma ese vector de manera distinta según aparezca en:<br>
 “deposité dinero en el banco”</p>
@@ -272,22 +311,10 @@ Por ejemplo, el embedding inicial de &quot;banco&quot; es siempre el mismo:</p>
 \boxed{\text{representación contextual}}$$</div>
 
 <div class="intro-card intro-card--context">
-<p class="prose" data-i18n="intro_p43">Un bloque Transformer hace esto principalmente con dos componentes:<br>
-<span class="concept concept--context">1. Atención</span>: permite que cada token “mire” otros tokens y determine cuáles son relevantes.<br>
-<span class="concept concept--context">2. Red neuronal feed-forward</span>: transforma aún más la representación de cada token.<br>
-Muy simplificado:</p>
+<p class="prose" data-i18n="intro_p43">En términos simples, los bloques Transformer sirven para que el modelo <span class="concept concept--context">preste atención a las palabras clave</span> del texto y use esa información para <span class="concept concept--context">poner en contexto cada palabra</span>. Así, una palabra deja de interpretarse de forma aislada y pasa a representarse según las palabras que la rodean.</p>
 </div>
 
-<div class="math-block">$$X
-\rightarrow
-\text{Attention}(X)
-\rightarrow
-\text{MLP}
-\rightarrow
-X&#x27;$$</div>
-
-<p class="prose" data-i18n="intro_p44">donde $X$ es la matriz de embeddings y $X&#x27;$ es una nueva matriz de vectores más contextualizados.<br>
-Por ejemplo:</p>
+<p class="prose" data-i18n="intro_p44">Veamos otro ejemplo:</p>
 
 <div class="math-block">$$\text{&quot;El gato tomó leche&quot;}$$</div>
 
@@ -322,15 +349,15 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
 <p class="prose" data-i18n="intro_p49">Entonces, los investigadores determinan la arquitectura del modelo y las operaciones matemáticas que lo componen, pero no establecen manualmente los valores de todos sus parámetros. Durante el entrenamiento, el modelo los ajusta mediante un proceso de optimización que busca <span class="concept concept--learn">reducir progresivamente</span> una <span class="concept concept--learn">función de error</span>, el alejamiento que se tiene del objetivo.</p>
 </div>
 
-<p class="prose" data-i18n="intro_p50">En este trabajo veremos cómo con herramientas de Análisis Matemático y Álgebra Lineal, como las funciones de varias variables, las derivadas parciales y el gradiente, permiten comprender una parte fundamental de ese proceso de aprendizaje y optimización, y cómo este contribuye a que un modelo de lenguaje pueda generar texto coherente.</p>
+<p class="prose" data-i18n="intro_p50">En este trabajo veremos cómo herramientas de Análisis Matemático y Álgebra Lineal —como las funciones de varias variables, las derivadas parciales y el gradiente— permiten comprender una parte fundamental de ese proceso de aprendizaje y optimización, y cómo este contribuye a que un modelo de lenguaje pueda generar texto coherente.</p>
 </div>
 
 
         </div>
 
         <div class="page__nav">
-          <button data-i18n="t018" type="button" class="btn btn--ghost" data-goto="splash">
-            &larr; Portada
+          <button data-i18n="intro_probability_back" type="button" class="btn btn--ghost" data-goto="intro">
+            &larr; Introducción
           </button>
           <button data-i18n="t019" type="button" class="btn btn--primary" data-goto="cap1">
             Comenzar el trabajo &rarr;
@@ -386,18 +413,17 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
           </div>
 
           <p data-i18n="t026">
-            ¿Y qué es ese “error” que baja? El paper lo llama
-            <em>cross-entropy loss</em>, y se entiende mejor recordando cómo
+            ¿Y qué es ese “error” que baja? Se entiende mejor recordando cómo
             escribe un modelo de lenguaje: palabra por palabra. Antes de cada
-            palabra, el modelo reparte probabilidades entre todas las
-            candidatas; a las que le parecen más naturales les da más, a las
-            raras les da menos. Después se mira qué palabra venía de verdad en
-            el texto, y se lo penaliza según cuánta probabilidad le había
-            dado. Supongamos que la palabra que venía era <em>casa</em>:
+            palabra, el modelo reparte probabilidades entre todas las candidatas;
+            a las que le parecen más naturales les da más, a las raras les da
+            menos. Después se mira qué palabra venía de verdad en el texto, y se
+            lo penaliza según cuánta probabilidad le había dado. Supongamos que
+            la palabra que venía era <em>casa</em>:
           </p>
           <ul class="defs">
-            <li data-i18n="t027"><span class="sym">80&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización chica: $-\ln(0{,}8) \approx 0{,}22$.</li>
-            <li data-i18n="t028"><span class="sym">10&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización grande: $-\ln(0{,}1) \approx 2{,}30$.</li>
+            <li data-i18n="t027"><span class="sym">80&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización chica.</li>
+            <li data-i18n="t028"><span class="sym">10&nbsp;%</span> asignado a <em>casa</em> &rarr; penalización grande.</li>
           </ul>
           <p data-i18n="t029">
             Para puntuar un modelo completo se repite esa cuenta sobre miles
@@ -405,9 +431,8 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
             textos que el modelo nunca vio durante el entrenamiento, se lo
             llama <em>test loss</em>. Usar texto nuevo es lo que permite saber
             si el modelo de verdad aprendió el idioma o si solo memorizó sus
-            ejemplos:
+            ejemplos.
           </p>
-          <div class="eq">$$\text{test loss} = \frac{1}{T} \sum_{t=1}^{T} -\ln P(\text{token correcto}_t)$$</div>
           <p data-i18n="t030">
             Un test loss bajo significa que el modelo le viene dando buena
             probabilidad a las palabras que efectivamente aparecen. Eso queda
@@ -415,23 +440,22 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
             desempeño funciona muy bien, y es la vara que usa el paper: más
             cómputo, menor test loss, mejor modelo de lenguaje. Con un dataset
             suficientemente grande y un modelo de tamaño óptimo, la pérdida
-            baja siguiendo una ley de potencia:
+            baja siguiendo una ley de potencia.
           </p>
-          <div class="eq">$$L(C_{\min}) = \left(\frac{C_c^{\min}}{C_{\min}}\right)^{\alpha_C}, \qquad \alpha_C \approx 0{.}050$$</div>
           <p data-i18n="t031">
             Es decir, el rendimiento mejora de forma predecible pero con
             <em>rendimientos decrecientes</em>: para bajar mucho la pérdida,
             necesitás aumentar muchísimo el cómputo. Anotamos algunos puntos
-            aproximados de la Figura 1 del paper (eje X = cómputo de
-            entrenamiento en PF-days, eje Y = test loss, ambos en escala
-            logarítmica):
+            aproximados de la Figura 1 del paper citado, que son mediciones del
+            test loss frente al aumento del cómputo:
           </p>
 
           <figure class="gate-card" style="max-width: 460px; margin: 18px auto;">
             <h4 data-i18n="t032">Test loss vs. cómputo de entrenamiento</h4>
-            <div data-i18n="t033" class="gate-sub">en escala log-log, los puntos caen casi sobre una recta</div>
             <svg id="scatter-cap1" viewBox="0 0 380 240" aria-hidden="true"></svg>
           </figure>
+
+          <p data-i18n="t031a">(eje X = cómputo de entrenamiento, eje Y = test loss, ambos en escala logarítmica):</p>
 
           <p data-i18n="t034">
             En escala log-log, la curva baja casi como una línea recta: esa es
@@ -489,7 +513,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
           <p data-i18n="t046">
             ¿Cómo sabe el algoritmo si una línea es mejor que otra? Aquí entra el
             concepto de <em>error</em>. Para un punto determinado (por ejemplo,
-            un cómputo de $10^{0} = 1$ PF-day), nuestro modelo predice un test
+            un cómputo de $10^{0} = 1$), nuestro modelo predice un test
             loss de 2,9, pero el dato real del paper de Scaling Laws marca 2,6.
             La distancia entre el valor predicho y el valor real es nuestro
             error.

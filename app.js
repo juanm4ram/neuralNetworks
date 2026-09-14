@@ -72,8 +72,8 @@
   /* ---------- Datos compartidos (capítulos 1 y 2) ----------
      Puntos aproximados de la Figura 1 (izquierda) de
      "Scaling Laws for Neural Language Models" (OpenAI, 2020).
-     x = órdenes de magnitud de cómputo (log10 de PF-days, corrido +6:
-         0 ↔ 10⁻⁶ PF-days, 9 ↔ 10³ PF-days)
+     x = órdenes de magnitud de cómputo (escala log10, corrida +6:
+         0 ↔ 10⁻⁶, 9 ↔ 10³)
      y = test loss (cross-entropy) */
   var DATA = [
     [0, 5.2],
@@ -85,7 +85,7 @@
     [9, 1.9],
   ];
 
-  // Marcas del eje X en escala logarítmica (PF-days).
+  // Marcas del eje X en escala logarítmica.
   var XTICKS = [
     [0, '10⁻⁶'],
     [3, '10⁻³'],
