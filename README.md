@@ -1,6 +1,6 @@
 # The evolution of agents and neural networks
 
-A **Calculus II** project: an interactive web page that explains what is behind neural networks — how they learn, how they are optimised and where they came from — using nothing but the mathematics of the course.
+A **Probability & Statistics** project: an interactive web page that explains what is behind neural networks — how they learn, how they are optimised and where they came from — using nothing but the mathematics of the course.
 
 **➜ Live site:** [Open the project](https://juanm4ram.github.io/neuralNetworks/) · [Introduction](https://juanm4ram.github.io/neuralNetworks/#intro)
 
