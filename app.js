@@ -312,7 +312,38 @@
         draw();
       });
     }
+    // Draw at the available CSS width instead of shrinking a desktop bitmap.
+    // Hidden chapters are resized when they become visible.
+    function resizeCanvas() {
+      var width = canvas.parentElement.clientWidth;
+      if (!width) return;
+      CW = width;
+      CH = Math.max(270, Math.round(CW * 380 / 640));
+      var ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(CW * ratio);
+      canvas.height = Math.round(CH * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ml = CW < 400 ? 44 : 56;
+      mr = CW < 400 ? 16 : 24;
+      x0 = ml;
+      x1 = CW - mr;
+      y0 = CH - mb;
+      draw();
+    }
     draw();
+    if (window.ResizeObserver) {
+      new ResizeObserver(resizeCanvas).observe(canvas.parentElement);
+    } else {
+      window.addEventListener('resize', resizeCanvas);
+      // Navigation can reveal a previously hidden chapter without a resize.
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-goto]')) resizeCanvas();
+      });
+    }
+    resizeCanvas();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(resizeCanvas);
+    }
   }
 
   /* ---------- Compuertas: recorte de semiplano (Sutherland-Hodgman) ---------- */
@@ -825,5 +856,14 @@
     mouse.x = -99999;
     mouse.y = -99999;
   });
-  window.addEventListener('resize', build);
+  if (window.ResizeObserver) {
+    new ResizeObserver(function () {
+      if (canvas.clientWidth && canvas.clientHeight) build();
+    }).observe(canvas);
+  } else {
+    window.addEventListener('resize', build);
+    document.addEventListener('click', function (ev) {
+      if (ev.target.closest('[data-goto="splash"]')) build();
+    });
+  }
 })();

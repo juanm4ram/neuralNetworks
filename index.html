@@ -2,13 +2,13 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="La evolución de los agentes y las redes neuronales: una exploración con herramientas de Análisis Matemático 2."
     />
     <title>La evolución de los agentes y las redes neuronales</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260917-2" />
     <script>
       window.MathJax = {
         tex: {
@@ -79,7 +79,7 @@
           <div class="intro-text">
 <p class="prose" data-i18n="intro_p00">Algo que puede ser útil para mejorar nuestro <span class="concept concept--red">discernimiento al utilizar herramientas de IA</span> es comprender cómo funciona la estadística que tienen por detrás.</p>
 
-<p class="prose" data-i18n="intro_p01">De esta manera podremos reconocer <span class="concept concept--context">cuándo una respuesta puede ser confiable</span>, cuándo conviene verificarla y cuáles son los límites de la herramienta.</p>
+<p class="prose" data-i18n="intro_p01">De esta manera podremos entender por qué debemos <span class="concept concept--context">mantener el escepticismo</span> frente a una respuesta y cómo podría hacerse que una IA entrenada por nosotros tenga menor margen de error.</p>
 
           <!-- VIDEO 1: AwesomeClip.mp4 (loop, sin audio, autoplay) -->
           <figure class="video-card">
@@ -825,6 +825,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
             equivale a una compuerta lógica AND. Eligiendo $w_1 = 2$, $w_2 = 2$ y
             $b = -3$:
           </p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de verdad" data-i18n-aria-label="truthTableLabel">
           <table class="truth-table">
             <thead>
               <tr><th data-i18n="t107">$x_1$ (cómputo)</th><th data-i18n="t108">$x_2$ (razonamiento)</th><th data-i18n="t109">Éxito real $y$</th><th data-i18n="t110">Suma $z$</th><th data-i18n="t111">Salida</th></tr>
@@ -836,6 +837,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
               <tr><td>1</td><td>1</td><td class="ok">1</td><td>$2(1)+2(1)-3=+1$</td><td class="ok">1</td></tr>
             </tbody>
           </table>
+          </div>
           <p data-i18n="t112">
             La neurona solo arroja un valor positivo, y por ende salida $1$, cuando
             ambas entradas están activadas. Si visualizamos la tabla en una gráfica,
@@ -974,6 +976,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
             <li data-i18n="t131"><span class="sym">$x_1$</span> (naturaleza de la tarea): $1$ si es paralelizable, $0$ si es secuencial.</li>
             <li data-i18n="t132"><span class="sym">$x_2$</span> (infraestructura): $1$ si es multi-agente, $0$ si es un agente solo.</li>
           </ul>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de verdad" data-i18n-aria-label="truthTableLabel">
           <table class="truth-table">
             <thead>
               <tr><th>$x_1$</th><th>$x_2$</th><th data-i18n="t133">Éxito $y$</th><th data-i18n="t134">Escenario real</th></tr>
@@ -985,6 +988,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
               <tr><td>1</td><td>1</td><td class="ok">1</td><td data-i18n="t138">Paralelizable + multi-agente: coordinación perfecta.</td></tr>
             </tbody>
           </table>
+          </div>
 
           <figure class="gate-card" style="max-width: 320px; margin: 18px auto;">
             <h4 data-i18n="t139">Compuerta XOR</h4>
@@ -1141,15 +1145,16 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
                 playsinline
                 preload="auto"
               >
-                <source src="videos/sigmoide3d.mp4" type="video/mp4" />
+                <source src="videos/sigmoide3d.mp4?v=20260917-trimmed" type="video/mp4" />
               </video>
               <div class="video-card__missing" style="display: none;">
                 <span data-i18n="t015">Falta el video</span>
                 <code>videos/sigmoide3d.mp4</code>
               </div>
             </div>
-            <figcaption data-i18n="t163" class="video-card__caption">
-              La superficie sigmoide sobre el plano (x₁, x₂) y cómo curva la frontera de decisión.
+            <figcaption class="video-card__caption video-card__caption--credited">
+              <span data-i18n="t163">La superficie sigmoide sobre el plano (x₁, x₂) y cómo curva la frontera de decisión.</span>
+              <span data-i18n="sigmoidVideoCredit" class="video-card__credit">Créditos: Dot CSV — <strong>¿Qué es una Red Neuronal? Parte 2 : La Red</strong>.</span>
             </figcaption>
           </figure>
 
@@ -1394,7 +1399,7 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
           <p data-i18n="t205">
             Los hallazgos que motivaron cada página, con su paper y su fuente:
           </p>
-          <div class="table-wrap">
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Referencias" data-i18n-aria-label="referencesTableLabel">
             <table class="truth-table papers-table">
               <thead>
                 <tr><th data-i18n="t206">Hallazgo</th><th data-i18n="t207">Paper</th><th data-i18n="t208">Fuente</th></tr>
@@ -1416,8 +1421,8 @@ Un bloque Transformer recibe los embeddings de los tokens y los transforma en nu
       </div>
     </section>
 
-    <script src="i18n.js"></script>
+    <script src="i18n.js?v=20260917-2"></script>
     <script src="papers.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260917"></script>
   </body>
 </html>

@@ -23,7 +23,7 @@
   var EN = {
     /* Expanded introduction: preserve colors, panels and mathematical notation. */
     "intro_p00": "One useful way to improve our <span class=\"concept concept--red\">judgement when using AI tools</span> is to understand the statistics behind them.",
-    "intro_p01": "This helps us recognise <span class=\"concept concept--context\">when a response may be reliable</span>, when it should be checked, and what limitations the tool has.",
+    "intro_p01": "This way, we can understand why we should <span class=\"concept concept--context\">remain sceptical</span> of a response and how an AI trained by us could be made to have a smaller margin of error.",
     "intro_p02": "A <em>Large Language Model</em> (LLM) is a mathematical model that generates a text response through a <span class=\"concept concept--learn\">probability function</span>—which varies from one model to another—based on a text prompt. This function depends on millions of parameters adjusted during training. As an analogy, we can compare them with the millions of synaptic connections in our brains. We will now see why this comparison is useful.",
     "intro_p03": "An LLM calculates probabilities for the <span class=\"concept concept--text\">next token</span> it will write. Once that token has been selected and appended to the response, all the preceding text is sent back through the same function to calculate the next one.",
     "intro_p04": "<span class=\"concept concept--text\">Tokens</span> are <span class=\"concept concept--text\">character fragments</span> with an associated <span class=\"concept concept--text\">numerical ID</span>.",
@@ -260,6 +260,7 @@
     t160: 'The sigmoid in three dimensions',
     t161: 'To close, let us look at the sigmoid in three dimensions. Applied to the weighted sum $z = w_1 x_1 + w_2 x_2 + b$, it turns the tilted plane into a smooth surface shaped like a curved step: on one side it saturates near $0$ and on the other near $1$, with a continuous transition in between. That curvature is exactly what lets us separate the gates: instead of a straight, abrupt cut like the threshold’s, we get a <em>smooth, deformable boundary</em> which, chained across layers, can wrap around the crossed XOR points.',
     t163: 'The sigmoid surface over the (x₁, x₂) plane and how it curves the decision boundary.',
+    sigmoidVideoCredit: 'Credits: Dot CSV — <strong>¿Qué es una Red Neuronal? Parte 2 : La Red</strong>.',
     t164: 'With this the architecture is complete: neurons that compute weighted sums, organised in layers, with non-linear activations in between. But so far <em>we</em> have chosen the weights by hand, by looking at the picture. The real magic of machine learning is that the network finds them on its own. How? That is the subject of the next page.',
     t165: 'Page 9 of 11',
     t166: '&larr; The XOR paradox',
@@ -316,6 +317,8 @@
     docTitle: 'The evolution of agents and neural networks',
     docDesc: 'The evolution of agents and neural networks: an exploration using the tools of Calculus II.',
     chartXLabel: 'training compute',
+    truthTableLabel: 'Truth table: scroll horizontally to view all columns',
+    referencesTableLabel: 'References: scroll horizontally to view all columns',
     chartError: 'Error (MSE) = ',
     layerPrev: 'LAYER N−1',
     layerCurr: 'LAYER N',

@@ -6,7 +6,7 @@ A **Probability & Statistics** project: an interactive web page that explains wh
 
 *🇦🇷 [Leer este README en español](README.es.md) · the site itself is bilingual (EN / ES switch in the top bar).*
 
-![Site cover](assets/readme/portada.png)
+![Site cover](assets/readme/portada-en.png)
 
 ---
 
@@ -18,19 +18,22 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 
 ## How we approached it
 
-- **An expanded introduction.** A learning analogy leads into language models, token IDs, embeddings, Transformer blocks and learned parameters. The introduction uses LaTeX formulas, colored text panels and a visual token-to-vector example.
+- **An expanded introduction.** Statistics and critical judgement lead into language models, token IDs, embeddings, Transformer blocks and learned parameters. The introduction uses LaTeX formulas, colored text panels and a visual token-to-vector example.
 - **A story in 11 pages, from simple to complex.** The site reads like a notebook: the introduction and an LLM's probability function (pages 1 and 2) → a line fitted to real data (page 3) → the error as a function to minimise (page 4) → more dimensions and least squares (page 5) → the perceptron (page 6) → AND/OR gates (page 7) → the XOR limit (page 8) → layers and activation functions (page 9) → backpropagation and gradient descent (page 10) → conclusion and references (page 11).
 - **Real papers as the through-line.** Each mathematical concept enters when a real finding demands it: linear regression shows up to model OpenAI's Scaling Laws, and XOR shows up because the DeepMind + MIT multi-agent finding (multi-agents help on parallelisable tasks and hurt on sequential ones) has exactly that shape.
 - **Interactive where it adds value, static where it does not.** Page 4 has a tool to drag the slope and bias of the line and watch the mean squared error change live. The rest are SVG charts drawn in code, with no libraries.
 - **Language selection.** The introduction, navigation and nine chapters support English and Spanish, with English selected by default. Color highlights, text panels and LaTeX formulas are preserved when switching languages. Spanish example tokens are retained to keep their IDs and vectors consistent. The language choice is remembered across visits.
 - **Handmade aesthetic.** Handwritten typography, paper colours and an animated cover (a homage to Nicky Case's *The Evolution of Trust*): it should feel like a notebook, not a corporate deck.
 - **No dependencies, no build step.** Vanilla HTML + CSS + JS; only MathJax from a CDN for the formulas. Deploying means copying static files.
+- **Mobile-friendly reading.** The header adapts to narrow screens, navigation and sliders have larger touch targets, the regression chart is redrawn at the available width, and wide tables and equations scroll within their own panels.
 
 ## The walkthrough, in screenshots
 
-**Introduction — learning and language models.** The opening analogy and video introduce the model, with color highlights for key concepts.
+All screenshots in this README use English. The [Spanish README](README.es.md) has its own Spanish screenshots; the example tokens intentionally remain in Spanish in both versions.
 
-![Introduction: learning analogy and video](assets/readme/introduccion-en.png)
+**Introduction — statistics and language models.** The opening text and video introduce the model and the importance of remaining sceptical, with color highlights for key concepts.
+
+![Introduction: statistics, critical judgement and video](assets/readme/introduccion-en.png)
 
 **Introduction — from tokens to the input vector.** Separate token boxes correspond to the IDs in the LaTeX vector, inside a dedicated text panel.
 
@@ -38,19 +41,23 @@ We wanted to show that journey without black boxes. Every formula on the site ca
 
 **Page 3 — the real data and the first line.** The test loss of OpenAI's models falls with compute following a power law; on a log-log scale it is almost a straight line, and that line is our first model:
 
-![Page 3: scaling laws](assets/readme/scaling-laws.png)
+![Page 3: scaling laws](assets/readme/scaling-laws-en.png)
 
 **Page 4 — the error as a function.** The interactive tool: you move the slope and the bias, and the mean squared error tells you how good your line is:
 
-![Page 4: regression tool](assets/readme/herramienta-mse.png)
+![Page 4: regression tool](assets/readme/herramienta-mse-en.png)
 
 **Page 8 — the limit.** The multi-agent finding has the shape of an XOR and no straight line can separate that pattern: the geometric reason why networks are needed:
 
-![Page 8: the XOR paradox](assets/readme/xor.png)
+![Page 8: the XOR paradox](assets/readme/xor-en.png)
 
 **Page 11 — the conclusion.** A recap of everything used, stage by stage, plus the references:
 
-![Page 11: conclusion](assets/readme/conclusion.png)
+![Page 11: conclusion](assets/readme/conclusion-en.png)
+
+**Mobile — interactive regression.** The chart keeps readable labels and the controls stack vertically on a phone:
+
+![Mobile layout: regression chart and touch controls](assets/readme/mobile-en.png)
 
 ## Running it locally
 

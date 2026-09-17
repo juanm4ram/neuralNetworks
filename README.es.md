@@ -18,19 +18,22 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 
 ## Cómo lo pensamos
 
-- **Una introducción ampliada.** Una analogía sobre el aprendizaje presenta los modelos de lenguaje, los IDs de tokens, los embeddings, los bloques Transformer y los parámetros aprendidos. Incluye fórmulas en LaTeX, recuadros, resaltados por color y un ejemplo visual de tokens y su vector de entrada.
+- **Una introducción ampliada.** La estadística y el discernimiento al usar IA presentan los modelos de lenguaje, los IDs de tokens, los embeddings, los bloques Transformer y los parámetros aprendidos. Incluye fórmulas en LaTeX, recuadros, resaltados por color y un ejemplo visual de tokens y su vector de entrada.
 - **Una historia en 11 páginas, de lo simple a lo complejo.** El sitio se lee como un cuadernillo: la introducción y la función de probabilidad de un LLM (páginas 1 y 2) → una recta sobre datos reales (página 3) → el error como función a minimizar (página 4) → más dimensiones y mínimos cuadrados (página 5) → el perceptrón (página 6) → compuertas AND/OR (página 7) → el límite del XOR (página 8) → capas y funciones de activación (página 9) → backpropagation y descenso del gradiente (página 10) → conclusión y referencias (página 11).
 - **Papers reales como hilo conductor.** Cada concepto matemático entra cuando un hallazgo real lo pide: la regresión lineal aparece para modelar las Scaling Laws de OpenAI, y el XOR aparece porque el hallazgo multi-agente de DeepMind + MIT (los multi-agentes ayudan en tareas paralelizables y perjudican en secuenciales) tiene exactamente esa forma.
 - **Interactivo donde suma, estático donde no.** La página 4 tiene una herramienta para mover la pendiente y el sesgo de la recta y ver el error cuadrático medio cambiar en vivo. El resto son gráficos SVG dibujados por código, sin librerías.
 - **Estética hecha a mano.** Tipografía manuscrita, colores de papel y una portada animada (homenaje a *The Evolution of Trust* de Nicky Case): la idea es que se sienta como un cuaderno de apuntes y no como una presentación corporativa.
 - **Selección de idioma.** La introducción, la navegación y los nueve capítulos están disponibles en inglés y español; el inglés es el idioma predeterminado. El cambio de idioma conserva los colores, los recuadros y las fórmulas LaTeX. Los tokens de ejemplo permanecen en español para conservar la correspondencia con sus IDs y vectores. La elección se recuerda entre visitas.
 - **Sin dependencias ni build.** HTML + CSS + JS vanilla; solo MathJax por CDN para las fórmulas. Desplegar es copiar archivos estáticos.
+- **Lectura adaptada a celulares.** La barra superior se ajusta a pantallas estrechas, la navegación y los deslizadores tienen controles táctiles más grandes, el gráfico de regresión se redibuja al ancho disponible y las tablas y ecuaciones anchas se desplazan dentro de sus propios recuadros.
 
 ## El recorrido, en capturas
 
-**Introducción — aprendizaje y modelos de lenguaje.** La analogía inicial y el video presentan el modelo, con palabras clave resaltadas por color.
+Todas las capturas de este README están en español. El [README en inglés](README.md) utiliza sus propias capturas en inglés.
 
-![Introducción: analogía del aprendizaje y video](assets/readme/introduccion.png)
+**Introducción — estadística y modelos de lenguaje.** El texto inicial y el video presentan el modelo y la importancia de mantener el escepticismo, con palabras clave resaltadas por color.
+
+![Introducción: estadística, discernimiento y video](assets/readme/introduccion.png)
 
 **Introducción — de los tokens al vector de entrada.** Los fragmentos se muestran separados y se corresponden con los IDs de la fórmula en LaTeX, dentro de un recuadro.
 
@@ -51,6 +54,10 @@ Queríamos mostrar ese recorrido sin cajas negras. Cada fórmula que aparece en 
 **Página 11 — la conclusión.** El repaso de todo lo utilizado, etapa por etapa, y las referencias:
 
 ![Página 11: conclusión](assets/readme/conclusion.png)
+
+**Celulares — regresión interactiva.** El gráfico conserva etiquetas legibles y los controles se apilan verticalmente en el teléfono:
+
+![Vista móvil: gráfico de regresión y controles táctiles](assets/readme/mobile.png)
 
 ## Cómo correrlo local
 
